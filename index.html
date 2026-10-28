@@ -472,7 +472,7 @@
             <div class="relative z-10">
               <span class="px-3 py-1 bg-brand-purple/10 rounded-full text-xs font-black uppercase tracking-wider text-brand-black">Student Portal</span>
               <h2 class="text-2xl sm:text-3xl font-black text-brand-black mt-2">Mabuhay, <span id="dashStudentName">Student</span>!</h2>
-              <p class="text-brand-black/80 text-sm mt-1 max-w-xl">Welcome to your digital scholarship hub. Apply, manage requirements, and track payout statuses easily.</p>
+              <p class="text-brand-black/80 text-sm mt-1 max-w-xl">Register for scholarships, submit the requirements specified for each scholarship, and monitor application status and messages from scholarship personnel.</p>
               
               <div class="mt-4 flex flex-wrap gap-2">
                 <button onclick="showStudentSection('apply')" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 transition shadow">
@@ -513,7 +513,7 @@
                 <i class="fa-solid fa-wallet"></i>
               </div>
               <div>
-                <p class="text-xs font-bold text-slate-500 uppercase">Approved Funds</p>
+                <p class="text-xs font-bold text-slate-500 uppercase">Application Summary</p>
                 <h4 id="dashApprovedFunds" class="text-2xl font-black text-emerald-600">₱0.00</h4>
               </div>
             </div>
@@ -522,7 +522,7 @@
           <!-- Active Application Highlight Card -->
           <div class="gcash-card p-6">
             <h3 class="text-base font-bold text-brand-black mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-circle-notch text-brand-purple"></i> Active Application Banner
+              <i class="fa-solid fa-circle-notch text-brand-purple"></i> Current Application Status
             </h3>
             <div id="dashActiveAppContainer">
               <!-- Populated dynamically -->
@@ -688,7 +688,7 @@
                 <p class="font-bold text-brand-black" id="previewProgTitle">Program Title</p>
                 <p class="text-slate-600" id="previewProgDesc">Program description...</p>
                 <div class="flex gap-4 text-slate-700 font-medium">
-                  <span>Grant Amount: <strong class="text-emerald-700" id="previewProgAmount">₱0</strong></span>
+                  <span>Scholarship Information: <strong class="text-emerald-700" id="previewProgAmount">₱0</strong></span>
                   <span>Slots Left: <strong id="previewProgSlots">0</strong></span>
                 </div>
               </div>
@@ -708,14 +708,14 @@
             <!-- STEP 2: DOCUMENT UPLOADS -->
             <div id="wizardStep2" class="space-y-4 hidden">
               <h3 class="text-sm font-bold text-brand-black uppercase tracking-wider"><i class="fa-solid fa-cloud-arrow-up text-purple-700 mr-1"></i> Step 2: Requirements Upload Simulator</h3>
-              <p class="text-xs text-slate-500">Upload simulated requirement files (e.g. COR, Grades, Income Certificate).</p>
+              <p class="text-xs text-slate-500">Upload the documents requested for the selected scholarship. Required documents may differ by scholarship; check the instructions provided by scholarship personnel.</p>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <!-- Doc 1: COR -->
                 <div class="p-4 border border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center text-center">
                   <i class="fa-solid fa-file-pdf text-rose-500 text-3xl mb-2"></i>
-                  <span class="font-bold text-slate-700">Certificate of Registration (COR)</span>
-                  <span class="text-[10px] text-slate-500 mb-3">PDF or Image file up to 5MB</span>
+                  <span class="font-bold text-slate-700">Requirement Document 1</span>
+                  <span class="text-[10px] text-slate-500 mb-3">Upload the document requested for this scholarship (PDF or image, up to 5MB).</span>
                   <input type="file" id="fileCOR" class="hidden" onchange="handleFileSim(this, 'statusCOR')">
                   <button type="button" onclick="document.getElementById('fileCOR').click()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-[11px]">
                     <i class="fa-solid fa-paperclip"></i> Select File
@@ -726,8 +726,8 @@
                 <!-- Doc 2: Grades -->
                 <div class="p-4 border border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center text-center">
                   <i class="fa-solid fa-file-lines text-blue-500 text-3xl mb-2"></i>
-                  <span class="font-bold text-slate-700">Official Report Card / Grades</span>
-                  <span class="text-[10px] text-slate-500 mb-3">Certified copy showing GWA</span>
+                  <span class="font-bold text-slate-700">Requirement Document 2</span>
+                  <span class="text-[10px] text-slate-500 mb-3">Follow the document instructions provided for the selected scholarship.</span>
                   <input type="file" id="fileGrades" class="hidden" onchange="handleFileSim(this, 'statusGrades')">
                   <button type="button" onclick="document.getElementById('fileGrades').click()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-[11px]">
                     <i class="fa-solid fa-paperclip"></i> Select File
@@ -738,8 +738,8 @@
                 <!-- Doc 3: ID -->
                 <div class="p-4 border border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center text-center md:col-span-2">
                   <i class="fa-solid fa-id-card text-emerald-500 text-3xl mb-2"></i>
-                  <span class="font-bold text-slate-700">Valid Student ID / Government ID</span>
-                  <span class="text-[10px] text-slate-500 mb-3">Front & Back photo</span>
+                  <span class="font-bold text-slate-700">Additional Requirement Document</span>
+                  <span class="text-[10px] text-slate-500 mb-3">Upload another document only if requested for the selected scholarship.</span>
                   <input type="file" id="fileID" class="hidden" onchange="handleFileSim(this, 'statusID')">
                   <button type="button" onclick="document.getElementById('fileID').click()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-[11px]">
                     <i class="fa-solid fa-paperclip"></i> Select File
@@ -801,8 +801,8 @@
         <!-- 5. MY APPLICATIONS & APPLICATION TRACKING -->
         <div id="studentSec-tracking" class="space-y-6 hidden">
           <div>
-            <h2 class="text-xl font-black text-brand-black">Application Status & Lifecycle Tracking</h2>
-            <p class="text-xs text-slate-500">Real-time status tracking of your submitted scholarship applications.</p>
+            <h2 class="text-xl font-black text-brand-black">Application Status Tracking</h2>
+            <p class="text-xs text-slate-500">View the current status of submitted applications and any review notes or updates from scholarship personnel.</p>
           </div>
 
           <div id="myApplicationsContainer" class="space-y-6">
@@ -815,7 +815,7 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-xl font-black text-brand-black">Notifications & Updates</h2>
-              <p class="text-xs text-slate-500">Application status updates, requirement corrections, and messages from scholarship personnel.</p>
+              <p class="text-xs text-slate-500">Messages about application status, missing or corrected requirements, and review updates from scholarship personnel.</p>
             </div>
             <button onclick="clearStudentNotifications()" class="text-xs font-bold text-slate-500 hover:text-slate-800">Clear All</button>
           </div>
@@ -884,13 +884,13 @@
             <span id="adminPendingBadge" class="bg-amber-500 text-slate-900 font-bold text-[10px] px-2 py-0.5 rounded-full hidden">0</span>
           </button>
           <button onclick="showAdminSection('approved')" id="aNav-approved" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
-            <i class="fa-solid fa-user-check w-4 text-center"></i> Approved Scholars
+            <i class="fa-solid fa-user-check w-4 text-center"></i> Applications with Final Decisions
           </button>
           <button onclick="showAdminSection('reports')" id="aNav-reports" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
             <i class="fa-solid fa-chart-column w-4 text-center"></i> Reports & Analytics
           </button>
           <button onclick="showAdminSection('settings')" id="aNav-settings" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
-            <i class="fa-solid fa-sliders w-4 text-center"></i> System Settings
+            <i class="fa-solid fa-sliders w-4 text-center"></i> Registration and Application Settings
           </button>
         </nav>
 
@@ -909,8 +909,8 @@
         <div id="adminSec-dashboard" class="space-y-6">
           <div class="flex justify-between items-center">
             <div>
-              <h2 class="text-xl font-black text-brand-black">Administrator Overview</h2>
-              <p class="text-xs text-slate-500">Live statistics on applications, fund allocations, and pending verifications.</p>
+              <h2 class="text-xl font-black text-brand-black">Scholarship Application Overview</h2>
+              <p class="text-xs text-slate-500">Summary of registered students, submitted applications, pending verification, and application decisions.</p>
             </div>
             <button onclick="refreshAdminDashboard()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl">
               <i class="fa-solid fa-arrows-rotate mr-1"></i> Refresh Stats
@@ -932,15 +932,15 @@
             </div>
 
             <div class="gcash-card p-4 border-l-4 border-emerald-500">
-              <p class="text-[11px] font-bold text-slate-500 uppercase">Approved Scholars</p>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Applications with Final Decisions</p>
               <h3 id="statApprovedApps" class="text-2xl font-black text-emerald-600">0</h3>
-              <p class="text-[10px] text-slate-500 mt-1">Active Beneficiaries</p>
+              <p class="text-[10px] text-slate-500 mt-1">Applications with final decisions</p>
             </div>
 
             <div class="gcash-card p-4 border-l-4 border-brand-purple">
-              <p class="text-[11px] font-bold text-slate-500 uppercase">Disbursed Funds</p>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Applications with Final Decision</p>
               <h3 id="statTotalDisbursed" class="text-2xl font-black text-brand-black">₱0.00</h3>
-              <p class="text-[10px] text-slate-500 mt-1">Allocated Support</p>
+              <p class="text-[10px] text-slate-500 mt-1">Final decisions recorded by authorized personnel</p>
             </div>
           </div>
 
@@ -966,8 +966,8 @@
         <div id="adminSec-scholarships" class="space-y-6 hidden">
           <div class="flex justify-between items-center">
             <div>
-              <h2 class="text-xl font-black text-brand-black">Scholarship Programs Management</h2>
-              <p class="text-xs text-slate-500">Manage scholarship information and application requirements.</p>
+              <h2 class="text-xl font-black text-brand-black">Scholarship Information Management</h2>
+              <p class="text-xs text-slate-500">Manage scholarship information and specify the requirements for each scholarship.</p>
             </div>
             <button onclick="openCreateProgramModal()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-200 shadow">
               <i class="fa-solid fa-plus mr-1"></i> Create New Program
@@ -1015,7 +1015,7 @@
         <div id="adminSec-applications" class="space-y-6 hidden">
           <div>
             <h2 class="text-xl font-black text-brand-black">Application Management & Document Verification</h2>
-            <p class="text-xs text-slate-500">Inspect uploaded documents, verify eligibility criteria, and approve, return, or reject applications.</p>
+            <p class="text-xs text-slate-500">Review submitted information and documents, record verification results, and update applications as pending, returned for correction, or decided. Final selection and approval remain with authorized scholarship personnel or the designated committee.</p>
           </div>
 
           <!-- Applications Filter Bar -->
@@ -1053,8 +1053,8 @@
         <!-- 5. APPROVED SCHOLARS -->
         <div id="adminSec-approved" class="space-y-6 hidden">
           <div>
-            <h2 class="text-xl font-black text-brand-black">Approved Scholars Master List</h2>
-            <p class="text-xs text-slate-500">Beneficiaries qualified for scholarship grant payouts.</p>
+            <h2 class="text-xl font-black text-brand-black">Application Decisions</h2>
+            <p class="text-xs text-slate-500">Applications with a final decision recorded by authorized scholarship personnel or the designated committee.</p>
           </div>
 
           <div class="gcash-card p-4">
@@ -1062,11 +1062,11 @@
               <table class="w-full text-left text-xs">
                 <thead class="bg-white text-slate-600 font-bold uppercase border-b">
                   <tr>
-                    <th class="p-3">Scholar Name</th>
+                    <th class="p-3">Applicant Name</th>
                     <th class="p-3">Program</th>
-                    <th class="p-3">Award Amount</th>
-                    <th class="p-3">Approval Date</th>
-                    <th class="p-3">Disbursement Status</th>
+                    <th class="p-3">Application Status</th>
+                    <th class="p-3">Decision Date</th>
+                    <th class="p-3">Review Notes / Status</th>
                   </tr>
                 </thead>
                 <tbody id="adminApprovedTableBody" class="divide-y divide-slate-100">
@@ -1081,8 +1081,8 @@
         <div id="adminSec-reports" class="space-y-6 hidden">
           <div class="flex justify-between items-center">
             <div>
-              <h2 class="text-xl font-black text-brand-black">System Reports & Analytics</h2>
-              <p class="text-xs text-slate-500">Exportable summary logs and financial reports.</p>
+              <h2 class="text-xl font-black text-brand-black">Application Processing Reports</h2>
+              <p class="text-xs text-slate-500">Summary reports on registrations, submitted applications, verification, application status, and processing.</p>
             </div>
             <button onclick="simulateExportReport()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 shadow">
               <i class="fa-solid fa-download mr-1"></i> Export Report (CSV)
@@ -1090,7 +1090,7 @@
           </div>
 
           <div class="gcash-card p-6">
-            <h3 class="text-sm font-bold text-brand-black mb-2">Program Breakdown Report</h3>
+            <h3 class="text-sm font-bold text-brand-black mb-2">Applications by Scholarship Program</h3>
             <div id="adminReportProgramSummary" class="space-y-2 text-xs">
               <!-- Summary breakdown -->
             </div>
@@ -1100,8 +1100,8 @@
         <!-- 7. SYSTEM SETTINGS -->
         <div id="adminSec-settings" class="space-y-6 hidden">
           <div>
-            <h2 class="text-xl font-black text-brand-black">System Configuration</h2>
-            <p class="text-xs text-slate-500">Toggle registration periods and maintain system settings.</p>
+            <h2 class="text-xl font-black text-brand-black">Registration and Application Settings</h2>
+            <p class="text-xs text-slate-500">Manage student registration and scholarship application submission periods.</p>
           </div>
 
           <div class="gcash-card p-6 space-y-4 max-w-lg">
@@ -1182,7 +1182,7 @@
           <div class="space-y-2">
             <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200">
               <input type="checkbox" id="chkCOR" class="w-4 h-4 text-brand-black rounded">
-              <span>Verified Official Certificate of Registration (COR)</span>
+              <span>Verified Official Requirement Document 1</span>
             </label>
             <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200">
               <input type="checkbox" id="chkGrades" class="w-4 h-4 text-brand-black rounded">
@@ -1229,7 +1229,7 @@
             <i class="fa-solid fa-xmark"></i> Reject Application
           </button>
           <button onclick="executeAppAction('APPROVE')" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5">
-            <i class="fa-solid fa-check"></i> Approve Scholarship
+            <i class="fa-solid fa-check"></i> Record Final Decision
           </button>
         </div>
       </div>
@@ -1259,7 +1259,7 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-600 mb-1">Award Amount (₱)</label>
+            <label class="block font-bold text-slate-600 mb-1">Application Status (₱)</label>
             <input type="number" id="progAmount" required placeholder="15000" class="w-full p-2.5 bg-white border rounded-xl">
           </div>
           <div>
@@ -2042,7 +2042,7 @@
       chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Pending Review', 'Returned', 'Approved Scholars', 'Rejected'],
+          labels: ['Pending Review', 'Returned', 'Applications with Final Decisions', 'Rejected'],
           datasets: [{
             label: 'Applications Count',
             data: [counts['Under Review'], counts['Returned'], counts['Approved'], counts['Rejected']],
