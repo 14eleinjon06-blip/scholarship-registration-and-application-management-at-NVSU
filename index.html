@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduPay Scholarship Portal</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for Admin Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#7C3AED',
+              darkpurple: '#4C1D95',
+              purpleLight: '#F3E8FF',
+              black: '#111827',
+              accent: '#9333EA',
+              darkBg: '#FFFFFF',
+              white: '#FFFFFF'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1F2937; }
+    .gcash-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px -5px rgba(124, 58, 237, 0.12);
+      border: 1px solid #DDD6FE;
+    }
+    .gcash-banner {
+      background: linear-gradient(135deg, #7C3AED 0%, #9333EA 100%);
+      color: #FFFFFF;
+    }
+    .gcash-gradient-dark {
+      background: linear-gradient(135deg, #7C3AED 0%, #4C1D95 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #FFFFFF;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #9333EA;
+      border-radius: 10px;
+    }
+    /* Hide scrollbar for clean horizontal tab bars */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+  /* Responsive fixes: keep the EduPay heading and registration card visible on phones and laptops */
+  #topDemoBar {
+    position: relative !important;
+    top: auto !important;
+    flex-shrink: 0;
+  }
+  #authPortalView {
+    box-sizing: border-box;
+    min-height: 0;
+    height: auto;
+    flex: 1 0 auto;
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding-top: clamp(1rem, 4vh, 2.5rem);
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    scroll-padding-top: 1rem;
+  }
+  #authPortalView > .w-full.max-w-md {
+    width: 100%;
+    max-width: 28rem;
+    margin-top: 0 !important;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+  #authPortalView h1 {
+    color: #171717;
+    font-size: clamp(1.45rem, 4vw, 1.75rem);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  #authPortalView .text-center.mb-6 {
+    margin-bottom: 1.25rem;
+  }
+  #authPortalView .gcash-card {
+    width: 100%;
+  }
+  #authPortalView .gcash-card > .flex.border-b {
+    flex-wrap: wrap;
+  }
+  #authPortalView .gcash-card > .flex.border-b button {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 480px) {
+    #authPortalView { padding-left: 0.75rem; padding-right: 0.75rem; }
+    #authPortalView > .w-full.max-w-md { max-width: 100%; }
+    #authPortalView .inline-flex.items-center.justify-center.w-16.h-16 {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    #authPortalView .inline-flex.items-center.justify-center.w-16.h-16 i { font-size: 1.5rem; }
+    #authPortalView .gcash-card > .p-6 { padding: 1rem; }
+    #topDemoBar { padding: 0.65rem 0.75rem; gap: 0.5rem; }
+    #topDemoBar > div { max-width: 100%; }
+    #topDemoBar button { font-size: 0.68rem; padding: 0.35rem 0.55rem; }
+  }
+  /* Compact demo controls on phones so they don't dominate the screen */
+  @media (max-width: 480px) {
+    #topDemoBar {
+      padding: 0.4rem 0.5rem;
+      gap: 0.35rem;
+      align-items: stretch;
+    }
+    #topDemoBar > div:first-child {
+      gap: 0.4rem;
+      min-width: 0;
+      justify-content: center;
+    }
+    #topDemoBar > div:first-child > span:nth-child(2) {
+      font-size: 0.62rem;
+      line-height: 1.15;
+      letter-spacing: 0.015em;
+    }
+    #topDemoBar > div:nth-child(2) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-top: 0;
+    }
+    #topDemoBar > div:nth-child(2) button {
+      font-size: 0.58rem;
+      line-height: 1.15;
+      padding: 0.28rem 0.4rem;
+      gap: 0.2rem;
+      white-space: nowrap;
+      border-radius: 0.45rem;
+    }
+    #topDemoBar > div:nth-child(2) button i {
+      font-size: 0.58rem;
+    }
+    #topDemoBar > div:nth-child(2) .h-4.w-\\[1px\\] {
+      display: none;
+    }
+  }
+  @media (max-width: 360px) {
+    #topDemoBar > div:first-child > span:nth-child(2) {
+      font-size: 0.56rem;
+    }
+    #topDemoBar > div:nth-child(2) button {
+      font-size: 0.52rem;
+      padding: 0.25rem 0.32rem;
+    }
+  }
+
+  @media (max-height: 760px) {
+    #authPortalView { padding-top: 0.75rem; }
+    #authPortalView .text-center.mb-6 { margin-bottom: 0.75rem; }
+    #authPortalView .inline-flex.items-center.justify-center.w-16.h-16 {
+      width: 3rem;
+      height: 3rem;
+      margin-bottom: 0.4rem;
+    }
+    #authPortalView .inline-flex.items-center.justify-center.w-16.h-16 i { font-size: 1.4rem; }
+  }
+
+  </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased custom-scrollbar">
+
+  <!-- TOP PERSISTENT DEMO & ROLE SWITCHER BAR -->
+  <div id="topDemoBar" class="bg-brand-black text-white text-xs py-2 px-4 flex flex-wrap justify-between items-center z-50 border-b border-brand-purple sticky top-0">
+    <div class="flex items-center gap-3">
+      <span class="flex h-2 w-2 relative">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+      </span>
+      <span class="font-bold tracking-wide text-white uppercase">EduPay System Simulator</span>
+      <span class="hidden md:inline text-slate-300">| Active User: <strong id="currentUserLabel" class="text-white">None (Not Logged In)</strong></span>
+    </div>
+
+    <div class="flex items-center gap-2 mt-1 sm:mt-0">
+      <button onclick="switchRoleView('auth')" class="px-2.5 py-1 rounded-full bg-purple-600 hover:bg-purple-700 transition font-medium text-white flex items-center gap-1">
+        <i class="fa-solid fa-right-to-bracket text-white"></i> Auth Portal
+      </button>
+      <button onclick="switchRoleView('student')" class="px-2.5 py-1 rounded-full bg-purple-600 hover:bg-purple-700 transition font-medium text-white flex items-center gap-1">
+        <i class="fa-solid fa-user-graduate text-white"></i> Student View
+      </button>
+      <button onclick="switchRoleView('admin')" class="px-2.5 py-1 rounded-full bg-purple-600 hover:bg-purple-700 transition font-medium text-white flex items-center gap-1">
+        <i class="fa-solid fa-user-shield text-white"></i> Admin View
+      </button>
+      <div class="h-4 w-[1px] bg-slate-600 mx-1"></div>
+      <button onclick="seedData()" title="Pre-populate mock data for quick testing" class="px-2.5 py-1 rounded-full bg-purple-600 text-white font-bold hover:bg-purple-700 transition">
+        <i class="fa-solid fa-bolt"></i> Seed Mock Data
+      </button>
+      <button onclick="resetSystemState()" title="Reset to 0 students clean state" class="px-2.5 py-1 rounded-full bg-rose-600 text-white font-medium hover:bg-rose-700 transition">
+        <i class="fa-solid fa-rotate-left"></i> Clear All
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed top-12 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div class="flex-1 flex flex-col min-h-0 relative">
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: AUTH / REGISTRATION PORTAL     -->
+    <!-- ========================================== -->
+    <div id="authPortalView" class="flex-1 flex flex-col items-center justify-center p-4 bg-white relative overflow-y-auto">
+      <div class="w-full max-w-md my-auto">
+        <!-- Logo Header -->
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-purple text-white shadow-lg mb-3">
+            <i class="fa-solid fa-graduation-cap text-3xl"></i>
+          </div>
+          <h1 class="text-2xl font-black text-brand-black tracking-tight">EduPay Scholarship</h1>
+          <p class="text-slate-500 text-sm mt-1">Digital Scholarship Registration & Management</p>
+        </div>
+
+        <!-- Auth Card Container -->
+        <div class="gcash-card overflow-hidden">
+          <!-- Auth Navigation Tabs -->
+          <div class="flex border-b border-purple-100 bg-white">
+            <button id="tabBtnRegister" onclick="showAuthTab('register')" class="flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-brand-purple text-brand-black transition">
+              <i class="fa-solid fa-user-plus mr-1"></i> Register Student
+            </button>
+            <button id="tabBtnStudentLogin" onclick="showAuthTab('studentLogin')" class="flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-600 transition">
+              <i class="fa-solid fa-right-to-bracket mr-1"></i> Student Login
+            </button>
+            <button id="tabBtnAdminLogin" onclick="showAuthTab('adminLogin')" class="flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-600 transition">
+              <i class="fa-solid fa-shield-halved mr-1"></i> Admin Access
+            </button>
+          </div>
+
+          <div class="p-6">
+            <!-- 1. STUDENT REGISTRATION FORM -->
+            <form id="formRegister" onsubmit="handleStudentRegistration(event)" class="space-y-4">
+              <div class="bg-amber-50 rounded-xl p-3 border border-amber-200 text-xs text-amber-800 flex gap-2.5 items-start mb-2">
+                <i class="fa-solid fa-circle-info text-amber-600 text-sm mt-0.5"></i>
+                <span>Initial State: <strong>No accounts exist yet.</strong> Register your student account below to start applying.</span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Full Name</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-user"></i></span>
+                  <input type="text" id="regFullName" required placeholder="e.g. Juan De La Cruz" class="w-full pl-9 pr-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email Address</label>
+                  <input type="email" id="regEmail" required placeholder="juan@email.com" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Student ID / LRN</label>
+                  <input type="text" id="regLRN" required placeholder="123456789012" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Course / Program</label>
+                  <select id="regCourse" required class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                    <option value="">Select Course</option>
+                    <option value="BS Computer Science">BS Computer Science</option>
+                    <option value="BS Information Technology">BS Information Technology</option>
+                    <option value="BS Civil Engineering">BS Civil Engineering</option>
+                    <option value="BS Business Administration">BS Business Administration</option>
+                    <option value="BS Nursing">BS Nursing</option>
+                    <option value="BS Education">BS Education</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Year / Grade Level</label>
+                  <select id="regYearLevel" required class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Mobile Number</label>
+                  <input type="tel" id="regPhone" required placeholder="09171234567" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">GWA / Average</label>
+                  <input type="number" step="0.01" min="1.0" max="5.0" id="regGWA" required placeholder="1.50" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                <input type="password" id="regPassword" required placeholder="••••••••" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+              </div>
+
+              <button type="submit" class="w-full py-3 bg-brand-purple hover:bg-purple-700 text-white font-black text-sm rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center gap-2 mt-4">
+                <span>Create Student Account</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
+
+            <!-- 2. STUDENT LOGIN FORM -->
+            <form id="formStudentLogin" onsubmit="handleStudentLogin(event)" class="space-y-4 hidden">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email or LRN</label>
+                <input type="text" id="loginStudentUser" required placeholder="juan@email.com" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                <input type="password" id="loginStudentPass" required placeholder="••••••••" class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+              </div>
+
+              <button type="submit" class="w-full py-3 bg-brand-purple hover:bg-purple-700 text-white font-bold text-sm rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Sign In as Student</span>
+              </button>
+
+              <div class="pt-3 text-center">
+                <p class="text-xs text-slate-500 mb-2">Need a quick test account?</p>
+                <button type="button" onclick="seedAndFillStudent()" class="text-xs text-brand-accent font-bold hover:underline">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-fill Sample Student
+                </button>
+              </div>
+            </form>
+
+            <!-- 3. ADMIN LOGIN FORM -->
+            <form id="formAdminLogin" onsubmit="handleAdminLogin(event)" class="space-y-4 hidden">
+              <div class="bg-blue-50 rounded-xl p-3 border border-blue-200 text-xs text-blue-900 flex gap-2 items-center mb-1">
+                <i class="fa-solid fa-shield text-blue-600 text-sm"></i>
+                <span>Default Admin Creds: <strong>admin@scholarship.gov.ph</strong> / <strong>admin123</strong></span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Admin Email</label>
+                <input type="email" id="loginAdminEmail" value="admin@scholarship.gov.ph" required class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                <input type="password" id="loginAdminPass" value="admin123" required class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
+              </div>
+
+              <button type="submit" class="w-full py-3 bg-brand-purple hover:bg-purple-600 text-white font-bold text-sm rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-user-shield text-brand-purple"></i>
+                <span>Access Administrator Portal</span>
+              </button>
+
+              <div class="pt-2 text-center">
+                <button type="button" onclick="quickAdminLogin()" class="w-full py-2 bg-white hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                  ⚡ Quick Demo Admin Login
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: STUDENT PANEL                   -->
+    <!-- ========================================== -->
+    <div id="studentPanelView" class="hidden flex-1 flex flex-col md:flex-row bg-white min-h-0 overflow-hidden">
+      <!-- Student Sidebar Nav -->
+      <aside class="w-full md:w-64 bg-brand-black text-white flex flex-col shrink-0 border-r border-purple-900">
+        <!-- Student Header Profile Brief -->
+        <div class="p-4 bg-brand-black flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-brand-purple text-white flex items-center justify-center font-black text-lg shadow-inner">
+            <span id="studentAvatarInitials">JD</span>
+          </div>
+          <div class="overflow-hidden">
+            <h3 id="studentNavName" class="font-bold text-sm text-white truncate">Juan De La Cruz</h3>
+            <p id="studentNavLRN" class="text-xs text-purple-200 opacity-100 truncate">LRN: 123456789012</p>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 p-3 space-y-1 overflow-y-auto no-scrollbar">
+          <button onclick="showStudentSection('dashboard')" id="sNav-dashboard" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-purple-200 bg-purple-600/60 transition">
+            <i class="fa-solid fa-house w-4 text-center"></i> Dashboard
+          </button>
+          <button onclick="showStudentSection('profile')" id="sNav-profile" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-id-card w-4 text-center"></i> Student Profile
+          </button>
+          <button onclick="showStudentSection('scholarships')" id="sNav-scholarships" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-graduation-cap w-4 text-center"></i> Available Scholarships
+          </button>
+          <button onclick="showStudentSection('apply')" id="sNav-apply" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-pen-to-square w-4 text-center"></i> Application Form
+          </button>
+          <button onclick="showStudentSection('tracking')" id="sNav-tracking" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-route w-4 text-center"></i> Application Tracking
+          </button>
+          <button onclick="showStudentSection('notifications')" id="sNav-notifications" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <span class="flex items-center gap-3"><i class="fa-solid fa-bell w-4 text-center"></i> Notifications</span>
+            <span id="studentNotifBadge" class="bg-brand-purple text-white text-[10px] font-black px-2 py-0.5 rounded-full hidden">0</span>
+          </button>
+          <button onclick="showStudentSection('settings')" id="sNav-settings" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-gear w-4 text-center"></i> Account Settings
+          </button>
+        </nav>
+
+        <!-- Logout CTA -->
+        <div class="p-3 border-t border-slate-800">
+          <button onclick="logout()" class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-800 hover:bg-rose-900/60 text-slate-300 hover:text-rose-200 text-xs font-bold rounded-xl transition">
+            <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Student Main Content Area -->
+      <main class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-white">
+
+        <!-- 1. STUDENT DASHBOARD -->
+        <div id="studentSec-dashboard" class="space-y-6">
+          <!-- GCash Style Banner Card -->
+          <div class="gcash-banner rounded-3xl p-6 shadow-md relative overflow-hidden">
+            <div class="relative z-10">
+              <span class="px-3 py-1 bg-brand-purple/10 rounded-full text-xs font-black uppercase tracking-wider text-brand-black">Student Portal</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-brand-black mt-2">Mabuhay, <span id="dashStudentName">Student</span>!</h2>
+              <p class="text-brand-black/80 text-sm mt-1 max-w-xl">Welcome to your digital scholarship hub. Apply, manage requirements, and track payout statuses easily.</p>
+              
+              <div class="mt-4 flex flex-wrap gap-2">
+                <button onclick="showStudentSection('apply')" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 transition shadow">
+                  <i class="fa-solid fa-plus mr-1"></i> Apply for Scholarship
+                </button>
+                <button onclick="showStudentSection('tracking')" class="px-4 py-2 bg-white/80 text-brand-black font-bold text-xs rounded-xl hover:bg-white transition">
+                  <i class="fa-solid fa-magnifying-glass mr-1"></i> Check Application Status
+                </button>
+              </div>
+            </div>
+            <i class="fa-solid fa-award text-8xl absolute -right-4 -bottom-4 text-brand-black/10"></i>
+          </div>
+
+          <!-- Quick Stats Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="gcash-card p-4 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-file-signature"></i>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-slate-500 uppercase">My Submissions</p>
+                <h4 id="dashMyApplicationsCount" class="text-2xl font-black text-slate-800">0</h4>
+              </div>
+            </div>
+
+            <div class="gcash-card p-4 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-arrows-spin"></i>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-slate-500 uppercase">Current Status</p>
+                <h4 id="dashLatestStatus" class="text-sm font-bold text-slate-800">No Active App</h4>
+              </div>
+            </div>
+
+            <div class="gcash-card p-4 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-wallet"></i>
+              </div>
+              <div>
+                <p class="text-xs font-bold text-slate-500 uppercase">Approved Funds</p>
+                <h4 id="dashApprovedFunds" class="text-2xl font-black text-emerald-600">₱0.00</h4>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Application Highlight Card -->
+          <div class="gcash-card p-6">
+            <h3 class="text-base font-bold text-brand-black mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-circle-notch text-brand-purple"></i> Active Application Banner
+            </h3>
+            <div id="dashActiveAppContainer">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Available Featured Grants -->
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-base font-bold text-brand-black">Recommended Programs for You</h3>
+              <button onclick="showStudentSection('scholarships')" class="text-xs font-bold text-brand-black hover:underline">View All →</button>
+            </div>
+            <div id="dashFeaturedScholarships" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Dynamic Cards -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. STUDENT PROFILE -->
+        <div id="studentSec-profile" class="space-y-6 hidden">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-black text-brand-black">Student Profile & Academic Info</h2>
+              <p class="text-xs text-slate-500">Ensure your information is updated for fast scholarship evaluation.</p>
+            </div>
+            <button onclick="saveStudentProfile()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 shadow">
+              <i class="fa-solid fa-floppy-disk mr-1"></i> Save Profile Updates
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Left Info Sidebar Card -->
+            <div class="gcash-card p-6 text-center">
+              <div class="w-24 h-24 rounded-full bg-brand-purple text-white text-3xl font-black mx-auto flex items-center justify-center mb-3 shadow-md">
+                <span id="profAvatarInitials">JD</span>
+              </div>
+              <h3 id="profCardName" class="font-bold text-base text-slate-800">Juan De La Cruz</h3>
+              <p id="profCardCourse" class="text-xs text-slate-500 mb-2">BS Computer Science</p>
+              <span id="profGwaBadge" class="inline-block px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">GWA: 1.50</span>
+
+              <div class="mt-6 pt-4 border-t border-purple-100 text-left space-y-2 text-xs">
+                <p class="flex justify-between text-slate-600"><span>Verification:</span> <strong class="text-emerald-600">Verified ID</strong></p>
+                <p class="flex justify-between text-slate-600"><span>Account Status:</span> <strong class="text-brand-black">Active Student</strong></p>
+              </div>
+            </div>
+
+            <!-- Right Details Forms -->
+            <div class="md:col-span-2 space-y-4">
+              <div class="gcash-card p-6 space-y-4">
+                <h4 class="text-sm font-bold text-brand-black uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-user text-purple-700 mr-1"></i> Personal Information</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">Full Name</label>
+                    <input type="text" id="profFullName" class="w-full p-2.5 bg-white border rounded-xl font-medium">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">Email Address</label>
+                    <input type="email" id="profEmail" class="w-full p-2.5 bg-white border rounded-xl font-medium" readonly>
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">Phone Number</label>
+                    <input type="text" id="profPhone" class="w-full p-2.5 bg-white border rounded-xl font-medium">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">LRN / Student ID</label>
+                    <input type="text" id="profLRN" class="w-full p-2.5 bg-white border rounded-xl font-medium" readonly>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gcash-card p-6 space-y-4">
+                <h4 class="text-sm font-bold text-brand-black uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-graduation-cap text-purple-700 mr-1"></i> Academic Background</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">Course/Program</label>
+                    <input type="text" id="profCourse" class="w-full p-2.5 bg-white border rounded-xl font-medium">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">Year Level</label>
+                    <input type="text" id="profYear" class="w-full p-2.5 bg-white border rounded-xl font-medium">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-600 mb-1">General Weighted Average</label>
+                    <input type="number" step="0.01" id="profGWA" class="w-full p-2.5 bg-white border rounded-xl font-medium">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. AVAILABLE SCHOLARSHIPS -->
+        <div id="studentSec-scholarships" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Available Scholarship Programs</h2>
+            <p class="text-xs text-slate-500">Explore financial grants and apply directly before deadlines.</p>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div class="gcash-card p-4 flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <div class="relative w-full sm:w-72">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-500 text-xs"></i>
+              <input type="text" id="scholarshipSearch" onkeyup="renderScholarshipList()" placeholder="Search scholarships..." class="w-full pl-9 pr-3 py-2 text-xs bg-white border rounded-xl focus:outline-none focus:border-brand-purple">
+            </div>
+            <div class="flex gap-2 w-full sm:w-auto">
+              <select id="scholarshipFilterType" onchange="renderScholarshipList()" class="text-xs bg-white border rounded-xl px-3 py-2 font-medium">
+                <option value="ALL">All Categories</option>
+                <option value="Academic">Academic Excellence</option>
+                <option value="Financial">Financial Need</option>
+                <option value="Barangay">Community / Barangay</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Scholarship Cards Grid -->
+          <div id="scholarshipGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Dynamic Render -->
+          </div>
+        </div>
+
+        <!-- 4. SCHOLARSHIP APPLICATION FORM (WIZARD) -->
+        <div id="studentSec-apply" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Scholarship Application Form</h2>
+            <p class="text-xs text-slate-500">Complete all required steps to submit your application for review.</p>
+          </div>
+
+          <!-- Step Progress Indicator -->
+          <div class="gcash-card p-4">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-500">
+              <div id="wizardStepHeader1" class="flex items-center gap-2 text-brand-black font-bold">
+                <span class="w-6 h-6 rounded-full bg-brand-purple text-white flex items-center justify-center text-xs">1</span>
+                <span>Select Program</span>
+              </div>
+              <div class="h-[2px] flex-1 bg-slate-200 mx-2"></div>
+              <div id="wizardStepHeader2" class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs">2</span>
+                <span>Upload Documents</span>
+              </div>
+              <div class="h-[2px] flex-1 bg-slate-200 mx-2"></div>
+              <div id="wizardStepHeader3" class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs">3</span>
+                <span>Review & Submit</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wizard Container Card -->
+          <div class="gcash-card p-6">
+            <!-- STEP 1: PROGRAM SELECTION -->
+            <div id="wizardStep1" class="space-y-4">
+              <h3 class="text-sm font-bold text-brand-black uppercase tracking-wider"><i class="fa-solid fa-list-check text-purple-700 mr-1"></i> Step 1: Select Target Scholarship</h3>
+              
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Choose Program</label>
+                <select id="appSelectProgram" class="w-full p-3 bg-white border rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-brand-purple">
+                  <option value="">-- Choose a Scholarship --</option>
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+
+              <div id="appProgramDetailsPreview" class="bg-amber-50/60 p-4 rounded-xl border border-amber-200 text-xs space-y-2 hidden">
+                <p class="font-bold text-brand-black" id="previewProgTitle">Program Title</p>
+                <p class="text-slate-600" id="previewProgDesc">Program description...</p>
+                <div class="flex gap-4 text-slate-700 font-medium">
+                  <span>Grant Amount: <strong class="text-emerald-700" id="previewProgAmount">₱0</strong></span>
+                  <span>Slots Left: <strong id="previewProgSlots">0</strong></span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Application Statement / Letter of Intent</label>
+                <textarea id="appStatement" rows="4" placeholder="Briefly state why you deserve this scholarship..." class="w-full p-3 bg-white border rounded-xl text-xs focus:outline-none focus:border-brand-purple"></textarea>
+              </div>
+
+              <div class="flex justify-end pt-4">
+                <button onclick="goToWizardStep(2)" class="px-5 py-2.5 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 transition">
+                  Next: Upload Documents <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: DOCUMENT UPLOADS -->
+            <div id="wizardStep2" class="space-y-4 hidden">
+              <h3 class="text-sm font-bold text-brand-black uppercase tracking-wider"><i class="fa-solid fa-cloud-arrow-up text-purple-700 mr-1"></i> Step 2: Requirements Upload Simulator</h3>
+              <p class="text-xs text-slate-500">Upload simulated requirement files (e.g. COR, Grades, Income Certificate).</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <!-- Doc 1: COR -->
+                <div class="p-4 border border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center text-center">
+                  <i class="fa-solid fa-file-pdf text-rose-500 text-3xl mb-2"></i>
+                  <span class="font-bold text-slate-700">Certificate of Registration (COR)</span>
+                  <span class="text-[10px] text-slate-500 mb-3">PDF or Image file up to 5MB</span>
+                  <input type="file" id="fileCOR" class="hidden" onchange="handleFileSim(this, 'statusCOR')">
+                  <button type="button" onclick="document.getElementById('fileCOR').click()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-[11px]">
+                    <i class="fa-solid fa-paperclip"></i> Select File
+                  </button>
+                  <span id="statusCOR" class="mt-2 font-bold text-slate-500 text-[10px]">No file chosen</span>
+                </div>
+
+                <!-- Doc 2: Grades -->
+                <div class="p-4 border border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center text-center">
+                  <i class="fa-solid fa-file-lines text-blue-500 text-3xl mb-2"></i>
+                  <span class="font-bold text-slate-700">Official Report Card / Grades</span>
+                  <span class="text-[10px] text-slate-500 mb-3">Certified copy showing GWA</span>
+                  <input type="file" id="fileGrades" class="hidden" onchange="handleFileSim(this, 'statusGrades')">
+                  <button type="button" onclick="document.getElementById('fileGrades').click()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-[11px]">
+                    <i class="fa-solid fa-paperclip"></i> Select File
+                  </button>
+                  <span id="statusGrades" class="mt-2 font-bold text-slate-500 text-[10px]">No file chosen</span>
+                </div>
+
+                <!-- Doc 3: ID -->
+                <div class="p-4 border border-dashed border-slate-300 rounded-2xl bg-white flex flex-col items-center justify-center text-center md:col-span-2">
+                  <i class="fa-solid fa-id-card text-emerald-500 text-3xl mb-2"></i>
+                  <span class="font-bold text-slate-700">Valid Student ID / Government ID</span>
+                  <span class="text-[10px] text-slate-500 mb-3">Front & Back photo</span>
+                  <input type="file" id="fileID" class="hidden" onchange="handleFileSim(this, 'statusID')">
+                  <button type="button" onclick="document.getElementById('fileID').click()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-[11px]">
+                    <i class="fa-solid fa-paperclip"></i> Select File
+                  </button>
+                  <span id="statusID" class="mt-2 font-bold text-slate-500 text-[10px]">No file chosen</span>
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-4 border-t border-purple-100">
+                <button onclick="goToWizardStep(1)" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl hover:bg-slate-300">
+                  <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                </button>
+                <button onclick="goToWizardStep(3)" class="px-5 py-2.5 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 transition">
+                  Next: Review Application <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: REVIEW & SUBMIT -->
+            <div id="wizardStep3" class="space-y-4 hidden">
+              <h3 class="text-sm font-bold text-brand-black uppercase tracking-wider"><i class="fa-solid fa-check-double text-purple-700 mr-1"></i> Step 3: Final Application Summary</h3>
+              
+              <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs space-y-3">
+                <div class="flex justify-between pb-2 border-b border-slate-200">
+                  <span class="text-slate-500">Applicant:</span>
+                  <strong id="reviewApplicantName" class="text-slate-800">Student Name</strong>
+                </div>
+                <div class="flex justify-between pb-2 border-b border-slate-200">
+                  <span class="text-slate-500">Target Scholarship:</span>
+                  <strong id="reviewProgramTitle" class="text-brand-black">Program Name</strong>
+                </div>
+                <div class="flex justify-between pb-2 border-b border-slate-200">
+                  <span class="text-slate-500">Academic GWA:</span>
+                  <strong id="reviewGWA" class="text-slate-800">1.50</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-500">Uploaded Documents:</span>
+                  <strong id="reviewDocsCount" class="text-emerald-600">3 Files Attached</strong>
+                </div>
+              </div>
+
+              <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex gap-2 items-start">
+                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5"></i>
+                <span>By submitting, you certify that all uploaded information and documents are true and accurate.</span>
+              </div>
+
+              <div class="flex justify-between pt-4 border-t border-purple-100">
+                <button onclick="goToWizardStep(2)" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl hover:bg-slate-300">
+                  <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                </button>
+                <button onclick="submitScholarshipApplication()" class="px-6 py-3 bg-brand-purple hover:bg-purple-700 text-white font-black text-xs rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2">
+                  <i class="fa-solid fa-paper-plane"></i> Submit Scholarship Application
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. MY APPLICATIONS & APPLICATION TRACKING -->
+        <div id="studentSec-tracking" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Application Status & Lifecycle Tracking</h2>
+            <p class="text-xs text-slate-500">Real-time status tracking of your submitted scholarship applications.</p>
+          </div>
+
+          <div id="myApplicationsContainer" class="space-y-6">
+            <!-- Dynamic Applications List -->
+          </div>
+        </div>
+
+        <!-- 6. NOTIFICATIONS -->
+        <div id="studentSec-notifications" class="space-y-6 hidden">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-black text-brand-black">Notifications & Updates</h2>
+              <p class="text-xs text-slate-500">Important system alerts, evaluation feedback, and approval updates.</p>
+            </div>
+            <button onclick="clearStudentNotifications()" class="text-xs font-bold text-slate-500 hover:text-slate-800">Clear All</button>
+          </div>
+
+          <div class="gcash-card p-6">
+            <div id="studentNotifList" class="space-y-3">
+              <!-- Dynamic items -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. ACCOUNT SETTINGS -->
+        <div id="studentSec-settings" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Account Settings</h2>
+            <p class="text-xs text-slate-500">Manage your security credentials and portal preferences.</p>
+          </div>
+
+          <div class="gcash-card p-6 space-y-4 max-w-lg">
+            <h3 class="text-sm font-bold text-brand-black uppercase tracking-wider"><i class="fa-solid fa-lock text-purple-700 mr-1"></i> Security</h3>
+            
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">New Password</label>
+              <input type="password" id="setNewPassword" placeholder="Enter new password" class="w-full p-2.5 bg-white border rounded-xl text-xs">
+            </div>
+
+            <button onclick="updatePassword()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 transition">
+              Update Security Password
+            </button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECTION 3: ADMINISTRATOR PANEL             -->
+    <!-- ========================================== -->
+    <div id="adminPanelView" class="hidden flex-1 flex flex-col md:flex-row bg-white min-h-0 overflow-hidden">
+      <!-- Admin Sidebar Nav -->
+      <aside class="w-full md:w-64 bg-slate-900 text-white flex flex-col shrink-0 border-r border-slate-800">
+        <!-- Admin Header -->
+        <div class="p-4 bg-brand-purple flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-purple text-white flex items-center justify-center font-black text-lg shadow">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm text-white">Admin Console</h3>
+            <p class="text-[10px] text-brand-purple tracking-wider uppercase font-semibold">Scholarship Officer</p>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-1 p-3 space-y-1 overflow-y-auto custom-scrollbar">
+          <button onclick="showAdminSection('dashboard')" id="aNav-dashboard" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-purple-200 bg-purple-600/60 transition">
+            <i class="fa-solid fa-chart-pie w-4 text-center"></i> Dashboard
+          </button>
+          <button onclick="showAdminSection('scholarships')" id="aNav-scholarships" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-folder-plus w-4 text-center"></i> Scholarship Programs
+          </button>
+          <button onclick="showAdminSection('students')" id="aNav-students" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-users w-4 text-center"></i> Student Records
+          </button>
+          <button onclick="showAdminSection('applications')" id="aNav-applications" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <span class="flex items-center gap-3"><i class="fa-solid fa-clipboard-check w-4 text-center"></i> Verification & Review</span>
+            <span id="adminPendingBadge" class="bg-amber-500 text-slate-900 font-bold text-[10px] px-2 py-0.5 rounded-full hidden">0</span>
+          </button>
+          <button onclick="showAdminSection('approved')" id="aNav-approved" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-user-check w-4 text-center"></i> Approved Scholars
+          </button>
+          <button onclick="showAdminSection('reports')" id="aNav-reports" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-chart-column w-4 text-center"></i> Reports & Analytics
+          </button>
+          <button onclick="showAdminSection('settings')" id="aNav-settings" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition">
+            <i class="fa-solid fa-sliders w-4 text-center"></i> System Settings
+          </button>
+        </nav>
+
+        <!-- Exit Admin CTA -->
+        <div class="p-3 border-t border-slate-800">
+          <button onclick="logout()" class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-xl transition">
+            <i class="fa-solid fa-right-from-bracket"></i> Exit Admin Mode
+          </button>
+        </div>
+      </aside>
+
+      <!-- Admin Main Content Area -->
+      <main class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar bg-white">
+
+        <!-- 1. ADMIN DASHBOARD -->
+        <div id="adminSec-dashboard" class="space-y-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-black text-brand-black">Administrator Overview</h2>
+              <p class="text-xs text-slate-500">Live statistics on applications, fund allocations, and pending verifications.</p>
+            </div>
+            <button onclick="refreshAdminDashboard()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl">
+              <i class="fa-solid fa-arrows-rotate mr-1"></i> Refresh Stats
+            </button>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="gcash-card p-4 border-l-4 border-slate-800">
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Total Registered</p>
+              <h3 id="statTotalStudents" class="text-2xl font-black text-slate-800">0</h3>
+              <p class="text-[10px] text-slate-500 mt-1">Student Accounts</p>
+            </div>
+
+            <div class="gcash-card p-4 border-l-4 border-amber-500">
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Pending Review</p>
+              <h3 id="statPendingApps" class="text-2xl font-black text-amber-600">0</h3>
+              <p class="text-[10px] text-slate-500 mt-1">Requires Officer Action</p>
+            </div>
+
+            <div class="gcash-card p-4 border-l-4 border-emerald-500">
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Approved Scholars</p>
+              <h3 id="statApprovedApps" class="text-2xl font-black text-emerald-600">0</h3>
+              <p class="text-[10px] text-slate-500 mt-1">Active Beneficiaries</p>
+            </div>
+
+            <div class="gcash-card p-4 border-l-4 border-brand-purple">
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Disbursed Funds</p>
+              <h3 id="statTotalDisbursed" class="text-2xl font-black text-brand-black">₱0.00</h3>
+              <p class="text-[10px] text-slate-500 mt-1">Allocated Support</p>
+            </div>
+          </div>
+
+          <!-- Visual Chart Section & Activity Feed -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 gcash-card p-6">
+              <h3 class="text-sm font-bold text-brand-black mb-4"><i class="fa-solid fa-chart-column text-purple-700 mr-1"></i> Application Status Distribution</h3>
+              <div class="h-64 relative">
+                <canvas id="adminStatusChart"></canvas>
+              </div>
+            </div>
+
+            <div class="gcash-card p-6 flex flex-col">
+              <h3 class="text-sm font-bold text-brand-black mb-4"><i class="fa-solid fa-clock-rotate-left text-purple-700 mr-1"></i> Recent Audit Log</h3>
+              <div id="adminAuditLog" class="flex-1 space-y-3 overflow-y-auto max-h-64 text-xs text-slate-600 custom-scrollbar">
+                <!-- Dynamic Logs -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. SCHOLARSHIP MANAGEMENT -->
+        <div id="adminSec-scholarships" class="space-y-6 hidden">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-black text-brand-black">Scholarship Programs Management</h2>
+              <p class="text-xs text-slate-500">Configure grant programs, eligibility criteria, and slots.</p>
+            </div>
+            <button onclick="openCreateProgramModal()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-200 shadow">
+              <i class="fa-solid fa-plus mr-1"></i> Create New Program
+            </button>
+          </div>
+
+          <div id="adminScholarshipsList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Dynamic Program Cards -->
+          </div>
+        </div>
+
+        <!-- 3. STUDENT RECORDS -->
+        <div id="adminSec-students" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Master Student Directory</h2>
+            <p class="text-xs text-slate-500">View registered student accounts and academic profiles.</p>
+          </div>
+
+          <div class="gcash-card p-4">
+            <div class="flex flex-col sm:flex-row gap-3 justify-between mb-4">
+              <input type="text" id="adminStudentSearch" onkeyup="renderAdminStudentTable()" placeholder="Search by name, email or LRN..." class="w-full sm:w-80 px-3 py-2 text-xs bg-white border rounded-xl">
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-white text-slate-600 font-bold uppercase border-b">
+                  <tr>
+                    <th class="p-3">Student Name</th>
+                    <th class="p-3">LRN</th>
+                    <th class="p-3">Course / Year</th>
+                    <th class="p-3">GWA</th>
+                    <th class="p-3">Contact</th>
+                    <th class="p-3">Registered Date</th>
+                  </tr>
+                </thead>
+                <tbody id="adminStudentTableBody" class="divide-y divide-slate-100">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. APPLICATION MANAGEMENT & VERIFICATION -->
+        <div id="adminSec-applications" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Application Management & Document Verification</h2>
+            <p class="text-xs text-slate-500">Inspect uploaded documents, verify eligibility criteria, and approve, return, or reject applications.</p>
+          </div>
+
+          <!-- Applications Filter Bar -->
+          <div class="gcash-card p-4 flex flex-wrap gap-3 items-center justify-between">
+            <div class="flex gap-2">
+              <button onclick="filterAdminApps('ALL')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-purple text-white">All Submissions</button>
+              <button onclick="filterAdminApps('Under Review')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-100 text-amber-800">Pending Review</button>
+              <button onclick="filterAdminApps('Returned for Correction')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-100 text-blue-800">Returned</button>
+            </div>
+          </div>
+
+          <!-- Applications Table -->
+          <div class="gcash-card p-4">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-white text-slate-600 font-bold uppercase border-b">
+                  <tr>
+                    <th class="p-3">App ID</th>
+                    <th class="p-3">Applicant Name</th>
+                    <th class="p-3">Target Scholarship</th>
+                    <th class="p-3">Submitted Date</th>
+                    <th class="p-3">GWA</th>
+                    <th class="p-3">Status</th>
+                    <th class="p-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="adminAppsTableBody" class="divide-y divide-slate-100">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. APPROVED SCHOLARS -->
+        <div id="adminSec-approved" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">Approved Scholars Master List</h2>
+            <p class="text-xs text-slate-500">Beneficiaries qualified for scholarship grant payouts.</p>
+          </div>
+
+          <div class="gcash-card p-4">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-white text-slate-600 font-bold uppercase border-b">
+                  <tr>
+                    <th class="p-3">Scholar Name</th>
+                    <th class="p-3">Program</th>
+                    <th class="p-3">Award Amount</th>
+                    <th class="p-3">Approval Date</th>
+                    <th class="p-3">Disbursement Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminApprovedTableBody" class="divide-y divide-slate-100">
+                  <!-- Dynamic Rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. REPORTS & ANALYTICS -->
+        <div id="adminSec-reports" class="space-y-6 hidden">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-black text-brand-black">System Reports & Analytics</h2>
+              <p class="text-xs text-slate-500">Exportable summary logs and financial reports.</p>
+            </div>
+            <button onclick="simulateExportReport()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 shadow">
+              <i class="fa-solid fa-download mr-1"></i> Export Report (CSV)
+            </button>
+          </div>
+
+          <div class="gcash-card p-6">
+            <h3 class="text-sm font-bold text-brand-black mb-2">Program Breakdown Report</h3>
+            <div id="adminReportProgramSummary" class="space-y-2 text-xs">
+              <!-- Summary breakdown -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. SYSTEM SETTINGS -->
+        <div id="adminSec-settings" class="space-y-6 hidden">
+          <div>
+            <h2 class="text-xl font-black text-brand-black">System Configuration</h2>
+            <p class="text-xs text-slate-500">Toggle registration periods and maintain system settings.</p>
+          </div>
+
+          <div class="gcash-card p-6 space-y-4 max-w-lg">
+            <div class="flex items-center justify-between border-b pb-3">
+              <div>
+                <h4 class="text-xs font-bold text-slate-800">Student Registration Portal</h4>
+                <p class="text-[10px] text-slate-500">Allow new students to sign up</p>
+              </div>
+              <input type="checkbox" checked class="w-4 h-4 text-brand-black rounded">
+            </div>
+
+            <div class="flex items-center justify-between border-b pb-3">
+              <div>
+                <h4 class="text-xs font-bold text-slate-800">Scholarship Submission Window</h4>
+                <p class="text-[10px] text-slate-500">Accept new applications</p>
+              </div>
+              <input type="checkbox" checked class="w-4 h-4 text-brand-black rounded">
+            </div>
+
+            <button onclick="saveAdminSettings()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl shadow">
+              Save Configuration Changes
+            </button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODALS & DIALOGS                          -->
+  <!-- ========================================== -->
+
+  <!-- APPLICATION REVIEWER & VERIFICATION MODAL -->
+  <div id="appReviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="gcash-card w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
+      <!-- Modal Header -->
+      <div class="p-4 bg-brand-purple text-white flex justify-between items-center">
+        <div>
+          <h3 class="font-bold text-sm text-brand-purple" id="modalReviewAppId">App #APP-001</h3>
+          <p class="text-xs text-slate-300" id="modalReviewStudentName">Applicant Name</p>
+        </div>
+        <button onclick="closeReviewModal()" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs custom-scrollbar">
+        <!-- Student Info Brief -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white p-3 rounded-xl border border-slate-200">
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">Course</span>
+            <strong id="modalCourse" class="text-slate-800">BS CS</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">Year</span>
+            <strong id="modalYear" class="text-slate-800">2nd Year</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">GWA</span>
+            <strong id="modalGWA" class="text-slate-800">1.50</strong>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">Target Program</span>
+            <strong id="modalProgram" class="text-slate-800">STEM Grant</strong>
+          </div>
+        </div>
+
+        <!-- Statement -->
+        <div>
+          <h4 class="font-bold text-slate-700 uppercase tracking-wider mb-1">Letter of Intent</h4>
+          <p id="modalStatement" class="p-3 bg-white rounded-xl border border-slate-200 text-slate-600">Statement text...</p>
+        </div>
+
+        <!-- Verification Checklist Simulator -->
+        <div>
+          <h4 class="font-bold text-slate-700 uppercase tracking-wider mb-2">Requirement Checklist Verification</h4>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200">
+              <input type="checkbox" id="chkCOR" class="w-4 h-4 text-brand-black rounded">
+              <span>Verified Official Certificate of Registration (COR)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200">
+              <input type="checkbox" id="chkGrades" class="w-4 h-4 text-brand-black rounded">
+              <span>Verified Report Card & Meets GWA Requirement</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border border-slate-200">
+              <input type="checkbox" id="chkID" class="w-4 h-4 text-brand-black rounded">
+              <span>Verified Student / Government ID Authenticity</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Simulated Document Viewer Bar -->
+        <div>
+          <h4 class="font-bold text-slate-700 uppercase tracking-wider mb-2">Submitted Attachments Inspection</h4>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="previewDoc('Certificate of Registration')" class="p-2 bg-white hover:bg-slate-200 rounded-lg border text-left text-[11px] flex items-center gap-2">
+              <i class="fa-solid fa-file-pdf text-rose-600"></i> COR.pdf
+            </button>
+            <button onclick="previewDoc('Grades Transcript')" class="p-2 bg-white hover:bg-slate-200 rounded-lg border text-left text-[11px] flex items-center gap-2">
+              <i class="fa-solid fa-file-lines text-blue-600"></i> Grades.pdf
+            </button>
+            <button onclick="previewDoc('Valid ID Card')" class="p-2 bg-white hover:bg-slate-200 rounded-lg border text-left text-[11px] flex items-center gap-2">
+              <i class="fa-solid fa-image text-emerald-600"></i> ID_Card.png
+            </button>
+          </div>
+        </div>
+
+        <!-- Remarks Input -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Evaluation Remarks / Correction Notes</label>
+          <textarea id="modalAdminRemarks" rows="2" placeholder="Provide notes or explain reasons if returning or rejecting..." class="w-full p-2.5 bg-white border rounded-xl focus:outline-none focus:border-brand-purple"></textarea>
+        </div>
+      </div>
+
+      <!-- Modal Footer Actions -->
+      <div class="p-4 bg-white border-t flex flex-wrap justify-between gap-2">
+        <button onclick="executeAppAction('RETURN')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5">
+          <i class="fa-solid fa-rotate-left"></i> Return for Correction
+        </button>
+
+        <div class="flex gap-2">
+          <button onclick="executeAppAction('REJECT')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5">
+            <i class="fa-solid fa-xmark"></i> Reject Application
+          </button>
+          <button onclick="executeAppAction('APPROVE')" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5">
+            <i class="fa-solid fa-check"></i> Approve Scholarship
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE SCHOLARSHIP PROGRAM MODAL -->
+  <div id="createProgramModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="gcash-card w-full max-w-lg p-6 space-y-4">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-brand-black">Create New Scholarship Program</h3>
+        <button onclick="closeCreateProgramModal()" class="text-slate-500"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleCreateProgram(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Program Title</label>
+          <input type="text" id="progTitle" required placeholder="e.g. Barangay Youth Leader Grant" class="w-full p-2.5 bg-white border rounded-xl">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Category</label>
+          <select id="progCategory" class="w-full p-2.5 bg-white border rounded-xl">
+            <option value="Academic">Academic Excellence</option>
+            <option value="Financial">Financial Assistance</option>
+            <option value="Barangay">Community / Barangay Support</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Award Amount (₱)</label>
+            <input type="number" id="progAmount" required placeholder="15000" class="w-full p-2.5 bg-white border rounded-xl">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-600 mb-1">Available Slots</label>
+            <input type="number" id="progSlots" required placeholder="50" class="w-full p-2.5 bg-white border rounded-xl">
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Max GWA Requirement</label>
+          <input type="number" step="0.01" id="progGWA" required placeholder="2.00" class="w-full p-2.5 bg-white border rounded-xl">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-600 mb-1">Description</label>
+          <textarea id="progDesc" rows="2" required placeholder="Brief description..." class="w-full p-2.5 bg-white border rounded-xl"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeCreateProgramModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold rounded-xl">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-brand-purple text-white font-bold rounded-xl">Publish Program</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- JS APPLICATION CORE ENGINE -->
+  <script>
+    // =========================================================================
+    // SYSTEM STATE & LOCAL STORAGE PERSISTENCE
+    // =========================================================================
+    
+    // Default initial empty state structure
+    const DEFAULT_SYSTEM_STATE = {
+      students: [], // NO STUDENTS INITIALLY
+      scholarships: [
+        {
+          id: 'SCH-001',
+          title: 'Academic Excellence Grant',
+          category: 'Academic',
+          amount: 25000,
+          slots: 15,
+          minGWA: 1.75,
+          deadline: '2026-11-30',
+          description: 'Full tuition support and semester stipend for top performing students maintaining a GWA of 1.75 or better.'
+        },
+        {
+          id: 'SCH-002',
+          title: 'STEM Future Leaders Award',
+          category: 'Academic',
+          amount: 30000,
+          slots: 10,
+          minGWA: 2.00,
+          deadline: '2026-12-15',
+          description: 'Special financial assistance for qualified engineering and computer science students.'
+        },
+        {
+          id: 'SCH-003',
+          title: 'Financial Assistance Program',
+          category: 'Financial',
+          amount: 15000,
+          slots: 40,
+          minGWA: 2.50,
+          deadline: '2026-11-20',
+          description: 'Targeted support for deserving students needing financial aid for books and living expenses.'
+        },
+        {
+          id: 'SCH-004',
+          title: 'Barangay Youth Support Grant',
+          category: 'Barangay',
+          amount: 10000,
+          slots: 50,
+          minGWA: 2.75,
+          deadline: '2026-12-01',
+          description: 'Local government subsidy for resident students actively participating in youth programs.'
+        }
+      ],
+      applications: [],
+      auditLog: []
+    };
+
+    let appState = loadState();
+    let currentUser = null; // null, student object, or { role: 'admin' }
+    let activeReviewAppId = null;
+    let wizardSelectedProgramId = null;
+    let chartInstance = null;
+
+    function loadState() {
+      const stored = localStorage.getItem('EDUPAY_SCHOLARSHIP_STATE');
+      if (stored) {
+        try { return JSON.parse(stored); } catch (e) { console.error(e); }
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_SYSTEM_STATE));
+    }
+
+    function saveState() {
+      localStorage.setItem('EDUPAY_SCHOLARSHIP_STATE', JSON.stringify(appState));
+    }
+
+    function resetSystemState() {
+      if (confirm("Reset system to 0 registered students state? All added data will be wiped.")) {
+        localStorage.removeItem('EDUPAY_SCHOLARSHIP_STATE');
+        appState = JSON.parse(JSON.stringify(DEFAULT_SYSTEM_STATE));
+        saveState();
+        currentUser = null;
+        showToast("System state cleared back to fresh 0-student start!");
+        switchRoleView('auth');
+      }
+    }
+
+    function seedData() {
+      appState.students = [
+        {
+          id: 'STU-001',
+          fullName: 'Juan De La Cruz',
+          email: 'juan@email.com',
+          lrn: '123456789012',
+          course: 'BS Computer Science',
+          yearLevel: '2nd Year',
+          phone: '09171234567',
+          gwa: 1.45,
+          password: 'password123',
+          registeredDate: '2026-10-15'
+        },
+        {
+          id: 'STU-002',
+          fullName: 'Maria Santos',
+          email: 'maria@email.com',
+          lrn: '987654321098',
+          course: 'BS Nursing',
+          yearLevel: '3rd Year',
+          phone: '09189876543',
+          gwa: 1.65,
+          password: 'password123',
+          registeredDate: '2026-10-18'
+        }
+      ];
+
+      appState.applications = [
+        {
+          id: 'APP-1001',
+          studentId: 'STU-001',
+          studentName: 'Juan De La Cruz',
+          scholarshipId: 'SCH-001',
+          scholarshipTitle: 'Academic Excellence Grant',
+          amount: 25000,
+          statement: 'I aim to complete my degree in Computer Science and give back to my community through AI technology.',
+          status: 'Under Review', // Under Review, Verification, Approved, Rejected, Returned for Correction
+          submittedDate: '2026-10-20',
+          documents: ['COR.pdf', 'Grades.pdf', 'ValidID.png'],
+          remarks: 'Verification in progress by officer.'
+        }
+      ];
+
+      appState.auditLog.unshift({
+        timestamp: new Date().toLocaleTimeString(),
+        message: 'Mock data seeded into system successfully.'
+      });
+
+      saveState();
+      showToast("Mock data seeded! Juan De La Cruz (juan@email.com / password123) is registered.");
+      showAuthTab('studentLogin');
+      document.getElementById('loginStudentUser').value = 'juan@email.com';
+      document.getElementById('loginStudentPass').value = 'password123';
+    }
+
+    // =========================================================================
+    // UI TOAST NOTIFICATIONS & VIEW SWITCHING
+    // =========================================================================
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `p-3.5 rounded-2xl shadow-xl text-xs font-bold flex items-center justify-between text-white transition transform duration-300 translate-y-2 pointer-events-auto ${
+        type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-brand-purple border border-brand-purple/30'
+      }`;
+      toast.innerHTML = `
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-info text-brand-purple"></i>
+          <span>${message}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="ml-3 text-slate-300 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function switchRoleView(view) {
+      document.getElementById('authPortalView').classList.add('hidden');
+      document.getElementById('studentPanelView').classList.add('hidden');
+      document.getElementById('adminPanelView').classList.add('hidden');
+
+      if (view === 'auth') {
+        currentUser = null;
+        document.getElementById('currentUserLabel').innerText = 'None (Not Logged In)';
+        document.getElementById('authPortalView').classList.remove('hidden');
+      } else if (view === 'student') {
+        if (!currentUser || currentUser.role === 'admin') {
+          // If no student logged in, fallback to first student or prompt login
+          if (appState.students.length > 0) {
+            currentUser = appState.students[0];
+          } else {
+            showToast("No students registered yet! Please register first or seed data.", "error");
+            document.getElementById('authPortalView').classList.remove('hidden');
+            return;
+          }
+        }
+        document.getElementById('currentUserLabel').innerText = `Student: ${currentUser.fullName}`;
+        document.getElementById('studentPanelView').classList.remove('hidden');
+        renderStudentView();
+        showStudentSection('dashboard');
+      } else if (view === 'admin') {
+        currentUser = { role: 'admin', fullName: 'Administrator' };
+        document.getElementById('currentUserLabel').innerText = 'Administrator Console';
+        document.getElementById('adminPanelView').classList.remove('hidden');
+        renderAdminDashboard();
+        showAdminSection('dashboard');
+      }
+    }
+
+    function showAuthTab(tab) {
+      document.getElementById('formRegister').classList.add('hidden');
+      document.getElementById('formStudentLogin').classList.add('hidden');
+      document.getElementById('formAdminLogin').classList.add('hidden');
+
+      document.getElementById('tabBtnRegister').className = "flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-transparent text-slate-500 transition";
+      document.getElementById('tabBtnStudentLogin').className = "flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-transparent text-slate-500 transition";
+      document.getElementById('tabBtnAdminLogin').className = "flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-transparent text-slate-500 transition";
+
+      if (tab === 'register') {
+        document.getElementById('formRegister').classList.remove('hidden');
+        document.getElementById('tabBtnRegister').className = "flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-brand-purple text-brand-black transition";
+      } else if (tab === 'studentLogin') {
+        document.getElementById('formStudentLogin').classList.remove('hidden');
+        document.getElementById('tabBtnStudentLogin').className = "flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-brand-purple text-brand-black transition";
+      } else if (tab === 'adminLogin') {
+        document.getElementById('formAdminLogin').classList.remove('hidden');
+        document.getElementById('tabBtnAdminLogin').className = "flex-1 py-3.5 text-xs sm:text-sm font-bold text-center border-b-2 border-brand-purple text-brand-black transition";
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      showToast("Signed out successfully.");
+      switchRoleView('auth');
+    }
+
+    // =========================================================================
+    // AUTHENTICATION LOGIC
+    // =========================================================================
+
+    function handleStudentRegistration(e) {
+      e.preventDefault();
+      const name = document.getElementById('regFullName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const lrn = document.getElementById('regLRN').value.trim();
+      const course = document.getElementById('regCourse').value;
+      const year = document.getElementById('regYearLevel').value;
+      const phone = document.getElementById('regPhone').value.trim();
+      const gwa = parseFloat(document.getElementById('regGWA').value);
+      const pass = document.getElementById('regPassword').value;
+
+      // Check duplicates
+      if (appState.students.some(s => s.email === email || s.lrn === lrn)) {
+        showToast("Email or LRN already registered!", "error");
+        return;
+      }
+
+      const newStudent = {
+        id: 'STU-' + Math.floor(1000 + Math.random() * 9000),
+        fullName: name,
+        email: email,
+        lrn: lrn,
+        course: course,
+        yearLevel: year,
+        phone: phone,
+        gwa: gwa,
+        password: pass,
+        registeredDate: new Date().toISOString().split('T')[0]
+      };
+
+      appState.students.push(newStudent);
+      appState.auditLog.unshift({
+        timestamp: new Date().toLocaleTimeString(),
+        message: `New student registered: ${name} (${lrn})`
+      });
+
+      saveState();
+      currentUser = newStudent;
+      showToast("Registration successful! Logging in...", "success");
+      switchRoleView('student');
+    }
+
+    function handleStudentLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('loginStudentUser').value.trim();
+      const pass = document.getElementById('loginStudentPass').value;
+
+      const found = appState.students.find(s => (s.email === input || s.lrn === input) && s.password === pass);
+
+      if (found) {
+        currentUser = found;
+        showToast(`Welcome back, ${found.fullName}!`, "success");
+        switchRoleView('student');
+      } else {
+        showToast("Invalid credentials or student not registered yet.", "error");
+      }
+    }
+
+    function seedAndFillStudent() {
+      if (appState.students.length === 0) {
+        seedData();
+      } else {
+        document.getElementById('loginStudentUser').value = appState.students[0].email;
+        document.getElementById('loginStudentPass').value = appState.students[0].password;
+        showToast("Filled sample student credentials.");
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginAdminEmail').value;
+      const pass = document.getElementById('loginAdminPass').value;
+
+      if (email === 'admin@scholarship.gov.ph' && pass === 'admin123') {
+        showToast("Admin access granted!", "success");
+        switchRoleView('admin');
+      } else {
+        showToast("Invalid admin credentials.", "error");
+      }
+    }
+
+    function quickAdminLogin() {
+      showToast("Accessing Administrator Console...", "success");
+      switchRoleView('admin');
+    }
+
+    // =========================================================================
+    // STUDENT PANEL CONTROLLER
+    // =========================================================================
+
+    function showStudentSection(sec) {
+      const sections = ['dashboard', 'profile', 'scholarships', 'apply', 'tracking', 'notifications', 'settings'];
+      sections.forEach(s => {
+        const el = document.getElementById(`studentSec-${s}`);
+        const btn = document.getElementById(`sNav-${s}`);
+        if (el) el.classList.add('hidden');
+        if (btn) btn.className = "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition";
+      });
+
+      const activeEl = document.getElementById(`studentSec-${sec}`);
+      const activeBtn = document.getElementById(`sNav-${sec}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+      if (activeBtn) activeBtn.className = "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-purple-200 bg-purple-600/60 transition";
+
+      if (sec === 'scholarships') renderScholarshipList();
+      if (sec === 'apply') prepareApplicationWizard();
+      if (sec === 'tracking') renderMyApplications();
+      if (sec === 'notifications') renderStudentNotifications();
+    }
+
+    function renderStudentView() {
+      if (!currentUser || currentUser.role === 'admin') return;
+
+      // Update sidebar brief
+      const initials = currentUser.fullName.split(' ').map(n => n[0]).join('').substring(0, 2);
+      document.getElementById('studentAvatarInitials').innerText = initials;
+      document.getElementById('studentNavName').innerText = currentUser.fullName;
+      document.getElementById('studentNavLRN').innerText = `LRN: ${currentUser.lrn}`;
+
+      // Dashboard Welcome
+      document.getElementById('dashStudentName').innerText = currentUser.fullName.split(' ')[0];
+
+      // Student Apps
+      const myApps = appState.applications.filter(a => a.studentId === currentUser.id);
+      document.getElementById('dashMyApplicationsCount').innerText = myApps.length;
+
+      if (myApps.length > 0) {
+        const latest = myApps[myApps.length - 1];
+        document.getElementById('dashLatestStatus').innerHTML = getStatusBadgeHTML(latest.status);
+        
+        // Active App Highlight Card
+        document.getElementById('dashActiveAppContainer').innerHTML = `
+          <div class="p-4 bg-white border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">Application ID: ${latest.id}</span>
+              <h4 class="font-bold text-sm text-brand-black">${latest.scholarshipTitle}</h4>
+              <p class="text-xs text-slate-500">Submitted on: ${latest.submittedDate}</p>
+            </div>
+            <div class="flex items-center gap-3">
+              ${getStatusBadgeHTML(latest.status)}
+              <button onclick="showStudentSection('tracking')" class="px-3 py-1.5 bg-brand-purple text-white font-bold text-xs rounded-xl">View Lifecycle</button>
+            </div>
+          </div>
+        `;
+      } else {
+        document.getElementById('dashLatestStatus').innerText = 'No Active App';
+        document.getElementById('dashActiveAppContainer').innerHTML = `
+          <p class="text-xs text-slate-500 italic">You have not submitted any scholarship applications yet.</p>
+        `;
+      }
+
+      // Funds calculation
+      const approvedTotal = myApps.filter(a => a.status === 'Approved').reduce((acc, curr) => acc + curr.amount, 0);
+      document.getElementById('dashApprovedFunds').innerText = `₱${approvedTotal.toLocaleString()}`;
+
+      // Profile View Populate
+      document.getElementById('profAvatarInitials').innerText = initials;
+      document.getElementById('profCardName').innerText = currentUser.fullName;
+      document.getElementById('profCardCourse').innerText = `${currentUser.course} (${currentUser.yearLevel})`;
+      document.getElementById('profGwaBadge').innerText = `GWA: ${currentUser.gwa}`;
+
+      document.getElementById('profFullName').value = currentUser.fullName;
+      document.getElementById('profEmail').value = currentUser.email;
+      document.getElementById('profPhone').value = currentUser.phone;
+      document.getElementById('profLRN').value = currentUser.lrn;
+      document.getElementById('profCourse').value = currentUser.course;
+      document.getElementById('profYear').value = currentUser.yearLevel;
+      document.getElementById('profGWA').value = currentUser.gwa;
+
+      // Render featured scholarships on dashboard
+      const featured = appState.scholarships.slice(0, 2);
+      document.getElementById('dashFeaturedScholarships').innerHTML = featured.map(s => `
+        <div class="gcash-card p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="px-2.5 py-0.5 bg-brand-purpleLight text-brand-black font-bold text-[10px] rounded-full">${s.category}</span>
+              <span class="font-black text-emerald-600 text-sm">₱${s.amount.toLocaleString()}</span>
+            </div>
+            <h4 class="font-bold text-sm text-brand-black">${s.title}</h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">${s.description}</p>
+          </div>
+          <button onclick="applyForScholarshipDirect('${s.id}')" class="mt-4 w-full py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700">Apply Now</button>
+        </div>
+      `).join('');
+    }
+
+    function saveStudentProfile() {
+      if (!currentUser) return;
+      currentUser.fullName = document.getElementById('profFullName').value;
+      currentUser.phone = document.getElementById('profPhone').value;
+      currentUser.course = document.getElementById('profCourse').value;
+      currentUser.yearLevel = document.getElementById('profYear').value;
+      currentUser.gwa = parseFloat(document.getElementById('profGWA').value);
+
+      const idx = appState.students.findIndex(s => s.id === currentUser.id);
+      if (idx !== -1) appState.students[idx] = currentUser;
+
+      saveState();
+      renderStudentView();
+      showToast("Profile details updated successfully!", "success");
+    }
+
+    function renderScholarshipList() {
+      const search = document.getElementById('scholarshipSearch').value.toLowerCase();
+      const filter = document.getElementById('scholarshipFilterType').value;
+
+      const list = appState.scholarships.filter(s => {
+        const matchesSearch = s.title.toLowerCase().includes(search) || s.description.toLowerCase().includes(search);
+        const matchesFilter = filter === 'ALL' || s.category === filter;
+        return matchesSearch && matchesFilter;
+      });
+
+      const grid = document.getElementById('scholarshipGrid');
+      grid.innerHTML = list.map(s => `
+        <div class="gcash-card p-5 flex flex-col justify-between hover:shadow-lg transition">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="px-3 py-1 bg-amber-100 text-amber-900 font-bold text-xs rounded-full">${s.category}</span>
+              <span class="text-xs font-bold text-slate-500">Slots: ${s.slots}</span>
+            </div>
+            <h3 class="font-black text-base text-brand-black">${s.title}</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">${s.description}</p>
+            
+            <div class="mt-4 pt-3 border-t border-purple-100 flex flex-wrap gap-2 text-[11px] font-bold text-slate-600">
+              <span class="bg-white px-2.5 py-1 rounded-lg">GWA ≤ ${s.minGWA}</span>
+              <span class="bg-white px-2.5 py-1 rounded-lg">Deadline: ${s.deadline}</span>
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between pt-2">
+            <div>
+              <span class="text-[10px] text-slate-500 block uppercase font-bold">Grant Amount</span>
+              <strong class="text-lg font-black text-emerald-600">₱${s.amount.toLocaleString()}</strong>
+            </div>
+            <button onclick="applyForScholarshipDirect('${s.id}')" class="px-5 py-2.5 bg-brand-purple hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow transition">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function applyForScholarshipDirect(schId) {
+      wizardSelectedProgramId = schId;
+      showStudentSection('apply');
+    }
+
+    function prepareApplicationWizard() {
+      const select = document.getElementById('appSelectProgram');
+      select.innerHTML = '<option value="">-- Choose a Scholarship --</option>' + appState.scholarships.map(s => `
+        <option value="${s.id}" ${wizardSelectedProgramId === s.id ? 'selected' : ''}>${s.title} (₱${s.amount.toLocaleString()})</option>
+      `).join('');
+
+      select.onchange = function() {
+        const selected = appState.scholarships.find(s => s.id === this.value);
+        const preview = document.getElementById('appProgramDetailsPreview');
+        if (selected) {
+          document.getElementById('previewProgTitle').innerText = selected.title;
+          document.getElementById('previewProgDesc').innerText = selected.description;
+          document.getElementById('previewProgAmount').innerText = `₱${selected.amount.toLocaleString()}`;
+          document.getElementById('previewProgSlots').innerText = selected.slots;
+          preview.classList.remove('hidden');
+        } else {
+          preview.classList.add('hidden');
+        }
+      };
+
+      if (wizardSelectedProgramId) select.dispatchEvent(new Event('change'));
+      goToWizardStep(1);
+    }
+
+    function goToWizardStep(step) {
+      if (step === 2) {
+        const progId = document.getElementById('appSelectProgram').value;
+        if (!progId) {
+          showToast("Please select a scholarship program first.", "error");
+          return;
+        }
+      }
+
+      if (step === 3) {
+        // Populate Review
+        const progId = document.getElementById('appSelectProgram').value;
+        const prog = appState.scholarships.find(s => s.id === progId);
+        document.getElementById('reviewApplicantName').innerText = currentUser ? currentUser.fullName : 'Student';
+        document.getElementById('reviewProgramTitle').innerText = prog ? prog.title : 'Program';
+        document.getElementById('reviewGWA').innerText = currentUser ? currentUser.gwa : '1.50';
+      }
+
+      [1, 2, 3].forEach(s => {
+        document.getElementById(`wizardStep${s}`).classList.add('hidden');
+        const header = document.getElementById(`wizardStepHeader${s}`);
+        if (s === step) {
+          header.className = "flex items-center gap-2 text-brand-black font-bold";
+          header.querySelector('span').className = "w-6 h-6 rounded-full bg-brand-purple text-white flex items-center justify-center text-xs font-bold";
+        } else {
+          header.className = "flex items-center gap-2 text-slate-500 font-normal";
+          header.querySelector('span').className = "w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs";
+        }
+      });
+
+      document.getElementById(`wizardStep${step}`).classList.remove('hidden');
+    }
+
+    function handleFileSim(input, targetStatusId) {
+      if (input.files && input.files[0]) {
+        document.getElementById(targetStatusId).innerText = `Attached: ${input.files[0].name}`;
+        document.getElementById(targetStatusId).className = "mt-2 font-bold text-emerald-600 text-[10px]";
+      }
+    }
+
+    function submitScholarshipApplication() {
+      const progId = document.getElementById('appSelectProgram').value;
+      const statement = document.getElementById('appStatement').value;
+      const prog = appState.scholarships.find(s => s.id === progId);
+
+      const newApp = {
+        id: 'APP-' + Math.floor(1000 + Math.random() * 9000),
+        studentId: currentUser.id,
+        studentName: currentUser.fullName,
+        scholarshipId: prog.id,
+        scholarshipTitle: prog.title,
+        amount: prog.amount,
+        statement: statement || 'Standard student grant application submitted via online portal.',
+        status: 'Under Review',
+        submittedDate: new Date().toISOString().split('T')[0],
+        documents: ['COR.pdf', 'Grades.pdf', 'ValidID.png'],
+        remarks: 'Application submitted. Pending administrator verification.'
+      };
+
+      appState.applications.push(newApp);
+      appState.auditLog.unshift({
+        timestamp: new Date().toLocaleTimeString(),
+        message: `${currentUser.fullName} submitted application ${newApp.id} for ${prog.title}`
+      });
+
+      saveState();
+      showToast("Application Submitted Successfully!", "success");
+      renderStudentView();
+      showStudentSection('tracking');
+    }
+
+    function renderMyApplications() {
+      const container = document.getElementById('myApplicationsContainer');
+      const myApps = appState.applications.filter(a => a.studentId === currentUser.id);
+
+      if (myApps.length === 0) {
+        container.innerHTML = `
+          <div class="gcash-card p-8 text-center space-y-3">
+            <i class="fa-solid fa-folder-open text-4xl text-slate-300"></i>
+            <h3 class="font-bold text-slate-700">No Applications Submitted</h3>
+            <p class="text-xs text-slate-500">You haven't applied for any scholarships yet.</p>
+            <button onclick="showStudentSection('scholarships')" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl">Browse Grants</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = myApps.map(app => `
+        <div class="gcash-card p-6 space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-purple-100">
+            <div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase">App ID: ${app.id}</span>
+              <h3 class="font-black text-lg text-brand-black">${app.scholarshipTitle}</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              ${getStatusBadgeHTML(app.status)}
+            </div>
+          </div>
+
+          <!-- Timeline Stepper -->
+          <div class="py-2">
+            <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold">
+              <div class="${getStepClass(app.status, 'Submitted')}">1. Submitted</div>
+              <div class="${getStepClass(app.status, 'Under Review')}">2. Document Review</div>
+              <div class="${getStepClass(app.status, 'Verification')}">3. Verification</div>
+              <div class="${getStepClass(app.status, 'Decision')}">4. Final Decision</div>
+            </div>
+          </div>
+
+          <!-- Officer Remarks Box -->
+          <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
+            <span class="font-bold text-slate-600 block mb-1"><i class="fa-solid fa-comment-dots text-purple-700 mr-1"></i> Officer Feedback / Remarks:</span>
+            <p class="text-slate-700 font-medium">${app.remarks || 'No specific officer notes.'}</p>
+          </div>
+
+          ${app.status === 'Returned for Correction' ? `
+            <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl text-xs flex justify-between items-center">
+              <span class="text-blue-900 font-bold">Action Required: Update documents or details as requested.</span>
+              <button onclick="resubmitApp('${app.id}')" class="px-3 py-1.5 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">Resubmit Application</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function resubmitApp(appId) {
+      const app = appState.applications.find(a => a.id === appId);
+      if (app) {
+        app.status = 'Under Review';
+        app.remarks = 'Resubmitted by student after correction.';
+        saveState();
+        showToast("Application resubmitted for officer review!", "success");
+        renderMyApplications();
+      }
+    }
+
+    function getStepClass(currentStatus, stepName) {
+      const order = ['Submitted', 'Under Review', 'Verification', 'Decision'];
+      let activeIndex = 0;
+      if (currentStatus === 'Under Review') activeIndex = 1;
+      if (currentStatus === 'Verification') activeIndex = 2;
+      if (currentStatus === 'Approved' || currentStatus === 'Rejected') activeIndex = 3;
+
+      const stepIndex = order.indexOf(stepName);
+      if (stepIndex <= activeIndex) {
+        return "p-2 bg-brand-purple/20 text-brand-black rounded-xl border border-brand-purple font-bold";
+      }
+      return "p-2 bg-white text-slate-500 rounded-xl";
+    }
+
+    function renderStudentNotifications() {
+      const container = document.getElementById('studentNotifList');
+      const myApps = appState.applications.filter(a => a.studentId === currentUser.id);
+
+      if (myApps.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No notifications yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = myApps.map(a => `
+        <div class="p-3 bg-white rounded-xl border text-xs flex gap-3 items-start">
+          <i class="fa-solid fa-bell text-purple-700 text-base mt-0.5"></i>
+          <div>
+            <h4 class="font-bold text-slate-800">Status Update for ${a.scholarshipTitle}</h4>
+            <p class="text-slate-600 mt-0.5">Your application status is now <strong class="text-brand-black">${a.status}</strong>. Feedback: "${a.remarks}"</p>
+            <span class="text-[10px] text-slate-500 mt-1 block">${a.submittedDate}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function clearStudentNotifications() {
+      document.getElementById('studentNotifList').innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Notifications cleared.</p>`;
+    }
+
+    function updatePassword() {
+      const newP = document.getElementById('setNewPassword').value;
+      if (newP) {
+        currentUser.password = newP;
+        saveState();
+        showToast("Password updated successfully!", "success");
+      }
+    }
+
+    // Helper: Status Badges
+    function getStatusBadgeHTML(status) {
+      if (status === 'Approved') return `<span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Approved</span>`;
+      if (status === 'Rejected') return `<span class="px-3 py-1 bg-rose-100 text-rose-800 font-bold text-xs rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>`;
+      if (status === 'Returned for Correction') return `<span class="px-3 py-1 bg-blue-100 text-blue-800 font-bold text-xs rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-rotate-left"></i> Returned</span>`;
+      return `<span class="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full inline-flex items-center gap-1"><i class="fa-solid fa-clock"></i> Under Review</span>`;
+    }
+
+    // =========================================================================
+    // ADMINISTRATOR PANEL CONTROLLER
+    // =========================================================================
+
+    function showAdminSection(sec) {
+      const sections = ['dashboard', 'scholarships', 'students', 'applications', 'approved', 'reports', 'settings'];
+      sections.forEach(s => {
+        const el = document.getElementById(`adminSec-${s}`);
+        const btn = document.getElementById(`aNav-${s}`);
+        if (el) el.classList.add('hidden');
+        if (btn) btn.className = "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:bg-purple-600 hover:text-white transition";
+      });
+
+      const activeEl = document.getElementById(`adminSec-${sec}`);
+      const activeBtn = document.getElementById(`aNav-${sec}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+      if (activeBtn) activeBtn.className = "w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-purple-200 bg-purple-600/60 transition";
+
+      if (sec === 'dashboard') renderAdminDashboard();
+      if (sec === 'scholarships') renderAdminScholarships();
+      if (sec === 'students') renderAdminStudentTable();
+      if (sec === 'applications') renderAdminApplicationsTable();
+      if (sec === 'approved') renderAdminApprovedTable();
+      if (sec === 'reports') renderAdminReports();
+    }
+
+    function renderAdminDashboard() {
+      document.getElementById('statTotalStudents').innerText = appState.students.length;
+      
+      const pending = appState.applications.filter(a => a.status === 'Under Review' || a.status === 'Verification').length;
+      document.getElementById('statPendingApps').innerText = pending;
+      document.getElementById('adminPendingBadge').innerText = pending;
+      if (pending > 0) document.getElementById('adminPendingBadge').classList.remove('hidden');
+
+      const approved = appState.applications.filter(a => a.status === 'Approved').length;
+      document.getElementById('statApprovedApps').innerText = approved;
+
+      const totalDisbursed = appState.applications.filter(a => a.status === 'Approved').reduce((acc, curr) => acc + curr.amount, 0);
+      document.getElementById('statTotalDisbursed').innerText = `₱${totalDisbursed.toLocaleString()}`;
+
+      // Audit log render
+      document.getElementById('adminAuditLog').innerHTML = appState.auditLog.map(l => `
+        <div class="p-2 bg-white rounded-lg border border-slate-200">
+          <span class="text-[10px] text-slate-500 font-bold block">${l.timestamp}</span>
+          <span>${l.message}</span>
+        </div>
+      `).join('') || `<p class="text-slate-500 italic">No system log activity.</p>`;
+
+      // Render Chart.js
+      renderAdminChart();
+    }
+
+    function renderAdminChart() {
+      const ctx = document.getElementById('adminStatusChart').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      const counts = {
+        'Under Review': appState.applications.filter(a => a.status === 'Under Review').length,
+        'Returned': appState.applications.filter(a => a.status === 'Returned for Correction').length,
+        'Approved': appState.applications.filter(a => a.status === 'Approved').length,
+        'Rejected': appState.applications.filter(a => a.status === 'Rejected').length
+      };
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Pending Review', 'Returned', 'Approved Scholars', 'Rejected'],
+          datasets: [{
+            label: 'Applications Count',
+            data: [counts['Under Review'], counts['Returned'], counts['Approved'], counts['Rejected']],
+            backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#f43f5e'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+
+    function renderAdminScholarships() {
+      const container = document.getElementById('adminScholarshipsList');
+      container.innerHTML = appState.scholarships.map(s => `
+        <div class="gcash-card p-5 space-y-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="px-2.5 py-0.5 bg-amber-100 text-amber-900 font-bold text-[10px] rounded-full">${s.category}</span>
+              <h3 class="font-bold text-base text-brand-black mt-1">${s.title}</h3>
+            </div>
+            <span class="text-sm font-black text-emerald-600">₱${s.amount.toLocaleString()}</span>
+          </div>
+          <p class="text-xs text-slate-600">${s.description}</p>
+          <div class="text-xs text-slate-500 font-medium flex justify-between border-t pt-2">
+            <span>Slots Available: <strong>${s.slots}</strong></span>
+            <span>Max GWA: <strong>${s.minGWA}</strong></span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openCreateProgramModal() {
+      document.getElementById('createProgramModal').classList.remove('hidden');
+    }
+
+    function closeCreateProgramModal() {
+      document.getElementById('createProgramModal').classList.add('hidden');
+    }
+
+    function handleCreateProgram(e) {
+      e.preventDefault();
+      const newProg = {
+        id: 'SCH-' + Math.floor(100 + Math.random() * 900),
+        title: document.getElementById('progTitle').value,
+        category: document.getElementById('progCategory').value,
+        amount: parseFloat(document.getElementById('progAmount').value),
+        slots: parseInt(document.getElementById('progSlots').value),
+        minGWA: parseFloat(document.getElementById('progGWA').value),
+        deadline: '2026-12-31',
+        description: document.getElementById('progDesc').value
+      };
+
+      appState.scholarships.push(newProg);
+      appState.auditLog.unshift({
+        timestamp: new Date().toLocaleTimeString(),
+        message: `Admin created scholarship program: ${newProg.title}`
+      });
+
+      saveState();
+      closeCreateProgramModal();
+      showToast("Scholarship program created!", "success");
+      renderAdminScholarships();
+    }
+
+    function renderAdminStudentTable() {
+      const query = (document.getElementById('adminStudentSearch')?.value || '').toLowerCase();
+      const tbody = document.getElementById('adminStudentTableBody');
+
+      const filtered = appState.students.filter(s => 
+        s.fullName.toLowerCase().includes(query) || s.email.toLowerCase().includes(query) || s.lrn.includes(query)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">No student records found in database.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => `
+        <tr class="hover:bg-white">
+          <td class="p-3 font-bold text-brand-black">${s.fullName}</td>
+          <td class="p-3 text-slate-600">${s.lrn}</td>
+          <td class="p-3 text-slate-600">${s.course} (${s.yearLevel})</td>
+          <td class="p-3 font-bold text-amber-700">${s.gwa}</td>
+          <td class="p-3 text-slate-600">${s.phone}</td>
+          <td class="p-3 text-slate-500">${s.registeredDate}</td>
+        </tr>
+      `).join('');
+    }
+
+    let adminAppsFilter = 'ALL';
+    function filterAdminApps(status) {
+      adminAppsFilter = status;
+      renderAdminApplicationsTable();
+    }
+
+    function renderAdminApplicationsTable() {
+      const tbody = document.getElementById('adminAppsTableBody');
+      const filtered = appState.applications.filter(a => {
+        if (adminAppsFilter === 'ALL') return true;
+        return a.status === adminAppsFilter;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">No applications matching filter.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => {
+        const student = appState.students.find(s => s.id === a.studentId);
+        return `
+          <tr class="hover:bg-white">
+            <td class="p-3 font-bold text-brand-black">${a.id}</td>
+            <td class="p-3 font-medium text-slate-800">${a.studentName}</td>
+            <td class="p-3 text-slate-600">${a.scholarshipTitle}</td>
+            <td class="p-3 text-slate-500">${a.submittedDate}</td>
+            <td class="p-3 font-bold text-amber-700">${student ? student.gwa : 'N/A'}</td>
+            <td class="p-3">${getStatusBadgeHTML(a.status)}</td>
+            <td class="p-3 text-right">
+              <button onclick="openReviewModal('${a.id}')" class="px-3 py-1.5 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700">
+                Inspect & Action
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openReviewModal(appId) {
+      activeReviewAppId = appId;
+      const app = appState.applications.find(a => a.id === appId);
+      const student = appState.students.find(s => s.id === app.studentId);
+
+      document.getElementById('modalReviewAppId').innerText = `Inspection: ${app.id}`;
+      document.getElementById('modalReviewStudentName').innerText = app.studentName;
+      document.getElementById('modalCourse').innerText = student ? student.course : 'N/A';
+      document.getElementById('modalYear').innerText = student ? student.yearLevel : 'N/A';
+      document.getElementById('modalGWA').innerText = student ? student.gwa : 'N/A';
+      document.getElementById('modalProgram').innerText = app.scholarshipTitle;
+      document.getElementById('modalStatement').innerText = app.statement;
+      document.getElementById('modalAdminRemarks').value = app.remarks || '';
+
+      document.getElementById('chkCOR').checked = true;
+      document.getElementById('chkGrades').checked = true;
+      document.getElementById('chkID').checked = true;
+
+      document.getElementById('appReviewModal').classList.remove('hidden');
+    }
+
+    function closeReviewModal() {
+      document.getElementById('appReviewModal').classList.add('hidden');
+    }
+
+    function previewDoc(docTitle) {
+      showToast(`Viewing simulated attachment: [${docTitle}]`);
+    }
+
+    function executeAppAction(action) {
+      const app = appState.applications.find(a => a.id === activeReviewAppId);
+      const remarks = document.getElementById('modalAdminRemarks').value;
+
+      if (!app) return;
+
+      if (action === 'APPROVE') {
+        app.status = 'Approved';
+        app.remarks = remarks || 'Congratulations! Application approved for full grant.';
+        showToast(`Application ${app.id} APPROVED!`, "success");
+      } else if (action === 'REJECT') {
+        app.status = 'Rejected';
+        app.remarks = remarks || 'Application rejected due to criteria non-compliance.';
+        showToast(`Application ${app.id} REJECTED.`, "error");
+      } else if (action === 'RETURN') {
+        app.status = 'Returned for Correction';
+        app.remarks = remarks || 'Returned for student document update.';
+        showToast(`Application ${app.id} returned to student.`);
+      }
+
+      appState.auditLog.unshift({
+        timestamp: new Date().toLocaleTimeString(),
+        message: `Admin evaluated ${app.id}: Set status to ${app.status}`
+      });
+
+      saveState();
+      closeReviewModal();
+      renderAdminApplicationsTable();
+      renderAdminDashboard();
+    }
+
+    function renderAdminApprovedTable() {
+      const tbody = document.getElementById('adminApprovedTableBody');
+      const approved = appState.applications.filter(a => a.status === 'Approved');
+
+      if (approved.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">No approved scholars yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = approved.map(a => `
+        <tr class="hover:bg-white">
+          <td class="p-3 font-bold text-brand-black">${a.studentName}</td>
+          <td class="p-3 text-slate-600">${a.scholarshipTitle}</td>
+          <td class="p-3 font-black text-emerald-600">₱${a.amount.toLocaleString()}</td>
+          <td class="p-3 text-slate-500">${a.submittedDate}</td>
+          <td class="p-3"><span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full">Ready for Payout</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminReports() {
+      const summary = document.getElementById('adminReportProgramSummary');
+      summary.innerHTML = appState.scholarships.map(s => {
+        const count = appState.applications.filter(a => a.scholarshipId === s.id).length;
+        const approvedCount = appState.applications.filter(a => a.scholarshipId === s.id && a.status === 'Approved').length;
+        return `
+          <div class="p-3 bg-white rounded-xl border flex justify-between items-center">
+            <div>
+              <strong class="text-brand-black block">${s.title}</strong>
+              <span class="text-slate-500">Slots: ${s.slots} | Total Applicants: ${count}</span>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-emerald-600">${approvedCount} Approved</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function simulateExportReport() {
+      showToast("Generating CSV Report download simulation...", "success");
+    }
+
+    function saveAdminSettings() {
+      showToast("System configuration settings updated!", "success");
+    }
+
+    function refreshAdminDashboard() {
+      renderAdminDashboard();
+      showToast("Dashboard stats refreshed!");
+    }
+
+    // Initialize application on load
+    window.onload = function() {
+      switchRoleView('auth');
+    };
+  </script>
+</body>
+</html>
+```
