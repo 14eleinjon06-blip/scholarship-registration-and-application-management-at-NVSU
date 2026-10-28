@@ -513,8 +513,8 @@
                 <i class="fa-solid fa-wallet"></i>
               </div>
               <div>
-                <p class="text-xs font-bold text-slate-500 uppercase">Application Summary</p>
-                <h4 id="dashApprovedFunds" class="text-2xl font-black text-emerald-600">₱0.00</h4>
+                <p class="text-xs font-bold text-slate-500 uppercase">Applications Submitted</p>
+                <h4 id="dashApprovedFunds" class="text-2xl font-black text-emerald-600">0</h4>
               </div>
             </div>
           </div>
@@ -926,7 +926,7 @@
             </div>
 
             <div class="gcash-card p-4 border-l-4 border-amber-500">
-              <p class="text-[11px] font-bold text-slate-500 uppercase">Pending Review</p>
+              <p class="text-[11px] font-bold text-slate-500 uppercase">Pending Verification</p>
               <h3 id="statPendingApps" class="text-2xl font-black text-amber-600">0</h3>
               <p class="text-[10px] text-slate-500 mt-1">Requires Officer Action</p>
             </div>
@@ -1022,7 +1022,7 @@
           <div class="gcash-card p-4 flex flex-wrap gap-3 items-center justify-between">
             <div class="flex gap-2">
               <button onclick="filterAdminApps('ALL')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-purple text-white">All Submissions</button>
-              <button onclick="filterAdminApps('Under Review')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-100 text-amber-800">Pending Review</button>
+              <button onclick="filterAdminApps('Under Review')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-100 text-amber-800">Pending Verification</button>
               <button onclick="filterAdminApps('Returned for Correction')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-100 text-blue-800">Returned</button>
             </div>
           </div>
@@ -1406,10 +1406,10 @@
           scholarshipTitle: 'Academic Excellence Grant',
           amount: 25000,
           statement: 'I aim to complete my degree in Computer Science and give back to my community through AI technology.',
-          status: 'Under Review', // Under Review, Verification, Approved, Rejected, Returned for Correction
+          status: 'Pending Verification', // Pending Verification, Under Review, Returned for Correction, Approved, Rejected
           submittedDate: '2026-10-20',
           documents: ['COR.pdf', 'Grades.pdf', 'ValidID.png'],
-          remarks: 'Verification in progress by officer.'
+          remarks: 'Submitted application awaiting verification by scholarship personnel.'
         }
       ];
 
@@ -1829,6 +1829,18 @@
       const statement = document.getElementById('appStatement').value;
       const prog = appState.scholarships.find(s => s.id === progId);
 
+      if (!prog) {
+        showToast("Please select a scholarship program before submitting.", "error");
+        return;
+      }
+
+      // Record only the files the student actually selected. Required documents
+      // can differ by scholarship, so the demo must not assume a fixed checklist.
+      const documents = ['fileCOR', 'fileGrades', 'fileID']
+        .map(id => document.getElementById(id))
+        .filter(input => input && input.files && input.files.length > 0)
+        .map(input => input.files[0].name);
+
       const newApp = {
         id: 'APP-' + Math.floor(1000 + Math.random() * 9000),
         studentId: currentUser.id,
@@ -1836,11 +1848,11 @@
         scholarshipId: prog.id,
         scholarshipTitle: prog.title,
         amount: prog.amount,
-        statement: statement || 'Standard student grant application submitted via online portal.',
-        status: 'Under Review',
+        statement: statement || 'Scholarship application submitted through the portal.',
+        status: 'Pending Verification',
         submittedDate: new Date().toISOString().split('T')[0],
-        documents: ['COR.pdf', 'Grades.pdf', 'ValidID.png'],
-        remarks: 'Application submitted. Pending administrator verification.'
+        documents,
+        remarks: 'Application received. Scholarship personnel must verify the submitted information and documents against the selected scholarship requirements.'
       };
 
       appState.applications.push(newApp);
@@ -2042,7 +2054,7 @@
       chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Pending Review', 'Returned', 'Applications with Final Decisions', 'Rejected'],
+          labels: ['Pending Verification', 'Returned', 'Applications with Final Decisions', 'Rejected'],
           datasets: [{
             label: 'Applications Count',
             data: [counts['Under Review'], counts['Returned'], counts['Approved'], counts['Rejected']],
