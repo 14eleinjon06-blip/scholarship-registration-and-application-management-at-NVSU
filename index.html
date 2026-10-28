@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduPay Scholarship Portal</title>
+  <title>NVSU Scholarship Registration &amp; Application Management System</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -241,8 +241,8 @@
           <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-purple text-white shadow-lg mb-3">
             <i class="fa-solid fa-graduation-cap text-3xl"></i>
           </div>
-          <h1 class="text-2xl font-black text-brand-black tracking-tight">EduPay Scholarship</h1>
-          <p class="text-slate-500 text-sm mt-1">Digital Scholarship Registration & Management</p>
+          <h1 class="text-2xl font-black text-brand-black tracking-tight">NVSU Scholarship Portal</h1>
+          <p class="text-slate-500 text-sm mt-1">Scholarship Registration & Application Management</p>
         </div>
 
         <!-- Auth Card Container -->
@@ -291,13 +291,35 @@
                 <div>
                   <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Course / Program</label>
                   <select id="regCourse" required class="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple">
-                    <option value="">Select Course</option>
-                    <option value="BS Computer Science">BS Computer Science</option>
-                    <option value="BS Information Technology">BS Information Technology</option>
-                    <option value="BS Civil Engineering">BS Civil Engineering</option>
-                    <option value="BS Business Administration">BS Business Administration</option>
-                    <option value="BS Nursing">BS Nursing</option>
-                    <option value="BS Education">BS Education</option>
+                    <option value="">Select Course / Program</option>
+                    <option value="Certificate of Agricultural Science">Certificate of Agricultural Science</option>
+                    <option value="Bachelor of Science in Agriculture">Bachelor of Science in Agriculture</option>
+                    <option value="Bachelor of Science in Fisheries">Bachelor of Science in Fisheries</option>
+                    <option value="Bachelor of Science in Mathematics">Bachelor of Science in Mathematics</option>
+                    <option value="Bachelor of Science in Computer Science">Bachelor of Science in Computer Science</option>
+                    <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
+                    <option value="Bachelor of Science in Information Systems">Bachelor of Science in Information Systems</option>
+                    <option value="Bachelor of Science in Agribusiness">Bachelor of Science in Agribusiness</option>
+                    <option value="Bachelor of Science in Business Administration">Bachelor of Science in Business Administration</option>
+                    <option value="Bachelor of Science in Civil Engineering">Bachelor of Science in Civil Engineering</option>
+                    <option value="Bachelor of Science in Geodetic Engineering">Bachelor of Science in Geodetic Engineering</option>
+                    <option value="Bachelor of Science in Agricultural and Biosystems Engineering">Bachelor of Science in Agricultural and Biosystems Engineering</option>
+                    <option value="Bachelor of Science in Agroforestry">Bachelor of Science in Agroforestry</option>
+                    <option value="Bachelor of Science in Forestry">Bachelor of Science in Forestry</option>
+                    <option value="Bachelor of Science in Environmental Science">Bachelor of Science in Environmental Science</option>
+                    <option value="Bachelor of Science in Ecotourism">Bachelor of Science in Ecotourism</option>
+                    <option value="Bachelor of Science in Hospitality Management">Bachelor of Science in Hospitality Management</option>
+                    <option value="Bachelor of Science in Tourism Management">Bachelor of Science in Tourism Management</option>
+                    <option value="Bachelor of Science in Home Technology">Bachelor of Science in Home Technology</option>
+                    <option value="Bachelor of Physical Education">Bachelor of Physical Education</option>
+                    <option value="Bachelor of Culture and Arts Education">Bachelor of Culture and Arts Education</option>
+                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education</option>
+                    <option value="Bachelor of Early Childhood Education">Bachelor of Early Childhood Education</option>
+                    <option value="Bachelor of Secondary Education">Bachelor of Secondary Education</option>
+                    <option value="Bachelor of Technical Vocational Teacher Education">Bachelor of Technical Vocational Teacher Education</option>
+                    <option value="Bachelor of Technology and Livelihood Education">Bachelor of Technology and Livelihood Education</option>
+                    <option value="Bachelor in Animal Science">Bachelor in Animal Science</option>
+                    <option value="Doctor of Veterinary Medicine">Doctor of Veterinary Medicine</option>
                   </select>
                 </div>
                 <div>
@@ -510,7 +532,7 @@
           <!-- Available Featured Grants -->
           <div>
             <div class="flex justify-between items-center mb-3">
-              <h3 class="text-base font-bold text-brand-black">Recommended Programs for You</h3>
+              <h3 class="text-base font-bold text-brand-black">Available Scholarship Programs</h3>
               <button onclick="showStudentSection('scholarships')" class="text-xs font-bold text-brand-black hover:underline">View All →</button>
             </div>
             <div id="dashFeaturedScholarships" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -524,7 +546,7 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-xl font-black text-brand-black">Student Profile & Academic Info</h2>
-              <p class="text-xs text-slate-500">Ensure your information is updated for fast scholarship evaluation.</p>
+              <p class="text-xs text-slate-500">Keep your student and academic information organized for your scholarship application.</p>
             </div>
             <button onclick="saveStudentProfile()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-700 shadow">
               <i class="fa-solid fa-floppy-disk mr-1"></i> Save Profile Updates
@@ -596,7 +618,7 @@
         <div id="studentSec-scholarships" class="space-y-6 hidden">
           <div>
             <h2 class="text-xl font-black text-brand-black">Available Scholarship Programs</h2>
-            <p class="text-xs text-slate-500">Explore financial grants and apply directly before deadlines.</p>
+            <p class="text-xs text-slate-500">View available scholarship opportunities and submit applications for personnel review.</p>
           </div>
 
           <!-- Filter & Search Bar -->
@@ -793,7 +815,7 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-xl font-black text-brand-black">Notifications & Updates</h2>
-              <p class="text-xs text-slate-500">Important system alerts, evaluation feedback, and approval updates.</p>
+              <p class="text-xs text-slate-500">Application status updates, requirement corrections, and messages from scholarship personnel.</p>
             </div>
             <button onclick="clearStudentNotifications()" class="text-xs font-bold text-slate-500 hover:text-slate-800">Clear All</button>
           </div>
@@ -925,7 +947,7 @@
           <!-- Visual Chart Section & Activity Feed -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 gcash-card p-6">
-              <h3 class="text-sm font-bold text-brand-black mb-4"><i class="fa-solid fa-chart-column text-purple-700 mr-1"></i> Application Status Distribution</h3>
+              <h3 class="text-sm font-bold text-brand-black mb-4"><i class="fa-solid fa-chart-column text-purple-700 mr-1"></i> Application Status Overview</h3>
               <div class="h-64 relative">
                 <canvas id="adminStatusChart"></canvas>
               </div>
@@ -945,7 +967,7 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-xl font-black text-brand-black">Scholarship Programs Management</h2>
-              <p class="text-xs text-slate-500">Configure grant programs, eligibility criteria, and slots.</p>
+              <p class="text-xs text-slate-500">Manage scholarship information and application requirements.</p>
             </div>
             <button onclick="openCreateProgramModal()" class="px-4 py-2 bg-brand-purple text-white font-bold text-xs rounded-xl hover:bg-purple-200 shadow">
               <i class="fa-solid fa-plus mr-1"></i> Create New Program
@@ -1354,7 +1376,7 @@
           fullName: 'Juan De La Cruz',
           email: 'juan@email.com',
           lrn: '123456789012',
-          course: 'BS Computer Science',
+          course: 'Bachelor of Science in Computer Science',
           yearLevel: '2nd Year',
           phone: '09171234567',
           gwa: 1.45,
@@ -1366,7 +1388,7 @@
           fullName: 'Maria Santos',
           email: 'maria@email.com',
           lrn: '987654321098',
-          course: 'BS Nursing',
+          course: 'Bachelor of Science in Information Technology',
           yearLevel: '3rd Year',
           phone: '09189876543',
           gwa: 1.65,
@@ -1642,7 +1664,7 @@
         `;
       }
 
-      // Funds calculation
+      // Application summary
       const approvedTotal = myApps.filter(a => a.status === 'Approved').reduce((acc, curr) => acc + curr.amount, 0);
       document.getElementById('dashApprovedFunds').innerText = `₱${approvedTotal.toLocaleString()}`;
 
