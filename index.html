@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NVSU Scholarship Registration and Application Management System</title>
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
@@ -16,10 +13,10 @@
       theme: {
         extend: {
           colors: {
-            brandNavy: '#0F2D56',
-            brandGreen: '#1B5E38',
-            brandCream: '#F7F5E9',
-            brandAccent: '#A7C957',
+            brandNavy: '#14532D',
+            brandGreen: '#166534',
+            brandCream: '#FFFDF2',
+            brandAccent: '#F4C542',
             brandSlate: '#6B7280',
             brandDarkSlate: '#374151'
           },
@@ -33,7 +30,7 @@
 
   <style>
     body {
-      background-color: #F7F5E9;
+      background-color: #FFFDF2;
       color: #374151;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
@@ -44,11 +41,11 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #F7F5E9;
+      background: #FFFDF2;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #A7C957;
+      background: #F4C542;
       border-radius: 9999px;
     }
 
@@ -87,6 +84,7 @@
 
         <!-- Role Switcher -->
         <div class="flex items-center space-x-3">
+
           <div id="roleBadge"
                class="hidden md:flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brandGreen/60 text-brandAccent border border-brandAccent/30">
 
@@ -111,7 +109,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-brandNavy via-[#163e75] to-brandGreen text-white py-8 px-4 sm:px-6 shadow-inner relative overflow-hidden">
+  <section class="bg-gradient-to-r from-brandNavy via-[#2F7D32] to-brandGreen text-white py-8 px-4 sm:px-6 shadow-inner relative overflow-hidden">
 
     <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
       <i data-lucide="book-open-check"
@@ -128,12 +126,12 @@
 
         <h2 class="text-2xl sm:text-3xl font-black tracking-tight"
             id="heroTitle">
-          Scholarship Registration &amp; Management
+          Scholarship Registration & Management
         </h2>
 
         <p class="text-sm sm:text-base text-gray-200 mt-1 max-w-2xl"
            id="heroSubtitle">
-          Streamlining scholarship applications, requirement verification, and application tracking for Bayombong &amp; Bambang campuses.
+          Streamlining scholarship applications, requirement verification, and application tracking for Bayombong & Bambang campuses.
         </p>
       </div>
 
@@ -167,13 +165,12 @@
     <!-- STUDENT VIEW -->
     <div id="studentContainer" class="space-y-6">
 
-      <!-- Student Secondary Navigation -->
+      <!-- Student Navigation Tabs -->
       <div class="flex flex-wrap gap-2 border-b border-gray-300 pb-3">
 
         <button onclick="showStudentTab('apply')"
                 id="tabBtn-apply"
                 class="student-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition bg-brandGreen text-white shadow-md">
-
           <i data-lucide="file-text" class="w-4 h-4"></i>
           <span>New Application</span>
         </button>
@@ -181,25 +178,18 @@
         <button onclick="showStudentTab('track')"
                 id="tabBtn-track"
                 class="student-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition bg-white text-brandDarkSlate hover:bg-gray-100 border border-gray-200">
-
-          <i data-lucide="activity"
-             class="w-4 h-4 text-brandGreen"></i>
+          <i data-lucide="activity" class="w-4 h-4 text-brandGreen"></i>
           <span>Track Application Status</span>
         </button>
 
         <button onclick="showStudentTab('messages')"
                 id="tabBtn-messages"
                 class="student-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition bg-white text-brandDarkSlate hover:bg-gray-100 border border-gray-200 relative">
-
-          <i data-lucide="message-square"
-             class="w-4 h-4 text-brandGreen"></i>
-
-          <span>Personnel Updates &amp; Communication</span>
+          <i data-lucide="message-square" class="w-4 h-4 text-brandGreen"></i>
+          <span>Personnel Updates & Communication</span>
 
           <span id="unreadBadge"
-                class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">
-            0
-          </span>
+                class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
         </button>
       </div>
 
@@ -210,161 +200,13 @@
               onsubmit="handleFormSubmit(event)"
               class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200 space-y-8">
 
-          <!-- Form Header -->
           <div class="border-b border-gray-100 pb-4">
             <h3 class="text-xl font-extrabold text-brandNavy flex items-center gap-2">
-
-              <i data-lucide="user-edit"
-                 class="w-5 h-5 text-brandGreen"></i>
-
-              Section 1: Applicant &amp; Academic Information
+              <i data-lucide="user-edit" class="w-5 h-5 text-brandGreen"></i>
+              Section 1: Applicant & Academic Information
             </h3>
 
             <p class="text-xs sm:text-sm text-brandSlate mt-1">
               Please fill out all required fields accurately as per official NVSU records.
             </p>
           </div>
-
-          <!-- Applicant Fields Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                Full Name *
-              </label>
-
-              <input type="text"
-                     id="appFullName"
-                     required
-                     placeholder="e.g., Juan Dela Cruz"
-                     class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                Student ID *
-              </label>
-
-              <input type="text"
-                     id="appStudentId"
-                     required
-                     placeholder="e.g., 2024-BAY-0123"
-                     class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                Email Address *
-              </label>
-
-              <input type="email"
-                     id="appEmail"
-                     required
-                     placeholder="student@nvsu.edu.ph"
-                     class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                NVSU Campus *
-              </label>
-
-              <select id="appCampus"
-                      onchange="updateProgramOptions()"
-                      required
-                      class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50">
-
-                <option value="Bayombong Campus">Bayombong Campus</option>
-                <option value="Bambang Campus">Bambang Campus</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                College / Program *
-              </label>
-
-              <select id="appProgram"
-                      required
-                      class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50">
-                <!-- Populated dynamically via JavaScript -->
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                Year Level *
-              </label>
-
-              <select id="appYear"
-                      required
-                      class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50">
-
-                <option value="1st Year">1st Year</option>
-                <option value="2nd Year">2nd Year</option>
-                <option value="3rd Year">3rd Year</option>
-                <option value="4th Year">4th Year</option>
-                <option value="5th Year">5th Year</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                General Weighted Average (GWA) *
-              </label>
-
-              <input type="number"
-                     step="0.01"
-                     min="1.00"
-                     max="5.00"
-                     id="appGwa"
-                     required
-                     placeholder="e.g., 1.45"
-                     class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                Monthly Household Income (PHP) *
-              </label>
-
-              <input type="number"
-                     id="appIncome"
-                     required
-                     placeholder="e.g., 15000"
-                     class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-extrabold text-brandDarkSlate uppercase tracking-wider mb-2">
-                Target Scholarship Program *
-              </label>
-
-              <select id="appScholarship"
-                      required
-                      class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen focus:border-transparent text-sm bg-gray-50/50">
-
-                <option value="CHED Tulong Dunong Program (TDP)">
-                  CHED Tulong Dunong Program (TDP)
-                </option>
-
-                <option value="Tertiary Education Subsidy (TES)">
-                  Tertiary Education Subsidy (TES)
-                </option>
-
-                <option value="NVSU Honor & Academic Excellence Grant">
-                  NVSU Honor &amp; Academic Excellence Grant
-                </option>
-
-                <option value="LGU Vizcaya Financial Assistance">
-                  LGU Vizcaya Financial Assistance
-                </option>
-
-                <option value="Private Donor / Foundation Grant">
-                  Private Donor / Foundation Grant
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Section 2: Requirements & Verification Checklist -->
