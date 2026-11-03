@@ -333,4 +333,776 @@
       <!-- Management & Analytics Cards -->
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         
-        <div class="bg-white p-4 sm:p-5 round
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-bold text-brandSlate uppercase tracking-wider">Total Applications</span>
+          <div class="flex items-baseline justify-between mt-2">
+            <span id="staffStatTotal" class="text-2xl sm:text-3xl font-black text-brandNavy">0</span>
+            <i data-lucide="files" class="w-5 h-5 text-brandNavy opacity-40"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-amber-200 bg-amber-50/30 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Under Verification</span>
+          <div class="flex items-baseline justify-between mt-2">
+            <span id="staffStatVerification" class="text-2xl sm:text-3xl font-black text-amber-600">0</span>
+            <i data-lucide="clock" class="w-5 h-5 text-amber-600 opacity-40"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-blue-200 bg-blue-50/30 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Checked / Valid</span>
+          <div class="flex items-baseline justify-between mt-2">
+            <span id="staffStatChecked" class="text-2xl sm:text-3xl font-black text-blue-600">0</span>
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 opacity-40"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-rose-200 bg-rose-50/30 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">Needs Correction</span>
+          <div class="flex items-baseline justify-between mt-2">
+            <span id="staffStatCorrection" class="text-2xl sm:text-3xl font-black text-rose-600">0</span>
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-600 opacity-40"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-emerald-200 bg-emerald-50/30 shadow-sm flex flex-col justify-between col-span-2 sm:col-span-1">
+          <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Approved</span>
+          <div class="flex items-baseline justify-between mt-2">
+            <span id="staffStatApproved" class="text-2xl sm:text-3xl font-black text-brandGreen">0</span>
+            <i data-lucide="award" class="w-5 h-5 text-brandGreen opacity-40"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Personnel Toolbar (Filters & Search) -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-200 space-y-4">
+        
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          
+          <div class="flex-1 relative">
+            <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-4 top-3.5"></i>
+            <input type="text" id="staffSearch" oninput="renderStaffTable()" placeholder="Search applicant name, student ID, course, or scholarship..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen text-sm bg-gray-50/50" />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <select id="staffFilterStatus" onchange="renderStaffTable()" class="px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-brandGreen bg-gray-50/50 font-semibold text-brandDarkSlate">
+              <option value="All">All Application Statuses</option>
+              <option value="Submitted for Review">Submitted for Review</option>
+              <option value="Under Verification">Under Verification</option>
+              <option value="Requirements Checked">Requirements Checked</option>
+              <option value="Requirements Need Correction">Requirements Need Correction</option>
+              <option value="Approved for Committee Review">Approved for Committee Review</option>
+            </select>
+
+            <button onclick="seedDemoData()" class="px-4 py-2.5 rounded-xl bg-brandNavy text-white hover:bg-slate-800 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i data-lucide="database" class="w-3.5 h-3.5 text-brandAccent"></i>
+              <span>Load Seed Demo Data</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Applications Table -->
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+          <h3 class="font-extrabold text-brandNavy text-base flex items-center gap-2">
+            <i data-lucide="list-checks" class="w-5 h-5 text-brandGreen"></i>
+            Verification & Review Records Table
+          </h3>
+          <span class="text-xs font-semibold text-brandSlate" id="recordCountLabel">Showing 0 records</span>
+        </div>
+
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse min-w-[900px]">
+            <thead>
+              <tr class="bg-brandCream/60 border-b border-gray-200 text-[11px] font-black uppercase text-brandSlate tracking-wider">
+                <th class="p-4">Applicant & Academic Details</th>
+                <th class="p-4">Scholarship Program</th>
+                <th class="p-4">Submitted Checklist</th>
+                <th class="p-4">Current Status</th>
+                <th class="p-4 text-right">Verification Actions</th>
+              </tr>
+            </thead>
+            <tbody id="staffTableBody" class="divide-y divide-gray-100 text-xs sm:text-sm">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Personnel Message Modal -->
+  <div id="messageModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 border border-gray-200">
+      <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+        <h3 class="font-extrabold text-brandNavy text-lg flex items-center gap-2">
+          <i data-lucide="send-horizontal" class="w-5 h-5 text-brandGreen"></i>
+          Send Message to Applicant
+        </h3>
+        <button onclick="closeMessageModal()" class="text-gray-400 hover:text-gray-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div>
+        <p class="text-xs text-brandSlate font-medium" id="modalTargetInfo">Applicant Target</p>
+        <textarea id="modalMsgText" rows="4" placeholder="Enter instructions, notes on missing requirements, or correction feedback..." class="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brandGreen text-sm"></textarea>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2">
+        <button onclick="closeMessageModal()" class="px-5 py-2.5 rounded-xl border border-gray-300 text-xs font-bold text-brandDarkSlate hover:bg-gray-100">Cancel</button>
+        <button onclick="submitPersonnelMessage()" class="px-6 py-2.5 rounded-xl bg-brandGreen text-white text-xs font-extrabold hover:bg-emerald-800 shadow-sm flex items-center gap-1.5">
+          <i data-lucide="send" class="w-3.5 h-3.5 text-brandAccent"></i>
+          <span>Send Notification</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300">
+    <div id="toastContent" class="bg-brandNavy text-white px-5 py-3.5 rounded-2xl shadow-xl flex items-center space-x-3 border border-brandAccent/30 text-sm font-semibold">
+      <i data-lucide="check-circle" class="w-5 h-5 text-brandAccent"></i>
+      <span id="toastMessage">Action completed successfully.</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-brandNavy text-white border-t border-brandGreen/40 py-6 mt-12 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-6 h-6 bg-brandGreen rounded-md flex items-center justify-center text-brandAccent font-bold text-xs">N</div>
+        <span class="font-bold tracking-wide">Nueva Vizcaya State University &copy; 2026</span>
+      </div>
+      <div class="text-emerald-100/60 text-center sm:text-right">
+        QM Research Framework Implementation | Authored by Janelle R. Esmino, Alora Yzabel O. Milanes, & Eleinjon D. Puwoc
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script>
+    // --- STATE MANAGEMENT & PERSISTENCE ---
+    const STORAGE_KEY = 'NVSU_SCHOLARSHIP_QM_SYSTEM_DATA_V2';
+    
+    const CAMPUS_PROGRAMS = {
+      'Bayombong Campus': [
+        'Certificate of Agricultural Science',
+        'Bachelor of Science in Agriculture',
+        'Bachelor of Science in Fisheries',
+        'Bachelor of Science in Mathematics',
+        'Bachelor of Science in Computer Science',
+        'Bachelor of Science in Information Technology',
+        'Bachelor of Science in Information Systems',
+        'Bachelor of Science in Agribusiness',
+        'Bachelor of Science in Business Administration',
+        'Bachelor of Science in Civil Engineering',
+        'Bachelor of Science in Geodetic Engineering',
+        'Bachelor of Science in Agricultural and Biosystems Engineering',
+        'Bachelor of Science in Agroforestry',
+        'Bachelor of Science in Forestry',
+        'Bachelor of Science in Environmental Science',
+        'Bachelor of Science in Ecotourism',
+        'Bachelor of Science in Hospitality Management',
+        'Bachelor of Science in Tourism Management',
+        'Bachelor of Science in Home Technology',
+        'Bachelor of Physical Education',
+        'Bachelor of Culture and Arts Education',
+        'Bachelor of Elementary Education',
+        'Bachelor of Early Childhood Education',
+        'Bachelor of Secondary Education',
+        'Bachelor of Technical Vocational Teacher Education',
+        'Bachelor of Technology and Livelihood Education',
+        'Bachelor in Animal Science',
+        'Doctor of Veterinary Medicine'
+      ],
+      'Bambang Campus': [
+        'Bachelor of Science in Criminology',
+        'Bachelor of Science in Electrical Engineering',
+        'Bachelor of Science in Mechanical Engineering',
+        'Bachelor of Science in Industrial Technology',
+        'Bachelor of Science in Information Technology',
+        'Bachelor of Science in Business Administration',
+        'Bachelor of Secondary Education',
+        'Bachelor of Technical-Vocational Teacher Education'
+      ]
+    };
+
+    let currentRole = 'student'; // 'student' | 'staff'
+    let currentStudentTab = 'apply';
+    let activeMsgAppId = null;
+    let applications = [];
+
+    // Load Initial Applications Data from LocalStorage
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          applications = JSON.parse(raw);
+        } else {
+          applications = [];
+        }
+      } catch (e) {
+        applications = [];
+      }
+    }
+
+    function saveData() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
+      } catch (e) {
+        console.error('Save failed', e);
+      }
+    }
+
+    // --- INITIALIZATION ---
+    window.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      updateProgramOptions();
+      renderAllViews();
+      lucide.createIcons();
+    });
+
+    // --- UI ROUTING & ROLE SWITCHING ---
+    function toggleRole() {
+      switchRole(currentRole === 'student' ? 'staff' : 'student');
+    }
+
+    function switchRole(targetRole) {
+      currentRole = targetRole;
+      const studentContainer = document.getElementById('studentContainer');
+      const staffContainer = document.getElementById('staffContainer');
+      const switchBtnText = document.getElementById('switchRoleText');
+      const roleLabel = document.getElementById('roleLabel');
+      const heroTitle = document.getElementById('heroTitle');
+
+      if (currentRole === 'staff') {
+        studentContainer.classList.add('hidden');
+        staffContainer.classList.remove('hidden');
+        switchBtnText.textContent = 'Switch to Student View';
+        roleLabel.textContent = 'Scholarship Personnel View';
+        heroTitle.textContent = 'Scholarship Personnel Evaluation Dashboard';
+        renderStaffTable();
+      } else {
+        staffContainer.classList.add('hidden');
+        studentContainer.classList.remove('hidden');
+        switchBtnText.textContent = 'Switch to Personnel';
+        roleLabel.textContent = 'Student Access';
+        heroTitle.textContent = 'Scholarship Registration & Application';
+        renderStudentViews();
+      }
+      lucide.createIcons();
+    }
+
+    function showStudentTab(tabName) {
+      currentStudentTab = tabName;
+      document.querySelectorAll('.student-tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.student-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-brandGreen', 'text-white', 'shadow-md');
+        btn.classList.add('bg-white', 'text-brandDarkSlate', 'hover:bg-gray-100', 'border', 'border-gray-200');
+      });
+
+      const targetContent = document.getElementById(`studentTab-${tabName}`);
+      const targetBtn = document.getElementById(`tabBtn-${tabName}`);
+
+      if (targetContent) targetContent.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.remove('bg-white', 'text-brandDarkSlate', 'hover:bg-gray-100', 'border', 'border-gray-200');
+        targetBtn.classList.add('bg-brandGreen', 'text-white', 'shadow-md');
+      }
+
+      renderStudentViews();
+      lucide.createIcons();
+    }
+
+    // --- DYNAMIC PROGRAM POPULATION ---
+    function updateProgramOptions() {
+      const campusSelect = document.getElementById('appCampus');
+      const programSelect = document.getElementById('appProgram');
+      const campus = campusSelect.value;
+      const programs = CAMPUS_PROGRAMS[campus] || [];
+
+      programSelect.innerHTML = '';
+      programs.forEach(prog => {
+        const opt = document.createElement('option');
+        opt.value = prog;
+        opt.textContent = prog;
+        programSelect.appendChild(opt);
+      });
+    }
+
+    // --- FORM SUBMISSION ---
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const newApp = {
+        id: 'NVSU-' + Date.now().toString().slice(-6),
+        fullName: document.getElementById('appFullName').value.trim(),
+        studentId: document.getElementById('appStudentId').value.trim(),
+        email: document.getElementById('appEmail').value.trim(),
+        campus: document.getElementById('appCampus').value,
+        program: document.getElementById('appProgram').value,
+        year: document.getElementById('appYear').value,
+        gwa: parseFloat(document.getElementById('appGwa').value).toFixed(2),
+        income: parseInt(document.getElementById('appIncome').value),
+        scholarship: document.getElementById('appScholarship').value,
+        checklist: {
+          indigency: document.getElementById('reqIndigency').checked,
+          form138: document.getElementById('reqForm138').checked,
+          coe: document.getElementById('reqCoe').checked,
+          goodMoral: document.getElementById('reqGoodMoral').checked
+        },
+        notes: document.getElementById('appNotes').value.trim(),
+        status: 'Submitted for Review',
+        submittedAt: new Date().toLocaleString(),
+        updatedAt: new Date().toLocaleString(),
+        messages: []
+      };
+
+      applications.unshift(newApp);
+      saveData();
+      document.getElementById('scholarshipForm').reset();
+      updateProgramOptions();
+
+      showToast(`Application ${newApp.id} submitted successfully!`);
+      showStudentTab('track');
+    }
+
+    // --- RENDERING STUDENT VIEWS ---
+    function renderStudentViews() {
+      renderStudentAppTracker();
+      renderStudentMessages();
+      updateGlobalCounters();
+    }
+
+    function getStatusBadgeHtml(status) {
+      switch (status) {
+        case 'Approved for Committee Review':
+          return `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1 w-fit"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Approved for Committee</span>`;
+        case 'Requirements Checked':
+          return `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 border border-blue-300 flex items-center gap-1 w-fit"><i data-lucide="file-check" class="w-3.5 h-3.5"></i> Requirements Checked</span>`;
+        case 'Requirements Need Correction':
+          return `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800 border border-rose-300 flex items-center gap-1 w-fit"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Needs Correction</span>`;
+        case 'Under Verification':
+          return `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1 w-fit"><i data-lucide="search" class="w-3.5 h-3.5"></i> Under Verification</span>`;
+        default:
+          return `<span class="px-3 py-1 rounded-full text-xs font-extrabold bg-gray-100 text-gray-700 border border-gray-300 flex items-center gap-1 w-fit"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Submitted for Review</span>`;
+      }
+    }
+
+    function renderStudentAppTracker() {
+      const container = document.getElementById('studentAppList');
+      if (applications.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 border-2 border-dashed border-gray-200 rounded-3xl p-6">
+            <i data-lucide="folder-open" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i>
+            <h4 class="font-bold text-brandDarkSlate text-base">No Submitted Applications Found</h4>
+            <p class="text-xs text-brandSlate mt-1">Submit your first scholarship application to track verification progress here.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = applications.map(app => {
+        // Pipeline Progress Step Calculation
+        let step = 1;
+        if (app.status === 'Under Verification') step = 2;
+        if (app.status === 'Requirements Checked') step = 3;
+        if (app.status === 'Requirements Need Correction') step = 2;
+        if (app.status === 'Approved for Committee Review') step = 4;
+
+        return `
+          <div class="border border-gray-200 rounded-2xl p-5 bg-white space-y-4 hover:shadow-md transition">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-brandGreen bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200">${app.id}</span>
+                  <h4 class="font-extrabold text-brandNavy text-base">${escapeHtml(app.scholarship)}</h4>
+                </div>
+                <p class="text-xs text-brandSlate mt-1">${escapeHtml(app.fullName)} (${escapeHtml(app.studentId)}) &bull; ${escapeHtml(app.program)}</p>
+              </div>
+              <div>${getStatusBadgeHtml(app.status)}</div>
+            </div>
+
+            <!-- Pipeline Visual Steps -->
+            <div class="py-2">
+              <div class="flex items-center justify-between relative">
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 z-0"></div>
+                <div class="absolute left-0 top-1/2 transform -translate-y-1/2 h-1 bg-brandGreen transition-all duration-500 z-0" style="width: ${((step - 1) / 3) * 100}%"></div>
+                
+                <div class="relative z-10 flex flex-col items-center">
+                  <div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${step >= 1 ? 'bg-brandGreen text-white' : 'bg-gray-200 text-gray-500'}">1</div>
+                  <span class="text-[10px] font-bold text-brandDarkSlate mt-1">Submitted</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                  <div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${step >= 2 ? 'bg-brandGreen text-white' : 'bg-gray-200 text-gray-500'}">2</div>
+                  <span class="text-[10px] font-bold text-brandDarkSlate mt-1">Verification</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                  <div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${step >= 3 ? 'bg-brandGreen text-white' : 'bg-gray-200 text-gray-500'}">3</div>
+                  <span class="text-[10px] font-bold text-brandDarkSlate mt-1">Requirements</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                  <div class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${step >= 4 ? 'bg-brandGreen text-white' : 'bg-gray-200 text-gray-500'}">4</div>
+                  <span class="text-[10px] font-bold text-brandDarkSlate mt-1">Final Review</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between text-xs text-brandSlate bg-gray-50 p-3 rounded-xl gap-2">
+              <div><strong>Campus:</strong> ${escapeHtml(app.campus)} | <strong>GWA:</strong> ${app.gwa}</div>
+              <div><strong>Updated:</strong> ${app.updatedAt}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderStudentMessages() {
+      const container = document.getElementById('studentMessageList');
+      const unreadBadge = document.getElementById('unreadBadge');
+      
+      let allMessages = [];
+      applications.forEach(app => {
+        if (app.messages && app.messages.length > 0) {
+          app.messages.forEach(msg => {
+            allMessages.push({
+              appId: app.id,
+              scholarship: app.scholarship,
+              sender: msg.sender,
+              text: msg.text,
+              timestamp: msg.timestamp
+            });
+          });
+        }
+      });
+
+      if (allMessages.length === 0) {
+        unreadBadge.classList.add('hidden');
+        container.innerHTML = `
+          <div class="text-center py-10 border border-dashed border-gray-200 rounded-2xl p-6">
+            <i data-lucide="message-square" class="w-10 h-10 text-gray-300 mx-auto mb-2"></i>
+            <p class="text-xs text-brandSlate font-medium">No personnel notifications or direct messages yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      unreadBadge.classList.remove('hidden');
+      unreadBadge.textContent = allMessages.length;
+
+      container.innerHTML = allMessages.map(msg => `
+        <div class="p-4 rounded-2xl border border-brandAccent/30 bg-emerald-50/30 space-y-1.5">
+          <div class="flex justify-between items-center">
+            <span class="font-extrabold text-xs text-brandNavy flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-brandGreen"></i>
+              ${escapeHtml(msg.sender)} &bull; Application ${msg.appId}
+            </span>
+            <span class="text-[10px] text-brandSlate font-semibold">${msg.timestamp}</span>
+          </div>
+          <p class="text-xs text-brandDarkSlate leading-relaxed">${escapeHtml(msg.text)}</p>
+        </div>
+      `).join('');
+    }
+
+    // --- RENDERING PERSONNEL / STAFF TABLE ---
+    function renderStaffTable() {
+      updateGlobalCounters();
+      const tbody = document.getElementById('staffTableBody');
+      const search = document.getElementById('staffSearch').value.toLowerCase().trim();
+      const filter = document.getElementById('staffFilterStatus').value;
+
+      let filtered = applications.filter(app => {
+        const matchesSearch = 
+          app.fullName.toLowerCase().includes(search) ||
+          app.studentId.toLowerCase().includes(search) ||
+          app.program.toLowerCase().includes(search) ||
+          app.scholarship.toLowerCase().includes(search) ||
+          app.id.toLowerCase().includes(search);
+
+        const matchesFilter = filter === 'All' || app.status === filter;
+        return matchesSearch && matchesFilter;
+      });
+
+      document.getElementById('recordCountLabel').textContent = `Showing ${filtered.length} of ${applications.length} records`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center py-12 text-brandSlate">
+              <i data-lucide="inbox" class="w-10 h-10 text-gray-300 mx-auto mb-2"></i>
+              <p class="font-bold">No applications match the specified criteria.</p>
+              <p class="text-xs">Try clearing search inputs or click "Load Seed Demo Data".</p>
+            </td>
+          </tr>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(app => `
+        <tr class="hover:bg-gray-50/80 transition">
+          <td class="p-4">
+            <div class="font-extrabold text-brandNavy text-sm">${escapeHtml(app.fullName)}</div>
+            <div class="text-xs text-brandSlate font-medium">ID: ${escapeHtml(app.studentId)} &bull; ${escapeHtml(app.email)}</div>
+            <div class="text-[11px] text-gray-500 mt-0.5">${escapeHtml(app.campus)} &bull; ${escapeHtml(app.program)} (${escapeHtml(app.year)})</div>
+            <div class="text-[11px] font-semibold text-brandGreen mt-1">GWA: ${app.gwa} | Inc: ₱${app.income.toLocaleString()}</div>
+          </td>
+
+          <td class="p-4">
+            <div class="font-bold text-brandDarkSlate">${escapeHtml(app.scholarship)}</div>
+            <div class="text-[11px] text-brandGreen font-bold">Ref: ${app.id}</div>
+            <div class="text-[10px] text-brandSlate">Submitted: ${app.submittedAt}</div>
+          </td>
+
+          <td class="p-4">
+            <div class="space-y-1 text-[11px]">
+              <div class="flex items-center gap-1.5 ${app.checklist.indigency ? 'text-emerald-700 font-bold' : 'text-gray-400'}">
+                <i data-lucide="${app.checklist.indigency ? 'check-square' : 'square'}" class="w-3.5 h-3.5"></i>
+                Indigency/ITR
+              </div>
+              <div class="flex items-center gap-1.5 ${app.checklist.form138 ? 'text-emerald-700 font-bold' : 'text-gray-400'}">
+                <i data-lucide="${app.checklist.form138 ? 'check-square' : 'square'}" class="w-3.5 h-3.5"></i>
+                Form 138/Grades
+              </div>
+              <div class="flex items-center gap-1.5 ${app.checklist.coe ? 'text-emerald-700 font-bold' : 'text-gray-400'}">
+                <i data-lucide="${app.checklist.coe ? 'check-square' : 'square'}" class="w-3.5 h-3.5"></i>
+                Certificate of Enrolment
+              </div>
+              <div class="flex items-center gap-1.5 ${app.checklist.goodMoral ? 'text-emerald-700 font-bold' : 'text-gray-400'}">
+                <i data-lucide="${app.checklist.goodMoral ? 'check-square' : 'square'}" class="w-3.5 h-3.5"></i>
+                Good Moral
+              </div>
+            </div>
+            ${app.notes ? `<div class="mt-2 p-1.5 bg-amber-50 border border-amber-200 rounded text-[10px] text-amber-900"><strong>Note:</strong> ${escapeHtml(app.notes)}</div>` : ''}
+          </td>
+
+          <td class="p-4">
+            ${getStatusBadgeHtml(app.status)}
+            <div class="text-[10px] text-brandSlate mt-1.5">Last updated: ${app.updatedAt}</div>
+          </td>
+
+          <td class="p-4 text-right">
+            <div class="flex flex-col sm:flex-row items-end sm:items-center justify-end gap-1.5">
+              <select onchange="updateAppStatus('${app.id}', this.value)" class="text-xs px-2.5 py-1.5 rounded-lg border border-gray-300 font-bold bg-white text-brandDarkSlate focus:ring-2 focus:ring-brandGreen">
+                <option value="" disabled selected>Update Status...</option>
+                <option value="Under Verification">Verify Details</option>
+                <option value="Requirements Checked">Check Requirements</option>
+                <option value="Requirements Need Correction">Request Correction</option>
+                <option value="Approved for Committee Review">Approve Application</option>
+              </select>
+              
+              <button onclick="openMessageModal('${app.id}')" class="px-3 py-1.5 bg-brandNavy text-white hover:bg-slate-800 rounded-lg font-bold text-xs flex items-center gap-1 shadow-sm">
+                <i data-lucide="message-square" class="w-3.5 h-3.5 text-brandAccent"></i>
+                Message
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // --- PERSONNEL ACTIONS ---
+    function updateAppStatus(id, newStatus) {
+      if (!newStatus) return;
+      const app = applications.find(x => x.id === id);
+      if (!app) return;
+
+      app.status = newStatus;
+      app.updatedAt = new Date().toLocaleString();
+
+      // System notification auto-log
+      let systemMsg = '';
+      if (newStatus === 'Under Verification') {
+        systemMsg = 'Your application is now undergoing official verification by NVSU scholarship staff.';
+      } else if (newStatus === 'Requirements Checked') {
+        systemMsg = 'All submitted requirements have been checked and verified as complete.';
+      } else if (newStatus === 'Requirements Need Correction') {
+        systemMsg = 'Action Required: One or more submitted requirements need correction or re-submission. Please check message history.';
+      } else if (newStatus === 'Approved for Committee Review') {
+        systemMsg = 'Congratulations! Your application has been verified and forwarded for final committee evaluation.';
+      }
+
+      if (systemMsg) {
+        app.messages.unshift({
+          sender: 'NVSU Scholarship Personnel (System)',
+          text: systemMsg,
+          timestamp: new Date().toLocaleString()
+        });
+      }
+
+      saveData();
+      renderStaffTable();
+      showToast(`Status updated to: ${newStatus}`);
+    }
+
+    // --- MESSAGE MODAL LOGIC ---
+    function openMessageModal(id) {
+      const app = applications.find(x => x.id === id);
+      if (!app) return;
+
+      activeMsgAppId = id;
+      document.getElementById('modalTargetInfo').textContent = `To: ${app.fullName} (${app.studentId}) — Scholarship: ${app.scholarship}`;
+      document.getElementById('modalMsgText').value = '';
+      document.getElementById('messageModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeMessageModal() {
+      activeMsgAppId = null;
+      document.getElementById('messageModal').classList.add('hidden');
+    }
+
+    function submitPersonnelMessage() {
+      const text = document.getElementById('modalMsgText').value.trim();
+      if (!text || !activeMsgAppId) return;
+
+      const app = applications.find(x => x.id === activeMsgAppId);
+      if (app) {
+        if (!app.messages) app.messages = [];
+        app.messages.unshift({
+          sender: 'NVSU Scholarship Officer',
+          text: text,
+          timestamp: new Date().toLocaleString()
+        });
+
+        saveData();
+        closeMessageModal();
+        showToast('Message sent to applicant.');
+        renderStaffTable();
+      }
+    }
+
+    // --- METRICS & COUNTERS ---
+    function updateGlobalCounters() {
+      document.getElementById('statTotalApps').textContent = applications.length;
+
+      const total = applications.length;
+      const verification = applications.filter(a => a.status === 'Under Verification').length;
+      const checked = applications.filter(a => a.status === 'Requirements Checked').length;
+      const correction = applications.filter(a => a.status === 'Requirements Need Correction').length;
+      const approved = applications.filter(a => a.status === 'Approved for Committee Review').length;
+
+      document.getElementById('staffStatTotal').textContent = total;
+      document.getElementById('staffStatVerification').textContent = verification;
+      document.getElementById('staffStatChecked').textContent = checked;
+      document.getElementById('staffStatCorrection').textContent = correction;
+      document.getElementById('staffStatApproved').textContent = approved;
+    }
+    function renderAllViews() {
+      renderStudentViews();
+      renderStaffTable();
+    }
+
+    // --- SEED DEMO DATA ---
+    function seedDemoData() {
+      applications = [
+        {
+          id: 'NVSU-882101',
+          fullName: 'Alora Yzabel Milanes',
+          studentId: '2024-BAY-0042',
+          email: 'alora.milanes@nvsu.edu.ph',
+          campus: 'Bayombong Campus',
+          program: 'Bachelor of Science in Information Technology',
+          year: '3rd Year',
+          gwa: '1.25',
+          income: 18000,
+          scholarship: 'CHED Tulong Dunong Program (TDP)',
+          checklist: { indigency: true, form138: true, coe: true, goodMoral: true },
+          notes: 'Submitted updated Certificate of Indigency from barangay.',
+          status: 'Requirements Checked',
+          submittedAt: '10/24/2026, 9:30:00 AM',
+          updatedAt: '10/25/2026, 2:15:00 PM',
+          messages: [
+            {
+              sender: 'NVSU Scholarship Personnel (System)',
+              text: 'All submitted requirements have been checked and verified as complete.',
+              timestamp: '10/25/2026, 2:15:00 PM'
+            }
+          ]
+        },
+        {
+          id: 'NVSU-882102',
+          fullName: 'Eleinjon Puwoc',
+          studentId: '2024-BAM-0199',
+          email: 'eleinjon.puwoc@nvsu.edu.ph',
+          campus: 'Bambang Campus',
+          program: 'Bachelor of Science in Computer Science',
+          year: '2nd Year',
+          gwa: '1.40',
+          income: 12000,
+          scholarship: 'Tertiary Education Subsidy (TES)',
+          checklist: { indigency: true, form138: false, coe: true, goodMoral: true },
+          notes: 'Awaiting official grade slip for previous term.',
+          status: 'Requirements Need Correction',
+          submittedAt: '10/26/2026, 11:00:00 AM',
+          updatedAt: '10/27/2026, 10:00:00 AM',
+          messages: [
+            {
+              sender: 'NVSU Scholarship Officer',
+              text: 'Please submit a clear copy of your Form 138 / Transcript of Records before Friday.',
+              timestamp: '10/27/2026, 10:00:00 AM'
+            }
+          ]
+        },
+        {
+          id: 'NVSU-882103',
+          fullName: 'Janelle Esmino',
+          studentId: '2024-BAY-0011',
+          email: 'janelle.esmino@nvsu.edu.ph',
+          campus: 'Bayombong Campus',
+          program: 'Bachelor of Science in Agriculture',
+          year: '4th Year',
+          gwa: '1.15',
+          income: 22000,
+          scholarship: 'NVSU Honor & Academic Excellence Grant',
+          checklist: { indigency: true, form138: true, coe: true, goodMoral: true },
+          notes: 'Applying for Academic Dean\'s List scholarship honor.',
+          status: 'Approved for Committee Review',
+          submittedAt: '10/20/2026, 8:00:00 AM',
+          updatedAt: '10/22/2026, 4:00:00 PM',
+          messages: [
+            {
+              sender: 'NVSU Scholarship Personnel (System)',
+              text: 'Congratulations! Your application has been verified and forwarded for final committee evaluation.',
+              timestamp: '10/22/2026, 4:00:00 PM'
+            }
+          ]
+        }
+      ];
+
+      saveData();
+      renderAllViews();
+      showToast('Seed demo applications loaded successfully!');
+    }
+
+    // --- TOAST NOTIFICATIONS ---
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.textContent = msg;
+
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Utility XSS Escaper
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>"']/g, c => {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+  </script>
+</body>
+</html>
