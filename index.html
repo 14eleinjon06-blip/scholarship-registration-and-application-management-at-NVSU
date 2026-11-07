@@ -71,7 +71,7 @@ tr:last-child td{border-bottom:0}
 .status.Approved{background:#e6f6ed;color:#167044}
 .status.Rejected{background:#ffeded;color:#ae2b26}
 .status.Submitted,.status.Pending{background:#fff4d9;color:#8a5b00}
-.status.Under\ Review{background:#e9f1ff;color:#2255a1}
+.status['Under Review']{background:#e9f1ff;color:#2255a1}
 .scholarship-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .scholarship{border:1px solid var(--line);border-radius:12px;padding:17px}
 .scholarship h4{margin:0 0 7px;color:var(--navy)}
@@ -111,23 +111,53 @@ tr:last-child td{border-bottom:0}
 }
 .logo{height:54px;width:54px;display:block;object-fit:contain}
 @media(max-width:560px){.logo{height:44px;width:44px}}
-/* NVSU Bayombong official green-and-yellow theme */
-.logo{height:54px;width:54px;display:block;object-fit:contain;flex:0 0 54px;background:#fff;border:2px solid var(--gold);border-radius:50%;padding:2px}
-.topbar{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
-.brand strong{color:#fff}
-.brand span{color:#e9f2dc}
-.welcome h1,.auth-card h2,.page-head h1,.stat strong,.panel h3,.scholarship h4{color:var(--navy)}
-.welcome .eyebrow{color:var(--green)}
-.primary{background:var(--blue);color:#fff;border:1px solid var(--blue)}
-.primary:hover{background:var(--navy)}
-.nav-btn:hover,.nav-btn.active{background:var(--pale);color:var(--blue)}
-@media(max-width:560px){.logo{height:44px;width:44px;flex-basis:44px}.topbar{height:70px}}
+/* FPES / SIAS look: slate background, white text, mint-green accents */
+:root{color-scheme:dark;--bg:#666675;--navy:#fff;--blue:#69bf92;--blue2:#8fd3ae;--pale:rgba(255,255,255,.1);--ink:#f4f4f8;--muted:#c6c6d1;--line:rgba(255,255,255,.22);--shadow:none}
+body{background:var(--bg);font-family:"Source Sans 3","Source Sans Pro","Segoe UI",Arial,sans-serif;font-size:16px}
+.topbar{height:92px;background:transparent;border-bottom:1px solid rgba(255,255,255,.35)}
+.brand strong{font-weight:700;letter-spacing:0}
+.brand span{color:#fff}
+@media(min-width:700px){.brand div>strong,.brand div>span{display:inline}.brand div>span{margin-left:8px;font-size:15px}.brand strong{font-size:15px}}
+.login-layout{grid-template-columns:1fr;justify-items:center;text-align:center;gap:30px;min-height:auto;padding:56px 0}
+.welcome h1{font-weight:400;color:#fff;font-size:clamp(34px,5vw,58px)}
+.welcome p{margin:0 auto;color:#d9d9e2}
+.welcome .eyebrow{color:#9fe0bd}
+.feature-list{justify-content:center}
+.feature-list span{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+.auth-card{width:100%;max-width:520px;text-align:left}
+.card,.panel,.stat,.sidebar,.scholarship{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);box-shadow:none}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.35);color:#fff}
+.field input::placeholder,.field textarea::placeholder{color:#c6c6d1}
+.field input:disabled{opacity:.7}
+option{background:#4d4d5a;color:#fff}
+.primary{background:var(--blue);border:1px solid #8fd3ae;color:#fff}
+.primary:hover{background:#58ad81}
+.secondary{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
+.top-actions .secondary,.top-actions .primary{background:transparent;border:0;color:#fff;font-size:16px;font-weight:600}
+.top-actions button:hover{background:transparent;text-decoration:underline}
+.nav-btn{color:#ececf2}
+.nav-btn:hover,.nav-btn.active{background:rgba(105,191,146,.28);color:#fff}
+th{background:rgba(255,255,255,.1);color:#e0e0e8}
+.scholarship .meta{color:#e0e0e8}
+.side-title{color:#c6c6d1}
+.notice{background:rgba(244,194,13,.16);border-color:rgba(244,194,13,.5);color:#ffe9a3}
+.footer{color:#d0d0da}
+.toast{background:#3f8f67}
+.tl{color:#fff;text-decoration:none;font-weight:600;padding:8px 10px}
+.tl:hover{text-decoration:underline}
+.footer{line-height:1.7;border-top:1px solid rgba(255,255,255,.25);margin-top:30px}
+.pick{width:100%;max-width:600px;margin:6px auto 0}
+#portalChoice{width:100%;appearance:none;-webkit-appearance:none;background:#69bf92 url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 5l6 6 6-6' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 18px center/16px;color:#fff;border:2px solid #8fd3ae;border-radius:10px;padding:15px 48px 15px 18px;font-size:17px;font-weight:600;cursor:pointer;text-align:left}
+#portalChoice:focus{outline:none;border-color:#fff}
+#portalChoice option{background:#69bf92;color:#fff}
+@media(max-width:900px){.tl{display:none}}
+@media(max-width:560px){.topbar{height:70px}.login-layout{padding:28px 0}}
 </style>
 </head>
 <body>
 <header class="topbar">
  <div class="brand">
-  <img class="logo" src="nvsu-logo.jpg" alt="NVSU seal">
+  <img class="logo" src="./nvsu-logo.png" alt="NVSU seal">
   <div><strong>NUEVA VIZCAYA STATE UNIVERSITY</strong><span>Bayombong Campus · Scholarship Portal</span></div>
  </div>
  <div class="top-actions">
@@ -136,7 +166,6 @@ tr:last-child td{border-bottom:0}
   <button class="secondary hidden" id="logoutTop" onclick="logout()">Log out</button>
  </div>
 </header>
-
 <main id="authView" class="page">
  <div class="login-layout">
   <section class="welcome">
@@ -152,39 +181,21 @@ tr:last-child td{border-bottom:0}
     </select>
    </div>
   </section>
-
   <section class="card auth-card" id="loginCard">
    <h2>Welcome back</h2>
    <p>Sign in using your registered email address.</p>
    <form id="loginForm">
-    <div class="field">
-     <label for="loginEmail">Email address</label>
-     <input id="loginEmail" type="email" placeholder="name@example.com" required autocomplete="username">
-    </div>
-    <div class="field">
-     <label for="loginPassword">Password</label>
-     <input id="loginPassword" type="password" placeholder="Enter your password" required autocomplete="current-password">
-    </div>
-    <div class="field">
-     <label for="loginRole">Sign in as</label>
-     <select id="loginRole" required>
-      <option value="student">Student</option>
-      <option value="admin">Scholarship Personnel</option>
-     </select>
-    </div>
+    <div class="field"><label for="loginEmail">Email address</label><input id="loginEmail" type="email" placeholder="name@example.com" required autocomplete="username"></div>
+    <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" placeholder="Enter your password" required autocomplete="current-password"></div>
+    <div class="field"><label for="loginRole">Sign in as</label><select id="loginRole" required><option value="student">Student</option><option value="admin">Scholarship Personnel</option></select></div>
     <button class="primary" type="submit">Log in to portal</button>
    </form>
    <div class="auth-links">
     <button class="link" onclick="showAuth('register')">Create student account</button>
     <button class="link" onclick="forgotPassword()">Forgot password?</button>
    </div>
-   <div class="notice">
-    <strong>Personnel demo account</strong><br>
-    Email: scholarship.admin@nvsu.edu.ph<br>
-    Password: NvsuAdmin2026!
-   </div>
+   <div class="notice"><strong>Personnel demo account</strong><br>Email: scholarship.admin@nvsu.edu.ph<br>Password: NvsuAdmin2026!</div>
   </section>
-
   <section class="card auth-card hidden" id="registerCard">
    <h2>Create student account</h2>
    <p>Register with your active email address.</p>
@@ -217,437 +228,71 @@ tr:last-child td{border-bottom:0}
      </select>
     </div>
     <div class="form-grid">
-     <div class="field">
-      <label>Year level</label>
-      <select id="regYear">
-       <option>1st Year</option>
-       <option>2nd Year</option>
-       <option>3rd Year</option>
-       <option>4th Year</option>
-      </select>
-     </div>
+     <div class="field"><label>Year level</label><select id="regYear"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></div>
      <div class="field"><label>Campus</label><input value="Bayombong" disabled></div>
     </div>
     <label class="small"><input type="checkbox" required> I agree to the Terms and Data Privacy Notice.</label>
     <button class="primary" type="submit">Register</button>
     <button class="secondary" type="reset" style="width:100%;margin-top:8px">Clear</button>
    </form>
-   <div class="auth-links">
-    <span>Already registered?</span>
-    <button class="link" onclick="showAuth('login')">Back to login</button>
-   </div>
+   <div class="auth-links"><span>Already registered?</span><button class="link" onclick="showAuth('login')">Back to login</button></div>
   </section>
  </div>
 </main>
-
 <div id="appView" class="app hidden">
  <aside class="sidebar" id="sidebar"></aside>
  <main class="content" id="content"></main>
 </div>
-
-<div class="footer" id="footer">
- Nueva Vizcaya State University · Bayombong Campus · Scholarship Portal<br>
- Quezon St., Bayombong, Nueva Vizcaya · (078) 392-1111 · info@nvsu.edu.ph
-</div>
+<div class="footer" id="footer">Nueva Vizcaya State University · Bayombong Campus · Scholarship Portal<br>Quezon St., Bayombong, Nueva Vizcaya · (078) 392-1111 · info@nvsu.edu.ph</div>
 <div id="toast" class="toast hidden" role="status"></div>
-
 <script>
 const KEY='nvsuScholarshipPortal_v1';
 const ADMIN_EMAIL='scholarship.admin@nvsu.edu.ph', ADMIN_PASS='NvsuAdmin2026!';
-
 const defaultScholarships=[
  {id:'SCH-001',name:'Academic Excellence Scholarship',sponsor:'University',eligibility:'For qualified students with strong academic standing. Final criteria subject to personnel verification.',benefit:'Based on approved scholarship guidelines',deadline:'2026-11-30',status:'Open'},
  {id:'SCH-002',name:'Financial Assistance Program',sponsor:'Partner / Government Program',eligibility:'For eligible students who can provide the required financial documents.',benefit:'Based on available program assistance',deadline:'2026-12-10',status:'Open'},
  {id:'SCH-003',name:'Student Support Grant',sponsor:'University / External Sponsor',eligibility:'For students who meet the published program requirements.',benefit:'Subject to sponsor guidelines',deadline:'2026-12-15',status:'Open'}
 ];
-
-function load(){
- try{return JSON.parse(localStorage.getItem(KEY))||{users:[],applications:[],scholarships:defaultScholarships}}
- catch(e){return {users:[],applications:[],scholarships:defaultScholarships}}
-}
-
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{users:[],applications:[],scholarships:defaultScholarships}}catch(e){return {users:[],applications:[],scholarships:defaultScholarships}}}
 let db=load(), current=null, activePage='dashboard';
-
 function save(){localStorage.setItem(KEY,JSON.stringify(db))}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function toast(msg){
- const t=document.getElementById('toast');
- t.textContent=msg;
- t.classList.remove('hidden');
- setTimeout(()=>t.classList.add('hidden'),3000);
-}
-
-function showAuth(which){
- document.getElementById('authView').classList.remove('hidden');
- document.getElementById('appView').classList.add('hidden');
- document.getElementById('footer').classList.remove('hidden');
- document.getElementById('loginCard').classList.toggle('hidden',which!=='login');
- document.getElementById('registerCard').classList.toggle('hidden',which!=='register');
- document.getElementById('topLogin').classList.toggle('hidden',which==='login');
- document.getElementById('topRegister').classList.toggle('hidden',which==='register');
- document.getElementById('logoutTop').classList.add('hidden');
-}
-
-document.getElementById('loginForm').addEventListener('submit',e=>{
- e.preventDefault();
- const email=document.getElementById('loginEmail').value.trim().toLowerCase();
- const pass=document.getElementById('loginPassword').value;
- const role=document.getElementById('loginRole').value;
-
- if(role==='admin'){
-  if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){
-   current={role:'admin',name:'Scholarship Personnel',email};
-   enterApp();
-  }else toast('Personnel login details are incorrect.');
- }else{
-  const user=db.users.find(u=>u.email.toLowerCase()===email&&u.password===pass);
-  if(user){
-   current={...user,role:'student'};
-   enterApp();
-  }else toast('Account not found or password is incorrect.');
- }
-});
-
-document.getElementById('registerForm').addEventListener('submit',e=>{
- e.preventDefault();
- const name=(document.getElementById('regFirst').value.trim()+' '+document.getElementById('regLast').value.trim());
- const id=document.getElementById('regId').value.trim();
- const email=document.getElementById('regEmail').value.trim().toLowerCase();
- const password=document.getElementById('regPassword').value;
-
- if(password!==document.getElementById('regConfirm').value){
-  toast('Passwords do not match.');
-  return;
- }
- if(db.users.some(u=>u.email.toLowerCase()===email||u.studentId===id)){
-  toast('Email or Student ID is already registered.');
-  return;
- }
-
- const user={
-  id:'USR-'+Date.now(),
-  name,
-  studentId:id,
-  email,
-  password,
-  program:document.getElementById('regProgram').value,
-  year:document.getElementById('regYear').value,
-  campus:'Bayombong',
-  dob:document.getElementById('regDob').value
- };
-
- db.users.push(user);
- save();
- current={...user,role:'student'};
- enterApp();
- toast('Student account created.');
-});
-
-function forgotPassword(){
- toast('For this demo, contact the Scholarship Personnel to reset your password.');
-}
-
-function logout(){
- current=null;
- showAuth('login');
- document.getElementById('loginForm').reset();
- toast('You have logged out.');
-}
-
-function enterApp(){
- document.getElementById('authView').classList.add('hidden');
- document.getElementById('appView').classList.remove('hidden');
- document.getElementById('footer').classList.add('hidden');
- document.getElementById('topLogin').classList.add('hidden');
- document.getElementById('topRegister').classList.add('hidden');
- document.getElementById('logoutTop').classList.remove('hidden');
- activePage='dashboard';
- render();
-}
-
-function navItems(){
- return current.role==='admin'
- ?[['dashboard','Dashboard'],['applications','Applications'],['students','Student Records'],['scholarships','Scholarship Management'],['reports','Reports']]
- :[['dashboard','Dashboard'],['profile','My Profile'],['scholarships','Available Scholarships'],['apply','Scholarship Application'],['applications','My Applications'],['notifications','Notifications']];
-}
-
-function render(){
- const items=navItems();
- document.getElementById('sidebar').innerHTML=
- '<div class="side-title">'+(current.role==='admin'?'Scholarship Personnel':'Student Portal')+'</div>'+
- items.map(([id,label])=>`<button class="nav-btn ${activePage===id?'active':''}" onclick="go('${id}')">${label}</button>`).join('')+
- `<div class="userbox"><strong>${esc(current.name)}</strong><span>${esc(current.email)}<br>${current.role==='admin'?'Personnel':esc(current.studentId||'Student')}</span></div>`;
-
- const pages=current.role==='admin'?adminPages:studentPages;
- document.getElementById('content').innerHTML=(pages[activePage]||pages.dashboard)();
- document.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click',handleAction));
-}
-
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3000)}
+function showAuth(which){document.getElementById('authView').classList.remove('hidden');document.getElementById('appView').classList.add('hidden');document.getElementById('footer').classList.remove('hidden');document.getElementById('loginCard').classList.toggle('hidden',which!=='login');document.getElementById('registerCard').classList.toggle('hidden',which!=='register');document.getElementById('topLogin').classList.toggle('hidden',which==='login');document.getElementById('topRegister').classList.toggle('hidden',which==='register');document.getElementById('logoutTop').classList.add('hidden')}
+document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();const email=document.getElementById('loginEmail').value.trim().toLowerCase(),pass=document.getElementById('loginPassword').value,role=document.getElementById('loginRole').value;if(role==='admin'){if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){current={role:'admin',name:'Scholarship Personnel',email};enterApp()}else toast('Personnel login details are incorrect.')}else{const user=db.users.find(u=>u.email.toLowerCase()===email&&u.password===pass);if(user){current={...user,role:'student'};enterApp()}else toast('Account not found or password is incorrect.')}});
+document.getElementById('registerForm').addEventListener('submit',e=>{e.preventDefault();const name=(document.getElementById('regFirst').value.trim()+' '+document.getElementById('regLast').value.trim()),id=document.getElementById('regId').value.trim(),email=document.getElementById('regEmail').value.trim().toLowerCase(),password=document.getElementById('regPassword').value;if(password!==document.getElementById('regConfirm').value){toast('Passwords do not match.');return}if(db.users.some(u=>u.email.toLowerCase()===email||u.studentId===id)){toast('Email or Student ID is already registered.');return}const user={id:'USR-'+Date.now(),name,studentId:id,email,password,program:document.getElementById('regProgram').value,year:document.getElementById('regYear').value,campus:'Bayombong',dob:document.getElementById('regDob').value};db.users.push(user);save();current={...user,role:'student'};enterApp();toast('Student account created.')} );
+function forgotPassword(){toast('For this demo, contact the Scholarship Personnel to reset your password.')}
+function logout(){current=null;showAuth('login');document.getElementById('loginForm').reset();toast('You have logged out.')}
+function enterApp(){document.getElementById('authView').classList.add('hidden');document.getElementById('appView').classList.remove('hidden');document.getElementById('footer').classList.add('hidden');document.getElementById('topLogin').classList.add('hidden');document.getElementById('topRegister').classList.add('hidden');document.getElementById('logoutTop').classList.remove('hidden');activePage='dashboard';render()}
+function navItems(){return current.role==='admin'?[['dashboard','Dashboard'],['applications','Applications'],['students','Student Records'],['scholarships','Scholarship Management'],['reports','Reports']]:[['dashboard','Dashboard'],['profile','My Profile'],['scholarships','Available Scholarships'],['apply','Scholarship Application'],['applications','My Applications'],['notifications','Notifications']]}
+function render(){const items=navItems();document.getElementById('sidebar').innerHTML='<div class="side-title">'+(current.role==='admin'?'Scholarship Personnel':'Student Portal')+'</div>'+items.map(([id,label])=>`<button class="nav-btn ${activePage===id?'active':''}" onclick="go('${id}')">${label}</button>`).join('')+`<div class="userbox"><strong>${esc(current.name)}</strong><span>${esc(current.email)}<br>${current.role==='admin'?'Personnel':esc(current.studentId||'Student')}</span></div>`;const pages=current.role==='admin'?adminPages:studentPages;document.getElementById('content').innerHTML=(pages[activePage]||pages.dashboard)();document.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click',handleAction))}
 function go(page){activePage=page;render()}
 function head(title,sub,action=''){return `<div class="page-head"><div><h1>${title}</h1><p>${sub}</p></div>${action}</div>`}
 function stat(label,value){return `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`}
 function status(s){return `<span class="status ${esc(s)}">${esc(s)}</span>`}
 function studentApps(){return db.applications.filter(a=>a.userId===current.id)}
-
 const studentPages={
- dashboard:()=>{
-  const apps=studentApps();
-  return head('Student Dashboard',`Welcome, ${esc(current.name)}. Here is your scholarship portal overview.`)+
-  `<div class="grid">
-  ${stat('Available scholarships',db.scholarships.filter(s=>s.status==='Open').length)}
-  ${stat('My applications',apps.length)}
-  ${stat('Approved',apps.filter(a=>a.status==='Approved').length)}
-  ${stat('For review',apps.filter(a=>['Submitted','Under Review'].includes(a.status)).length)}
-  </div>
-  <div class="panel"><h3>Quick access</h3>
-  <button class="primary" onclick="go('scholarships')">Browse scholarships</button>
-  <button class="secondary" onclick="go('apply')">Start an application</button></div>
-  <div class="panel"><h3>Recent applications</h3>${appTable(apps.slice().reverse().slice(0,5),false)}</div>`;
- },
-
- profile:()=>head('My Profile','Review your registered student information.')+
- `<div class="panel"><form id="profileForm" class="form-grid">
- <div class="field"><label>Full name</label><input name="name" value="${esc(current.name)}" required></div>
- <div class="field"><label>Student ID</label><input value="${esc(current.studentId)}" disabled></div>
- <div class="field"><label>Email</label><input value="${esc(current.email)}" disabled></div>
- <div class="field"><label>Program</label><input value="${esc(current.program)}" disabled></div>
- <div class="field"><label>Year level</label><input value="${esc(current.year)}" disabled></div>
- <div class="field"><label>Campus</label><input value="Bayombong" disabled></div>
- <div class="wide"><button class="primary">Save profile name</button></div>
- </form></div>`,
-
- scholarships:()=>head('Available Scholarships','Review the opportunities currently listed by Scholarship Personnel.')+
- `<div class="scholarship-grid">${db.scholarships.map(s=>`
- <article class="scholarship">
- <h4>${esc(s.name)}</h4>
- <p>${esc(s.eligibility)}</p>
- <div class="meta">
- <b>Sponsor:</b> ${esc(s.sponsor)}<br>
- <b>Benefit:</b> ${esc(s.benefit)}<br>
- <b>Deadline:</b> ${esc(s.deadline)}<br>
- <b>Status:</b> ${status(s.status)}
- </div>
- ${s.status==='Open'?`<button class="primary" onclick="go('apply');document.getElementById('applyScholarship').value='${esc(s.id)}'">Apply now</button>`:''}
- </article>`).join('')}</div>`,
-
- apply:()=>head('Scholarship Application','Complete the form and attach the required documents.')+
- `<div class="panel"><form id="applicationForm">
- <div class="field"><label>Scholarship</label>
- <select id="applyScholarship" required>
- <option value="">Select scholarship</option>
- ${db.scholarships.filter(s=>s.status==='Open').map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('')}
- </select></div>
- <div class="field"><label>Statement of purpose</label>
- <textarea id="statement" rows="4" minlength="30" required placeholder="Explain why you are applying..."></textarea></div>
- <div class="form-grid">
- <div class="field"><label>Certificate of Registration (file name)</label><input id="cor" required placeholder="e.g. COR_2026.pdf"></div>
- <div class="field"><label>Copy of Grades (file name)</label><input id="grades" required placeholder="e.g. Grades.pdf"></div>
- <div class="field"><label>Proof of Income (file name, if required)</label><input id="income" placeholder="e.g. Income.pdf"></div>
- <div class="field"><label>Other supporting document (file name)</label><input id="otherDoc" placeholder="Optional"></div>
- </div>
- <p class="muted small">This demonstration records document names only. Real file uploads require secure server-side storage.</p>
- <label class="small"><input type="checkbox" required> I certify that the information I provided is true and allow the authorized personnel to verify my requirements.</label>
- <p><button class="primary">Submit application</button></p>
- </form></div>`,
-
- applications:()=>head('My Applications','Check the current status and remarks for your submissions.')+
- `<div class="panel">${appTable(studentApps().slice().reverse(),true)}</div>`,
-
- notifications:()=>head('Notifications','Updates related to your scholarship applications.')+
- `<div class="panel">${studentApps().length?studentApps().slice().reverse().map(a=>`
- <p><b>${esc(a.reference)}</b> — ${status(a.status)}<br>
- <span class="muted small">${esc(a.remarks||'Your application has been received.')}</span></p><hr>
- `).join(''):'<div class="empty">No notifications yet.</div>'}</div>`
+ dashboard:()=>{const apps=studentApps();return head('Student Dashboard',`Welcome, ${esc(current.name)}. Here is your scholarship portal overview.`)+`<div class="grid">${stat('Available scholarships',db.scholarships.filter(s=>s.status==='Open').length)}${stat('My applications',apps.length)}${stat('Approved',apps.filter(a=>a.status==='Approved').length)}${stat('For review',apps.filter(a=>['Submitted','Under Review'].includes(a.status)).length)}</div><div class="panel"><h3>Quick access</h3><button class="primary" onclick="go('scholarships')">Browse scholarships</button> <button class="secondary" onclick="go('apply')">Start an application</button></div><div class="panel"><h3>Recent applications</h3>${appTable(apps.slice().reverse().slice(0,5),false)}</div>`},
+ profile:()=>head('My Profile','Review your registered student information.')+`<div class="panel"><form id="profileForm" class="form-grid"><div class="field"><label>Full name</label><input name="name" value="${esc(current.name)}" required></div><div class="field"><label>Student ID</label><input value="${esc(current.studentId)}" disabled></div><div class="field"><label>Email</label><input value="${esc(current.email)}" disabled></div><div class="field"><label>Program</label><input value="${esc(current.program)}" disabled></div><div class="field"><label>Year level</label><input value="${esc(current.year)}" disabled></div><div class="field"><label>Campus</label><input value="Bayombong" disabled></div><div class="wide"><button class="primary">Save profile name</button></div></form></div>`,
+ scholarships:()=>head('Available Scholarships','Review the opportunities currently listed by Scholarship Personnel.')+`<div class="scholarship-grid">${db.scholarships.map(s=>`<article class="scholarship"><h4>${esc(s.name)}</h4><p>${esc(s.eligibility)}</p><div class="meta"><b>Sponsor:</b> ${esc(s.sponsor)}<br><b>Benefit:</b> ${esc(s.benefit)}<br><b>Deadline:</b> ${esc(s.deadline)}<br><b>Status:</b> ${status(s.status)}</div>${s.status==='Open'?`<button class="primary" onclick="go('apply');document.getElementById('applyScholarship').value='${esc(s.id)}'">Apply now</button>`:''}</article>`).join('')}</div>`,
+ apply:()=>head('Scholarship Application','Complete the form and attach the required documents.')+`<div class="panel"><form id="applicationForm"><div class="field"><label>Scholarship</label><select id="applyScholarship" required><option value="">Select scholarship</option>${db.scholarships.filter(s=>s.status==='Open').map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('')}</select></div><div class="field"><label>Statement of purpose</label><textarea id="statement" rows="4" minlength="30" required placeholder="Explain why you are applying..."></textarea></div><div class="form-grid"><div class="field"><label>Certificate of Registration (file name)</label><input id="cor" required placeholder="e.g. COR_2026.pdf"></div><div class="field"><label>Copy of Grades (file name)</label><input id="grades" required placeholder="e.g. Grades.pdf"></div><div class="field"><label>Proof of Income (file name, if required)</label><input id="income" placeholder="e.g. Income.pdf"></div><div class="field"><label>Other supporting document (file name)</label><input id="otherDoc" placeholder="Optional"></div></div><p class="muted small">This demonstration records document names only. Real file uploads require secure server-side storage.</p><label class="small"><input type="checkbox" required> I certify that the information I provided is true and allow the authorized personnel to verify my requirements.</label><p><button class="primary">Submit application</button></p></form></div>`,
+ applications:()=>head('My Applications','Check the current status and remarks for your submissions.')+`<div class="panel">${appTable(studentApps().slice().reverse(),true)}</div>`,
+ notifications:()=>head('Notifications','Updates related to your scholarship applications.')+`<div class="panel">${studentApps().length?studentApps().slice().reverse().map(a=>`<p><b>${esc(a.reference)}</b> — ${status(a.status)}<br><span class="muted small">${esc(a.remarks||'Your application has been received.')}</span></p><hr>`).join(''):'<div class="empty">No notifications yet.</div>'}</div>`
 };
-
-function appTable(apps,showRemarks){
- if(!apps.length)return '<div class="empty">No application records found.</div>';
- return `<div class="table-wrap"><table>
- <thead><tr><th>Reference</th><th>Student</th><th>Scholarship</th><th>Date submitted</th><th>Status</th>${showRemarks?'<th>Remarks</th>':''}</tr></thead>
- <tbody>${apps.map(a=>`<tr>
- <td><b>${esc(a.reference)}</b></td>
- <td>${esc(a.studentName)}</td>
- <td>${esc(a.scholarshipName)}</td>
- <td>${esc(a.date)}</td>
- <td>${status(a.status)}</td>
- ${showRemarks?`<td>${esc(a.remarks||'—')}</td>`:''}
- </tr>`).join('')}</tbody></table></div>`;
-}
-
+function appTable(apps,showRemarks){if(!apps.length)return '<div class="empty">No application records found.</div>';return `<div class="table-wrap"><table><thead><tr><th>Reference</th><th>Student</th><th>Scholarship</th><th>Date submitted</th><th>Status</th>${showRemarks?'<th>Remarks</th>':''}</tr></thead><tbody>${apps.map(a=>`<tr><td><b>${esc(a.reference)}</b></td><td>${esc(a.studentName)}</td><td>${esc(a.scholarshipName)}</td><td>${esc(a.date)}</td><td>${status(a.status)}</td>${showRemarks?`<td>${esc(a.remarks||'—')}</td>`:''}</tr>`).join('')}</tbody></table></div>`}
 const adminPages={
- dashboard:()=>head('Personnel Dashboard','Overview of scholarship applications and student accounts.')+
- `<div class="grid">
- ${stat('Registered students',db.users.length)}
- ${stat('Scholarships',db.scholarships.length)}
- ${stat('Applications',db.applications.length)}
- ${stat('Pending review',db.applications.filter(a=>['Submitted','Under Review'].includes(a.status)).length)}
- </div>
- <div class="panel"><h3>Recent applications</h3>${appTable(db.applications.slice().reverse().slice(0,8),false)}</div>`,
-
- applications:()=>head('Application Management','Review submitted applications and update their status.')+
- `<div class="panel">${db.applications.length?`
- <div class="table-wrap"><table>
- <thead><tr><th>Reference</th><th>Student</th><th>Scholarship</th><th>Submitted</th><th>Status</th><th>Action</th></tr></thead>
- <tbody>${db.applications.slice().reverse().map(a=>`<tr>
- <td>${esc(a.reference)}</td>
- <td>${esc(a.studentName)}<br><span class="muted">${esc(a.studentEmail)}</span></td>
- <td>${esc(a.scholarshipName)}</td>
- <td>${esc(a.date)}</td>
- <td>${status(a.status)}</td>
- <td><button class="secondary" data-action="review" data-id="${esc(a.id)}">Review</button></td>
- </tr>`).join('')}</tbody></table></div>
- `:'<div class="empty">No applications have been submitted.</div>'}</div>
- <div id="reviewBox"></div>`,
-
- students:()=>head('Student Records','Registered student accounts in this browser demonstration.')+
- `<div class="panel">${db.users.length?`
- <div class="table-wrap"><table>
- <thead><tr><th>Student ID</th><th>Name</th><th>Email</th><th>Program</th><th>Year</th></tr></thead>
- <tbody>${db.users.map(u=>`<tr>
- <td>${esc(u.studentId)}</td><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${esc(u.program)}</td><td>${esc(u.year)}</td>
- </tr>`).join('')}</tbody></table></div>
- `:'<div class="empty">No student accounts registered yet.</div>'}</div>`,
-
- scholarships:()=>head('Scholarship Management','Add scholarship opportunities or change their availability.')+
- `<div class="panel"><h3>Add scholarship</h3>
- <form id="scholarshipForm" class="form-grid">
- <div class="field"><label>Scholarship name</label><input id="schName" required></div>
- <div class="field"><label>Sponsor</label><input id="schSponsor" required></div>
- <div class="field"><label>Benefit</label><input id="schBenefit" required></div>
- <div class="field"><label>Deadline</label><input id="schDeadline" type="date" required></div>
- <div class="field wide"><label>Eligibility criteria</label><textarea id="schEligibility" required></textarea></div>
- <div class="wide"><button class="primary">Add scholarship</button></div>
- </form></div>
- <div class="panel"><h3>Current scholarships</h3>
- <div class="table-wrap"><table>
- <thead><tr><th>Code</th><th>Name</th><th>Deadline</th><th>Status</th><th>Action</th></tr></thead>
- <tbody>${db.scholarships.map(s=>`<tr>
- <td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.deadline)}</td><td>${status(s.status)}</td>
- <td><button class="secondary" data-action="toggle-scholarship" data-id="${esc(s.id)}">${s.status==='Open'?'Close':'Reopen'}</button></td>
- </tr>`).join('')}</tbody></table></div></div>`,
-
- reports:()=>head('Reports','Summary of applications by current status.')+
- `<div class="grid">
- ${stat('Submitted',db.applications.filter(a=>a.status==='Submitted').length)}
- ${stat('Under review',db.applications.filter(a=>a.status==='Under Review').length)}
- ${stat('Approved',db.applications.filter(a=>a.status==='Approved').length)}
- ${stat('Rejected',db.applications.filter(a=>a.status==='Rejected').length)}
- </div>
- <div class="panel"><h3>Application list</h3>${appTable(db.applications,false)}
- <button class="secondary" onclick="window.print()">Print report</button></div>`
+ dashboard:()=>head('Personnel Dashboard','Overview of scholarship applications and student accounts.')+`<div class="grid">${stat('Registered students',db.users.length)}${stat('Scholarships',db.scholarships.length)}${stat('Applications',db.applications.length)}${stat('Pending review',db.applications.filter(a=>['Submitted','Under Review'].includes(a.status)).length)}</div><div class="panel"><h3>Recent applications</h3>${appTable(db.applications.slice().reverse().slice(0,8),false)}</div>`,
+ applications:()=>head('Application Management','Review submitted applications and update their status.')+`<div class="panel">${db.applications.length?`<div class="table-wrap"><table><thead><tr><th>Reference</th><th>Student</th><th>Scholarship</th><th>Submitted</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.applications.slice().reverse().map(a=>`<tr><td>${esc(a.reference)}</td><td>${esc(a.studentName)}<br><span class="muted">${esc(a.studentEmail)}</span></td><td>${esc(a.scholarshipName)}</td><td>${esc(a.date)}</td><td>${status(a.status)}</td><td><button class="secondary" data-action="review" data-id="${esc(a.id)}">Review</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No applications have been submitted.</div>'}</div><div id="reviewBox"></div>`,
+ students:()=>head('Student Records','Registered student accounts in this browser demonstration.')+`<div class="panel">${db.users.length?`<div class="table-wrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Email</th><th>Program</th><th>Year</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>${esc(u.studentId)}</td><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${esc(u.program)}</td><td>${esc(u.year)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">No student accounts registered yet.</div>'}</div>`,
+ scholarships:()=>head('Scholarship Management','Add scholarship opportunities or change their availability.')+`<div class="panel"><h3>Add scholarship</h3><form id="scholarshipForm" class="form-grid"><div class="field"><label>Scholarship name</label><input id="schName" required></div><div class="field"><label>Sponsor</label><input id="schSponsor" required></div><div class="field"><label>Benefit</label><input id="schBenefit" required></div><div class="field"><label>Deadline</label><input id="schDeadline" type="date" required></div><div class="field wide"><label>Eligibility criteria</label><textarea id="schEligibility" required></textarea></div><div class="wide"><button class="primary">Add scholarship</button></div></form></div><div class="panel"><h3>Current scholarships</h3><div class="table-wrap"><table><thead><tr><th>Code</th><th>Name</th><th>Deadline</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.scholarships.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.deadline)}</td><td>${status(s.status)}</td><td><button class="secondary" data-action="toggle-scholarship" data-id="${esc(s.id)}">${s.status==='Open'?'Close':'Reopen'}</button></td></tr>`).join('')}</tbody></table></div></div>`,
+ reports:()=>head('Reports','Summary of applications by current status.')+`<div class="grid">${stat('Submitted',db.applications.filter(a=>a.status==='Submitted').length)}${stat('Under review',db.applications.filter(a=>a.status==='Under Review').length)}${stat('Approved',db.applications.filter(a=>a.status==='Approved').length)}${stat('Rejected',db.applications.filter(a=>a.status==='Rejected').length)}</div><div class="panel"><h3>Application list</h3>${appTable(db.applications,false)}<button class="secondary" onclick="window.print()">Print report</button></div>`
 };
-
-function handleAction(e){
- const b=e.currentTarget,id=b.dataset.id;
- if(b.dataset.action==='review'){
-  const a=db.applications.find(x=>x.id===id);
-  document.getElementById('reviewBox').innerHTML=`
-  <div class="panel">
-  <h3>Review ${esc(a.reference)}</h3>
-  <p><b>${esc(a.studentName)}</b> · ${esc(a.studentEmail)}</p>
-  <p><b>Statement:</b> ${esc(a.statement)}</p>
-  <p><b>Documents:</b> COR: ${esc(a.documents.cor)} · Grades: ${esc(a.documents.grades)} · Income: ${esc(a.documents.income||'Not provided')} · Other: ${esc(a.documents.other||'Not provided')}</p>
-  <form id="decisionForm">
-  <div class="field"><label>Application status</label>
-  <select id="decisionStatus">
-  <option ${a.status==='Submitted'?'selected':''}>Submitted</option>
-  <option ${a.status==='Under Review'?'selected':''}>Under Review</option>
-  <option ${a.status==='Approved'?'selected':''}>Approved</option>
-  <option ${a.status==='Rejected'?'selected':''}>Rejected</option>
-  <option>Documents Incomplete</option>
-  </select></div>
-  <div class="field"><label>Remarks for student</label><textarea id="decisionRemarks">${esc(a.remarks||'')}</textarea></div>
-  <button class="primary">Save update</button>
-  </form></div>`;
-
-  document.getElementById('decisionForm').addEventListener('submit',ev=>{
-   ev.preventDefault();
-   a.status=document.getElementById('decisionStatus').value;
-   a.remarks=document.getElementById('decisionRemarks').value.trim();
-   save();
-   render();
-   toast('Application status updated.');
-  });
-
-  document.getElementById('reviewBox').scrollIntoView({behavior:'smooth'});
- }else if(b.dataset.action==='toggle-scholarship'){
-  const s=db.scholarships.find(x=>x.id===id);
-  s.status=s.status==='Open'?'Closed':'Open';
-  save();
-  render();
-  toast('Scholarship availability updated.');
- }
-}
-
-document.addEventListener('submit',e=>{
- if(e.target.id==='profileForm'){
-  e.preventDefault();
-  const u=db.users.find(x=>x.id===current.id);
-  u.name=e.target.elements.name.value.trim();
-  current.name=u.name;
-  save();
-  render();
-  toast('Profile updated.');
- }
-
- if(e.target.id==='applicationForm'){
-  e.preventDefault();
-  const sch=db.scholarships.find(s=>s.id===document.getElementById('applyScholarship').value);
-  if(!sch){toast('Please select a scholarship.');return}
-
-  const app={
-   id:'APP-'+Date.now(),
-   reference:'NVSU-SCH-'+new Date().getFullYear()+'-'+String(db.applications.length+1).padStart(4,'0'),
-   userId:current.id,
-   studentName:current.name,
-   studentEmail:current.email,
-   scholarshipId:sch.id,
-   scholarshipName:sch.name,
-   date:new Date().toLocaleDateString(),
-   status:'Submitted',
-   remarks:'Your application has been submitted and is awaiting initial review.',
-   statement:document.getElementById('statement').value,
-   documents:{
-    cor:document.getElementById('cor').value,
-    grades:document.getElementById('grades').value,
-    income:document.getElementById('income').value,
-    other:document.getElementById('otherDoc').value
-   }
-  };
-
-  db.applications.push(app);
-  save();
-  go('applications');
-  toast('Application submitted. Reference: '+app.reference);
- }
-
- if(e.target.id==='scholarshipForm'){
-  e.preventDefault();
-  db.scholarships.push({
-   id:'SCH-'+String(Date.now()).slice(-5),
-   name:document.getElementById('schName').value,
-   sponsor:document.getElementById('schSponsor').value,
-   benefit:document.getElementById('schBenefit').value,
-   deadline:document.getElementById('schDeadline').value,
-   eligibility:document.getElementById('schEligibility').value,
-   status:'Open'
-  });
-  save();
-  render();
-  toast('Scholarship added.');
- }
-});
-
+function handleAction(e){const b=e.currentTarget,id=b.dataset.id;if(b.dataset.action==='review'){const a=db.applications.find(x=>x.id===id);document.getElementById('reviewBox').innerHTML=`<div class="panel"><h3>Review ${esc(a.reference)}</h3><p><b>${esc(a.studentName)}</b> · ${esc(a.studentEmail)}</p><p><b>Statement:</b> ${esc(a.statement)}</p><p><b>Documents:</b> COR: ${esc(a.documents.cor)} · Grades: ${esc(a.documents.grades)} · Income: ${esc(a.documents.income||'Not provided')} · Other: ${esc(a.documents.other||'Not provided')}</p><form id="decisionForm"><div class="field"><label>Application status</label><select id="decisionStatus"><option ${a.status==='Submitted'?'selected':''}>Submitted</option><option ${a.status==='Under Review'?'selected':''}>Under Review</option><option ${a.status==='Approved'?'selected':''}>Approved</option><option ${a.status==='Rejected'?'selected':''}>Rejected</option><option>Documents Incomplete</option></select></div><div class="field"><label>Remarks for student</label><textarea id="decisionRemarks">${esc(a.remarks||'')}</textarea></div><button class="primary">Save update</button></form></div>`;document.getElementById('decisionForm').addEventListener('submit',ev=>{ev.preventDefault();a.status=document.getElementById('decisionStatus').value;a.remarks=document.getElementById('decisionRemarks').value.trim();save();render();toast('Application status updated.')});document.getElementById('reviewBox').scrollIntoView({behavior:'smooth'})}else if(b.dataset.action==='toggle-scholarship'){const s=db.scholarships.find(x=>x.id===id);s.status=s.status==='Open'?'Closed':'Open';save();render();toast('Scholarship availability updated.')}}
+document.addEventListener('submit',e=>{if(e.target.id==='profileForm'){e.preventDefault();const u=db.users.find(x=>x.id===current.id);u.name=e.target.elements.name.value.trim();current.name=u.name;save();render();toast('Profile updated.')}if(e.target.id==='applicationForm'){e.preventDefault();const sch=db.scholarships.find(s=>s.id===document.getElementById('applyScholarship').value);if(!sch){toast('Please select a scholarship.');return}const app={id:'APP-'+Date.now(),reference:'NVSU-SCH-'+new Date().getFullYear()+'-'+String(db.applications.length+1).padStart(4,'0'),userId:current.id,studentName:current.name,studentEmail:current.email,scholarshipId:sch.id,scholarshipName:sch.name,date:new Date().toLocaleDateString(),status:'Submitted',remarks:'Your application has been submitted and is awaiting initial review.',statement:document.getElementById('statement').value,documents:{cor:document.getElementById('cor').value,grades:document.getElementById('grades').value,income:document.getElementById('income').value,other:document.getElementById('otherDoc').value}};db.applications.push(app);save();go('applications');toast('Application submitted. Reference: '+app.reference)}if(e.target.id==='scholarshipForm'){e.preventDefault();db.scholarships.push({id:'SCH-'+String(Date.now()).slice(-5),name:document.getElementById('schName').value,sponsor:document.getElementById('schSponsor').value,benefit:document.getElementById('schBenefit').value,deadline:document.getElementById('schDeadline').value,eligibility:document.getElementById('schEligibility').value,status:'Open'});save();render();toast('Scholarship added.')}});
 showAuth('login');
+document.getElementById('loginCard').classList.add('hidden');
 document.getElementById('topLogin').classList.remove('hidden');
-
-document.getElementById('portalChoice').addEventListener('change',e=>{
- const v=e.target.value;
- if(!v)return;
- const reg=v==='student';
- showAuth(reg?'register':'login');
- document.getElementById(reg?'registerCard':'loginCard').scrollIntoView({behavior:'smooth',block:'center'});
-});
+document.getElementById('portalChoice').addEventListener('change',e=>{const v=e.target.value;if(!v)return;const reg=v==='student';showAuth(reg?'register':'login');document.getElementById(reg?'registerCard':'loginCard').scrollIntoView({behavior:'smooth',block:'center'})});
 </script>
 </body>
 </html>
