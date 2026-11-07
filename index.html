@@ -4,22 +4,134 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NVSU | Scholarship Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0b4a26;--blue:#157a3c;--blue2:#1f9a4d;--pale:#eef7ef;--bg:#f6f8f3;--ink:#17243a;--muted:#65738a;--line:#e0e8dc;--white:#fff;--green:#16834b;--amber:#a66a00;--red:#b42318;--gold:#f4c20d;--shadow:0 8px 28px rgba(11,74,38,.1)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:650}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--navy)}.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}.danger{background:#fff0ef;color:var(--red);border:1px solid #ffd5d1}.muted{color:var(--muted)}.small{font-size:12px}.hidden{display:none!important}
-.topbar{border-bottom:4px solid var(--gold);height:74px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1180px)/2));gap:16px}.brand{display:flex;align-items:center;gap:12px}.seal{height:44px;width:44px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:900;border:3px solid var(--gold)}.brand strong{display:block;font-size:14px;letter-spacing:.04em}.brand span{display:block;font-size:12px;color:#e9f2dc}.top-actions{display:flex;gap:8px;align-items:center}.top-actions button{padding:8px 12px}
-.page{max-width:1180px;margin:28px auto;padding:0 20px}.login-layout{min-height:calc(100vh - 130px);display:grid;grid-template-columns:1fr 440px;align-items:center;gap:54px}.welcome h1{font-size:clamp(32px,4vw,48px);line-height:1.12;color:var(--navy);margin:0 0 16px}.welcome p{color:var(--muted);max-width:570px;font-size:17px}.welcome .eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.feature-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}.feature-list span{background:#fff;border:1px solid var(--line);padding:9px 12px;border-radius:999px;color:#34445d;font-size:13px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px}.auth-card h2{margin:0 0 5px;color:var(--navy);font-size:25px}.auth-card>p{margin:0 0 22px;color:var(--muted);font-size:13px}.field{display:block;margin:14px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid #ccd5e2;border-radius:9px;padding:12px;background:#fff;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 3px #1f9a4d20}.auth-card .primary{width:100%;margin-top:8px}.auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:16px;font-size:13px}.link{background:none;padding:0;color:var(--blue);font-weight:700}.notice{border-radius:10px;padding:12px 14px;background:#fff8e8;border:1px solid #f1dfb5;color:#76520b;font-size:12px;margin-top:18px}
-.app{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 74px)}.sidebar{background:#fff;border-right:1px solid var(--line);padding:22px 14px}.side-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8995a8;font-weight:800;padding:8px 12px}.nav-btn{width:100%;text-align:left;background:transparent;color:#45536a;padding:11px 12px;margin:2px 0;font-weight:600}.nav-btn:hover,.nav-btn.active{background:var(--pale);color:var(--blue)}.sidebar .userbox{border-top:1px solid var(--line);margin-top:20px;padding:18px 10px 0}.userbox strong{display:block;font-size:13px}.userbox span{font-size:12px;color:var(--muted)}.content{padding:28px;max-width:1200px;width:100%;margin:0 auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}.page-head h1{margin:0;color:var(--navy);font-size:27px}.page-head p{margin:5px 0;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:0 3px 12px #102d5908}.stat span{display:block;color:var(--muted);font-size:12px;font-weight:650}.stat strong{display:block;font-size:29px;color:var(--navy);margin-top:6px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:18px;box-shadow:0 3px 12px #102d5908}.panel h3{margin:0 0 14px;color:var(--navy);font-size:17px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#758198;background:#f8fafd}tr:last-child td{border-bottom:0}.status{display:inline-block;padding:4px 9px;border-radius:99px;font-size:11px;font-weight:750;background:#eef2f7;color:#526176}.status.Approved{background:#e6f6ed;color:#167044}.status.Rejected{background:#ffeded;color:#ae2b26}.status.Submitted,.status.Pending{background:#fff4d9;color:#8a5b00}.status['Under Review']{background:#e9f1ff;color:#2255a1}
-.scholarship-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.scholarship{border:1px solid var(--line);border-radius:12px;padding:17px}.scholarship h4{margin:0 0 7px;color:var(--navy)}.scholarship p{font-size:13px;color:var(--muted);margin:5px 0}.scholarship .meta{font-size:12px;color:#394a63;margin:12px 0}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.form-grid .wide{grid-column:1/-1}.empty{padding:25px;text-align:center;color:var(--muted);font-size:13px}.toast{position:fixed;right:22px;bottom:22px;background:#0b4a26;color:#fff;padding:13px 18px;border-radius:10px;box-shadow:var(--shadow);z-index:10}.footer{text-align:center;color:#8792a4;font-size:11px;padding:22px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:650}
+.primary{background:var(--blue);color:#fff}
+.primary:hover{background:var(--navy)}
+.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.danger{background:#fff0ef;color:var(--red);border:1px solid #ffd5d1}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.hidden{display:none!important}
+.topbar{border-bottom:4px solid var(--gold);height:74px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1180px)/2));gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.seal{height:44px;width:44px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:900;border:3px solid var(--gold)}
+.brand strong{display:block;font-size:14px;letter-spacing:.04em}
+.brand span{display:block;font-size:12px;color:#e9f2dc}
+.top-actions{display:flex;gap:8px;align-items:center}
+.top-actions button{padding:8px 12px}
+.page{max-width:1180px;margin:28px auto;padding:0 20px}
+.login-layout{min-height:calc(100vh - 130px);display:grid;grid-template-columns:1fr 440px;align-items:center;gap:54px}
+.welcome h1{font-size:clamp(32px,4vw,48px);line-height:1.12;color:var(--navy);margin:0 0 16px}
+.welcome p{color:var(--muted);max-width:570px;font-size:17px}
+.welcome .eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.feature-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}
+.feature-list span{background:#fff;border:1px solid var(--line);padding:9px 12px;border-radius:999px;color:#34445d;font-size:13px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px}
+.auth-card h2{margin:0 0 5px;color:var(--navy);font-size:25px}
+.auth-card>p{margin:0 0 22px;color:var(--muted);font-size:13px}
+.field{display:block;margin:14px 0}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;border:1px solid #ccd5e2;border-radius:9px;padding:12px;background:#fff;color:var(--ink);outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 3px #1f9a4d20}
+.auth-card .primary{width:100%;margin-top:8px}
+.auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:16px;font-size:13px}
+.link{background:none;padding:0;color:var(--blue);font-weight:700}
+.notice{border-radius:10px;padding:12px 14px;background:#fff8e8;border:1px solid #f1dfb5;color:#76520b;font-size:12px;margin-top:18px}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 74px)}
+.sidebar{background:#fff;border-right:1px solid var(--line);padding:22px 14px}
+.side-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8995a8;font-weight:800;padding:8px 12px}
+.nav-btn{width:100%;text-align:left;background:transparent;color:#45536a;padding:11px 12px;margin:2px 0;font-weight:600}
+.nav-btn:hover,.nav-btn.active{background:var(--pale);color:var(--blue)}
+.sidebar .userbox{border-top:1px solid var(--line);margin-top:20px;padding:18px 10px 0}
+.userbox strong{display:block;font-size:13px}
+.userbox span{font-size:12px;color:var(--muted)}
+.content{padding:28px;max-width:1200px;width:100%;margin:0 auto}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}
+.page-head h1{margin:0;color:var(--navy);font-size:27px}
+.page-head p{margin:5px 0;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:0 3px 12px #102d5908}
+.stat span{display:block;color:var(--muted);font-size:12px;font-weight:650}
+.stat strong{display:block;font-size:29px;color:var(--navy);margin-top:6px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:18px;box-shadow:0 3px 12px #102d5908}
+.panel h3{margin:0 0 14px;color:var(--navy);font-size:17px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#758198;background:#f8fafd}
+tr:last-child td{border-bottom:0}
+.status{display:inline-block;padding:4px 9px;border-radius:99px;font-size:11px;font-weight:750;background:#eef2f7;color:#526176}
+.status.Approved{background:#e6f6ed;color:#167044}
+.status.Rejected{background:#ffeded;color:#ae2b26}
+.status.Submitted,.status.Pending{background:#fff4d9;color:#8a5b00}
+.status['Under Review']{background:#e9f1ff;color:#2255a1}
+.scholarship-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.scholarship{border:1px solid var(--line);border-radius:12px;padding:17px}
+.scholarship h4{margin:0 0 7px;color:var(--navy)}
+.scholarship p{font-size:13px;color:var(--muted);margin:5px 0}
+.scholarship .meta{font-size:12px;color:#394a63;margin:12px 0}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.form-grid .wide{grid-column:1/-1}
+.empty{padding:25px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;right:22px;bottom:22px;background:#0b4a26;color:#fff;padding:13px 18px;border-radius:10px;box-shadow:var(--shadow);z-index:10}
+.footer{text-align:center;color:#8792a4;font-size:11px;padding:22px}
 @media(max-width:900px){.login-layout{grid-template-columns:1fr;gap:20px;padding:28px 0}.welcome{padding:10px}.auth-card{max-width:520px;width:100%;margin:auto}.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:10px;display:flex;overflow:auto;gap:5px}.side-title,.userbox{display:none}.nav-btn{white-space:nowrap;width:auto;margin:0}.content{padding:20px}.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.topbar{padding:0 14px;height:66px}.brand strong{font-size:11px}.brand span{font-size:10px}.seal{width:38px;height:38px}.top-actions .secondary{display:none}.page{padding:0 14px;margin:14px auto}.card{padding:21px}.grid,.scholarship-grid,.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.page-head{display:block}.page-head button{margin-top:10px}.content{padding:15px}.stat{padding:14px}.stat strong{font-size:24px}}
-.logo{height:54px;width:54px;display:block;object-fit:contain}@media(max-width:560px){.logo{height:44px;width:44px}}
+.logo{height:54px;width:54px;display:block;object-fit:contain}
+@media(max-width:560px){.logo{height:44px;width:44px}}
+/* FPES / SIAS look: slate background, white text, mint-green accents */
+:root{color-scheme:dark;--bg:#666675;--navy:#fff;--blue:#69bf92;--blue2:#8fd3ae;--pale:rgba(255,255,255,.1);--ink:#f4f4f8;--muted:#c6c6d1;--line:rgba(255,255,255,.22);--shadow:none}
+body{background:var(--bg);font-family:"Source Sans 3","Source Sans Pro","Segoe UI",Arial,sans-serif;font-size:16px}
+.topbar{height:92px;background:transparent;border-bottom:1px solid rgba(255,255,255,.35)}
+.brand strong{font-weight:700;letter-spacing:0}
+.brand span{color:#fff}
+@media(min-width:700px){.brand div>strong,.brand div>span{display:inline}.brand div>span{margin-left:8px;font-size:15px}.brand strong{font-size:15px}}
+.login-layout{grid-template-columns:1fr;justify-items:center;text-align:center;gap:30px;min-height:auto;padding:56px 0}
+.welcome h1{font-weight:400;color:#fff;font-size:clamp(34px,5vw,58px)}
+.welcome p{margin:0 auto;color:#d9d9e2}
+.welcome .eyebrow{color:#9fe0bd}
+.feature-list{justify-content:center}
+.feature-list span{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+.auth-card{width:100%;max-width:520px;text-align:left}
+.card,.panel,.stat,.sidebar,.scholarship{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);box-shadow:none}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.35);color:#fff}
+.field input::placeholder,.field textarea::placeholder{color:#c6c6d1}
+.field input:disabled{opacity:.7}
+option{background:#4d4d5a;color:#fff}
+.primary{background:var(--blue);border:1px solid #8fd3ae;color:#fff}
+.primary:hover{background:#58ad81}
+.secondary{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
+.top-actions .secondary,.top-actions .primary{background:transparent;border:0;color:#fff;font-size:16px;font-weight:600}
+.top-actions button:hover{background:transparent;text-decoration:underline}
+.nav-btn{color:#ececf2}
+.nav-btn:hover,.nav-btn.active{background:rgba(105,191,146,.28);color:#fff}
+th{background:rgba(255,255,255,.1);color:#e0e0e8}
+.scholarship .meta{color:#e0e0e8}
+.side-title{color:#c6c6d1}
+.notice{background:rgba(244,194,13,.16);border-color:rgba(244,194,13,.5);color:#ffe9a3}
+.footer{color:#d0d0da}
+.toast{background:#3f8f67}
+.tl{color:#fff;text-decoration:none;font-weight:600;padding:8px 10px}
+.tl:hover{text-decoration:underline}
+.footer{line-height:1.7;border-top:1px solid rgba(255,255,255,.25);margin-top:30px}
+.pick{width:100%;max-width:600px;margin:6px auto 0}
+#portalChoice{width:100%;appearance:none;-webkit-appearance:none;background:#69bf92 url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 5l6 6 6-6' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 18px center/16px;color:#fff;border:2px solid #8fd3ae;border-radius:10px;padding:15px 48px 15px 18px;font-size:17px;font-weight:600;cursor:pointer;text-align:left}
+#portalChoice:focus{outline:none;border-color:#fff}
+#portalChoice option{background:#69bf92;color:#fff}
+@media(max-width:900px){.tl{display:none}}
+@media(max-width:560px){.topbar{height:70px}.login-layout{padding:28px 0}}
 </style>
 </head>
 <body>
 <header class="topbar">
- <div class="brand"><img class="logo" src="data:image/png;base64,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" alt="NVSU seal"><div><strong>NUEVA VIZCAYA STATE UNIVERSITY</strong><span>Bayombong Campus · Scholarship Portal</span></div></div>
+ <div class="brand"><img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAYFBMVEUAAAADVwP28/D3+AiTq5KY9pW+2TLw8HTedCkNYAeGVFruKIkDbZKTWbJrZeZk5lurnxZ1KNhSsd1tEkLFXEIAU1SpOG64NYyKlruifGf1m82BZJ7Mi1ANouwxWcZNo2D9uH19n1xE4+k2mmBU2NPDKARJskw9+HwgwVf/Z8DrMxrFxcJ9lHKJ2yL556hJhhoDj9+A1jmPDRf2jV9n9s5cUdX63YgBimF1PyDHx/vZg2yUIFmdzf8MSI4Ci4bx0/7H1FrVu7q6I5ndEQPz+lmj7LS3ecJlpTShh5XTlDripn7lVi7doTWPMw2u05knqEYTWOgIqhdffXTWuIZhHQfWXCC+8Fl9EeO21ezN325f/5UAWfb/ylwl5aDS/8ZcPNQeF+Z9O/0Rg/BL1f3j9Bx1qZdjy5UmvAAAAAElFTkSuQmCC" alt="NVSU seal"><div><strong>NUEVA VIZCAYA STATE UNIVERSITY</strong><span>Bayombong Campus · Scholarship Portal</span></div></div>
  <div class="top-actions"><button class="secondary" id="topLogin" onclick="showAuth('login')">Log in</button><button class="primary" id="topRegister" onclick="showAuth('register')">Register</button><button class="secondary hidden" id="logoutTop" onclick="logout()">Log out</button></div>
 </header>
 <main id="authView" class="page">
@@ -27,8 +139,7 @@
   <section class="welcome">
    <div class="eyebrow">Student financial assistance</div>
    <h1>Scholarship Registration &amp; Application Management</h1>
-   <p>A centralized portal for students to explore scholarship opportunities, submit requirements, and monitor their application status at Nueva Vizcaya State University – Bayombong Campus.</p>
-   <div class="feature-list"><span>Student account</span><span>Online application</span><span>Document submission</span><span>Application tracking</span></div>
+   <div class="pick"><select id="portalChoice" aria-label="Select a service"><option value="">Select a service</option><option value="student">Student account</option><option value="apply">Online application</option><option value="docs">Document submission</option><option value="track">Application tracking</option></select></div>
   </section>
   <section class="card auth-card" id="loginCard">
    <h2>Welcome back</h2><p>Sign in using your registered email address.</p>
@@ -63,7 +174,7 @@
  <aside class="sidebar" id="sidebar"></aside>
  <main class="content" id="content"></main>
 </div>
-<div class="footer" id="footer">Nueva Vizcaya State University · Bayombong Campus · Scholarship Portal</div>
+<div class="footer" id="footer">Nueva Vizcaya State University · Bayombong Campus · Scholarship Portal<br>Quezon St., Bayombong, Nueva Vizcaya · (078) 392-1111 · info@nvsu.edu.ph</div>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
 const KEY='nvsuScholarshipPortal_v1';
@@ -80,7 +191,7 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3000)}
 function showAuth(which){document.getElementById('authView').classList.remove('hidden');document.getElementById('appView').classList.add('hidden');document.getElementById('footer').classList.remove('hidden');document.getElementById('loginCard').classList.toggle('hidden',which!=='login');document.getElementById('registerCard').classList.toggle('hidden',which!=='register');document.getElementById('topLogin').classList.toggle('hidden',which==='login');document.getElementById('topRegister').classList.toggle('hidden',which==='register');document.getElementById('logoutTop').classList.add('hidden')}
 document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();const email=document.getElementById('loginEmail').value.trim().toLowerCase(),pass=document.getElementById('loginPassword').value,role=document.getElementById('loginRole').value;if(role==='admin'){if(email===ADMIN_EMAIL&&pass===ADMIN_PASS){current={role:'admin',name:'Scholarship Personnel',email};enterApp()}else toast('Personnel login details are incorrect.')}else{const user=db.users.find(u=>u.email.toLowerCase()===email&&u.password===pass);if(user){current={...user,role:'student'};enterApp()}else toast('Account not found or password is incorrect.')}});
-document.getElementById('registerForm').addEventListener('submit',e=>{e.preventDefault();const name=(document.getElementById('regFirst').value.trim()+' '+document.getElementById('regLast').value.trim()),id=document.getElementById('regId').value.trim(),email=document.getElementById('regEmail').value.trim().toLowerCase(),password=document.getElementById('regPassword').value;if(password!==document.getElementById('regConfirm').value){toast('Passwords do not match.');return}if(db.users.some(u=>u.email.toLowerCase()===email||u.studentId===id)){toast('Email or Student ID is already registered.');return}const user={id:'USR-'+Date.now(),name,studentId:id,email,password,program:document.getElementById('regProgram').value,year:document.getElementById('regYear').value,campus:'Bayombong',dob:document.getElementById('regDob').value};db.users.push(user);save();current={...user,role:'student'};enterApp();toast('Student account created.')} );
+document.getElementById('registerForm').addEventListener('submit',e=>{e.preventDefault();const name=(document.getElementById('regFirst').value.trim()+' '+document.getElementById('regLast').value.trim()),id=document.getElementById('regId').value.trim(),email=document.getElementById('regEmail').value.trim().toLowerCase(),password=document.getElementById('regPassword').value;if(password!==document.getElementById('regConfirm').value){toast('Passwords do not match.');return}if(db.users.some(u=>u.email.toLowerCase()===email||u.studentId===id)){toast('Email or Student ID is already registered.');return}const user={id:'USR-'+Date.now(),name,studentId:id,email,password,program:document.getElementById('regProgram').value,year:document.getElementById('regYear').value,campus:'Bayombong',dob:document.getElementById('regDob').value};db.users.push(user);save();current={...user,role:'student'};enterApp();toast('Student account created.')});
 function forgotPassword(){toast('For this demo, contact the Scholarship Personnel to reset your password.')}
 function logout(){current=null;showAuth('login');document.getElementById('loginForm').reset();toast('You have logged out.')}
 function enterApp(){document.getElementById('authView').classList.add('hidden');document.getElementById('appView').classList.remove('hidden');document.getElementById('footer').classList.add('hidden');document.getElementById('topLogin').classList.add('hidden');document.getElementById('topRegister').classList.add('hidden');document.getElementById('logoutTop').classList.remove('hidden');activePage='dashboard';render()}
@@ -107,9 +218,12 @@ const adminPages={
  scholarships:()=>head('Scholarship Management','Add scholarship opportunities or change their availability.')+`<div class="panel"><h3>Add scholarship</h3><form id="scholarshipForm" class="form-grid"><div class="field"><label>Scholarship name</label><input id="schName" required></div><div class="field"><label>Sponsor</label><input id="schSponsor" required></div><div class="field"><label>Benefit</label><input id="schBenefit" required></div><div class="field"><label>Deadline</label><input id="schDeadline" type="date" required></div><div class="field wide"><label>Eligibility criteria</label><textarea id="schEligibility" required></textarea></div><div class="wide"><button class="primary">Add scholarship</button></div></form></div><div class="panel"><h3>Current scholarships</h3><div class="table-wrap"><table><thead><tr><th>Code</th><th>Name</th><th>Deadline</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.scholarships.map(s=>`<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${esc(s.deadline)}</td><td>${status(s.status)}</td><td><button class="secondary" data-action="toggle-scholarship" data-id="${esc(s.id)}">${s.status==='Open'?'Close':'Reopen'}</button></td></tr>`).join('')}</tbody></table></div></div>`,
  reports:()=>head('Reports','Summary of applications by current status.')+`<div class="grid">${stat('Submitted',db.applications.filter(a=>a.status==='Submitted').length)}${stat('Under review',db.applications.filter(a=>a.status==='Under Review').length)}${stat('Approved',db.applications.filter(a=>a.status==='Approved').length)}${stat('Rejected',db.applications.filter(a=>a.status==='Rejected').length)}</div><div class="panel"><h3>Application list</h3>${appTable(db.applications,false)}<button class="secondary" onclick="window.print()">Print report</button></div>`
 };
-function handleAction(e){const b=e.currentTarget,id=b.dataset.id;if(b.dataset.action==='review'){const a=db.applications.find(x=>x.id===id);document.getElementById('reviewBox').innerHTML=`<div class="panel"><h3>Review ${esc(a.reference)}</h3><p><b>${esc(a.studentName)}</b> · ${esc(a.studentEmail)}</p><p><b>Statement:</b> ${esc(a.statement)}</p><p><b>Documents:</b> COR: ${esc(a.documents.cor)} · Grades: ${esc(a.documents.grades)} · Income: ${esc(a.documents.income||'Not provided')} · Other: ${esc(a.documents.other||'Not provided')}</p><form id="decisionForm"><div class="field"><label>Application status</label><select id="decisionStatus"><option ${a.status==='Submitted'?'selected':''}>Submitted</option><option ${a.status==='Under Review'?'selected':''}>Under Review</option><option ${a.status==='Approved'?'selected':''}>Approved</option><option ${a.status==='Rejected'?'selected':''}>Rejected</option><option>Documents Incomplete</option></select></div><div class="field"><label>Remarks for student</label><textarea id="decisionRemarks">${esc(a.remarks||'')}</textarea></div><button class="primary">Save update</button></form></div>`;document.getElementById('decisionForm').addEventListener('submit',ev=>{ev.preventDefault();a.status=document.getElementById('decisionStatus').value;a.remarks=document.getElementById('decisionRemarks').value.trim();save();render();toast('Application status updated.')});document.getElementById('reviewBox').scrollIntoView({behavior:'smooth'})}else if(b.dataset.action==='toggle-scholarship'){const s=db.scholarships.find(x=>x.id===id);s.status=s.status==='Open'?'Closed':'Open';save();render();toast('Scholarship availability updated.')}} 
+function handleAction(e){const b=e.currentTarget,id=b.dataset.id;if(b.dataset.action==='review'){const a=db.applications.find(x=>x.id===id);document.getElementById('reviewBox').innerHTML=`<div class="panel"><h3>Review ${esc(a.reference)}</h3><p><b>${esc(a.studentName)}</b> · ${esc(a.studentEmail)}</p><p><b>Statement:</b> ${esc(a.statement)}</p><p><b>Documents:</b> COR: ${esc(a.documents.cor)} · Grades: ${esc(a.documents.grades)} · Income: ${esc(a.documents.income||'Not provided')} · Other: ${esc(a.documents.other||'Not provided')}</p><form id="decisionForm"><div class="field"><label>Application status</label><select id="decisionStatus"><option ${a.status==='Submitted'?'selected':''}>Submitted</option><option ${a.status==='Under Review'?'selected':''}>Under Review</option><option ${a.status==='Approved'?'selected':''}>Approved</option><option ${a.status==='Rejected'?'selected':''}>Rejected</option><option>Documents Incomplete</option></select></div><div class="field"><label>Remarks for student</label><textarea id="decisionRemarks">${esc(a.remarks||'')}</textarea></div><button class="primary">Save update</button></form></div>`;document.getElementById('decisionForm').addEventListener('submit',ev=>{ev.preventDefault();a.status=document.getElementById('decisionStatus').value;a.remarks=document.getElementById('decisionRemarks').value.trim();save();render();toast('Application status updated.')});document.getElementById('reviewBox').scrollIntoView({behavior:'smooth'})}else if(b.dataset.action==='toggle-scholarship'){const s=db.scholarships.find(x=>x.id===id);s.status=s.status==='Open'?'Closed':'Open';save();render();toast('Scholarship availability updated.')}}
 document.addEventListener('submit',e=>{if(e.target.id==='profileForm'){e.preventDefault();const u=db.users.find(x=>x.id===current.id);u.name=e.target.elements.name.value.trim();current.name=u.name;save();render();toast('Profile updated.')}if(e.target.id==='applicationForm'){e.preventDefault();const sch=db.scholarships.find(s=>s.id===document.getElementById('applyScholarship').value);if(!sch){toast('Please select a scholarship.');return}const app={id:'APP-'+Date.now(),reference:'NVSU-SCH-'+new Date().getFullYear()+'-'+String(db.applications.length+1).padStart(4,'0'),userId:current.id,studentName:current.name,studentEmail:current.email,scholarshipId:sch.id,scholarshipName:sch.name,date:new Date().toLocaleDateString(),status:'Submitted',remarks:'Your application has been submitted and is awaiting initial review.',statement:document.getElementById('statement').value,documents:{cor:document.getElementById('cor').value,grades:document.getElementById('grades').value,income:document.getElementById('income').value,other:document.getElementById('otherDoc').value}};db.applications.push(app);save();go('applications');toast('Application submitted. Reference: '+app.reference)}if(e.target.id==='scholarshipForm'){e.preventDefault();db.scholarships.push({id:'SCH-'+String(Date.now()).slice(-5),name:document.getElementById('schName').value,sponsor:document.getElementById('schSponsor').value,benefit:document.getElementById('schBenefit').value,deadline:document.getElementById('schDeadline').value,eligibility:document.getElementById('schEligibility').value,status:'Open'});save();render();toast('Scholarship added.')}});
 showAuth('login');
+document.getElementById('loginCard').classList.add('hidden');
+document.getElementById('topLogin').classList.remove('hidden');
+document.getElementById('portalChoice').addEventListener('change',e=>{const v=e.target.value;if(!v)return;const reg=v==='student';showAuth(reg?'register':'login');document.getElementById(reg?'registerCard':'loginCard').scrollIntoView({behavior:'smooth',block:'center'})});
 </script>
 </body>
 </html>
