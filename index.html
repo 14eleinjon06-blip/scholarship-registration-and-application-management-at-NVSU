@@ -19,7 +19,6 @@ button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:6
 .muted{color:var(--muted)}
 .small{font-size:12px}
 .hidden{display:none!important}
-
 .topbar{border-bottom:4px solid var(--gold);height:74px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1180px)/2));gap:16px}
 .brand{display:flex;align-items:center;gap:12px}
 .seal{height:44px;width:44px;border-radius:50%;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:900;border:3px solid var(--gold)}
@@ -27,7 +26,6 @@ button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:6
 .brand span{display:block;font-size:12px;color:#e9f2dc}
 .top-actions{display:flex;gap:8px;align-items:center}
 .top-actions button{padding:8px 12px}
-
 .page{max-width:1180px;margin:28px auto;padding:0 20px}
 .login-layout{min-height:calc(100vh - 130px);display:grid;grid-template-columns:1fr 440px;align-items:center;gap:54px}
 .welcome h1{font-size:clamp(32px,4vw,48px);line-height:1.12;color:var(--navy);margin:0 0 16px}
@@ -35,7 +33,6 @@ button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:6
 .welcome .eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .feature-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}
 .feature-list span{background:#fff;border:1px solid var(--line);padding:9px 12px;border-radius:999px;color:#34445d;font-size:13px}
-
 .card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px}
 .auth-card h2{margin:0 0 5px;color:var(--navy);font-size:25px}
 .auth-card>p{margin:0 0 22px;color:var(--muted);font-size:13px}
@@ -47,7 +44,6 @@ button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:6
 .auth-links{display:flex;justify-content:space-between;gap:12px;margin-top:16px;font-size:13px}
 .link{background:none;padding:0;color:var(--blue);font-weight:700}
 .notice{border-radius:10px;padding:12px 14px;background:#fff8e8;border:1px solid #f1dfb5;color:#76520b;font-size:12px;margin-top:18px}
-
 .app{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 74px)}
 .sidebar{background:#fff;border-right:1px solid var(--line);padding:22px 14px}
 .side-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8995a8;font-weight:800;padding:8px 12px}
@@ -76,7 +72,6 @@ tr:last-child td{border-bottom:0}
 .status.Rejected{background:#ffeded;color:#ae2b26}
 .status.Submitted,.status.Pending{background:#fff4d9;color:#8a5b00}
 .status.Under\ Review{background:#e9f1ff;color:#2255a1}
-
 .scholarship-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .scholarship{border:1px solid var(--line);border-radius:12px;padding:17px}
 .scholarship h4{margin:0 0 7px;color:var(--navy)}
@@ -87,18 +82,6 @@ tr:last-child td{border-bottom:0}
 .empty{padding:25px;text-align:center;color:var(--muted);font-size:13px}
 .toast{position:fixed;right:22px;bottom:22px;background:#0b4a26;color:#fff;padding:13px 18px;border-radius:10px;box-shadow:var(--shadow);z-index:10}
 .footer{text-align:center;color:#8792a4;font-size:11px;padding:22px}
-
-/* NVSU Bayombong official green-and-yellow theme */
-.logo{height:54px;width:54px;display:block;object-fit:contain;flex:0 0 54px;background:#fff;border:2px solid var(--gold);border-radius:50%;padding:2px}
-.topbar{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
-.brand strong{color:#fff}
-.brand span{color:#e9f2dc}
-.welcome h1,.auth-card h2,.page-head h1,.stat strong,.panel h3,.scholarship h4{color:var(--navy)}
-.welcome .eyebrow{color:var(--green)}
-.primary{background:var(--blue);color:#fff;border:1px solid var(--blue)}
-.primary:hover{background:var(--navy)}
-.nav-btn:hover,.nav-btn.active{background:var(--pale);color:var(--blue)}
-
 @media(max-width:900px){
 .login-layout{grid-template-columns:1fr;gap:20px;padding:28px 0}
 .welcome{padding:10px}
@@ -110,12 +93,10 @@ tr:last-child td{border-bottom:0}
 .content{padding:20px}
 .grid{grid-template-columns:repeat(2,1fr)}
 }
-
 @media(max-width:560px){
-.topbar{padding:0 14px;height:70px}
+.topbar{padding:0 14px;height:66px}
 .brand strong{font-size:11px}
 .brand span{font-size:10px}
-.logo{height:44px;width:44px;flex-basis:44px}
 .seal{width:38px;height:38px}
 .top-actions .secondary{display:none}
 .page{padding:0 14px;margin:14px auto}
@@ -128,17 +109,26 @@ tr:last-child td{border-bottom:0}
 .stat{padding:14px}
 .stat strong{font-size:24px}
 }
+.logo{height:54px;width:54px;display:block;object-fit:contain}
+@media(max-width:560px){.logo{height:44px;width:44px}}
+/* NVSU Bayombong official green-and-yellow theme */
+.logo{height:54px;width:54px;display:block;object-fit:contain;flex:0 0 54px;background:#fff;border:2px solid var(--gold);border-radius:50%;padding:2px}
+.topbar{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
+.brand strong{color:#fff}
+.brand span{color:#e9f2dc}
+.welcome h1,.auth-card h2,.page-head h1,.stat strong,.panel h3,.scholarship h4{color:var(--navy)}
+.welcome .eyebrow{color:var(--green)}
+.primary{background:var(--blue);color:#fff;border:1px solid var(--blue)}
+.primary:hover{background:var(--navy)}
+.nav-btn:hover,.nav-btn.active{background:var(--pale);color:var(--blue)}
+@media(max-width:560px){.logo{height:44px;width:44px;flex-basis:44px}.topbar{height:70px}}
 </style>
 </head>
-
 <body>
 <header class="topbar">
  <div class="brand">
-  <img class="logo" src="data:image/png;base64,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" alt="NVSU Official Seal">
-  <div>
-   <strong>NUEVA VIZCAYA STATE UNIVERSITY</strong>
-   <span>Bayombong Campus · Scholarship Portal</span>
-  </div>
+  <img class="logo" src="nvsu-logo.jpg" alt="NVSU seal">
+  <div><strong>NUEVA VIZCAYA STATE UNIVERSITY</strong><span>Bayombong Campus · Scholarship Portal</span></div>
  </div>
  <div class="top-actions">
   <button class="secondary" id="topLogin" onclick="showAuth('login')">Log in</button>
@@ -230,7 +220,10 @@ tr:last-child td{border-bottom:0}
      <div class="field">
       <label>Year level</label>
       <select id="regYear">
-       <option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option>
+       <option>1st Year</option>
+       <option>2nd Year</option>
+       <option>3rd Year</option>
+       <option>4th Year</option>
       </select>
      </div>
      <div class="field"><label>Campus</label><input value="Bayombong" disabled></div>
